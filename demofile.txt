@@ -1,0 +1,44 @@
+QUESTION 111
+Which type of BGP AS number is 64591?
+A. a private AS number
+B. a public AS number
+C. a private 4-byte AS number
+D. a public 4-byte AS number
+Correct Answer: A
+Section: (none)
+Explanation
+Explanation/Reference:
+QUESTION 112
+Refer to the exhibit. When summarizing these routes, which route is the summarized route?
+
+A. OI 2001:DB8::/48 [110/100] via FE80::A8BB:CCFF:FE00:6F00, Ethernet0/0
+B. OI 2001:DB8::/24 [110/100] via FE80::A8BB:CCFF:FE00:6F00, Ethernet0/0
+C. OI 2001:DB8::/32 [110/100] via FE80::A8BB:CCFF:FE00:6F00, Ethernet0/0
+D. OI 2001:DB8::/64 [110/100] via FE80::A8BB:CCFF:FE00:6F00, Ethernet0/0
+Correct Answer: A
+Section: (none)
+Explanation
+Explanation/Reference:
+
+www.vceplus.com - VCE Exam Simulator - Download A+ VCE (latest) free Open VCE Exams - VCE to PDF Converter - PDF Online
+
+QUESTION 113
+Which Cisco VPN technology uses AAA to implement group policies and authorization and is also used for the XAUTH authentication method?
+A. DMVPN
+B. Cisco Easy VPN
+C. GETVPN
+D. GREVPN
+Correct Answer: B
+Section: (none)
+Explanation
+Explanation/Reference:
+QUESTION 114
+Which statement about dual stack is true?
+A. Dual stack translates IPv6 addresses to IPv4 addresses.
+B. Dual stack means that devices are able to run IPv4 and IPv6 in parallel.
+C. Dual stack translates IPv4 addresses to IPv6 addresses.
+D. Dual stack changes the IP addresses on hosts from IPv4 to IPv6 automatically.
+Correct Answer: B
+Section: (none)
+Explanation
+Explanation/Reference:
