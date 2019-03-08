@@ -8,6 +8,7 @@ Correct Answer: A
 Section: (none)
 Explanation
 Explanation/Reference:
+
 QUESTION 112
 Refer to the exhibit. When summarizing these routes, which route is the summarized route?
 
@@ -30,6 +31,7 @@ C. GETVPN
 D. GREVPN
 Correct Answer: B
 Section: (none)
+
 Explanation
 Explanation/Reference:
 QUESTION 114

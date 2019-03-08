@@ -48,14 +48,10 @@ def processParseQuestionBank(str_to_parse):
     data_set_group_0_1 = str_to_parse.split('QUESTION')
 
     data_set_group_0_2 = []
-    # data_set_group_0_3 = data_set_group_0_2[0].split('</quotes>')
-    # data_set_group_0_4 = data_set_group_0_3[0].split('</quote>')
     data_set_group_0_1.pop(0)
     internalIndex = 0
     for val in data_set_group_0_1:
-        # if(internalIndex == 0):
         questionContainer = val.splitlines()
-        # print(questionContainer)
         data_set_group_0_2.append(questionContainer)
         internalIndex += 1
 
