@@ -1,3 +1,4 @@
+from tkinter import *
 
 def main():
     # age = input("What is your age? ")
@@ -9,6 +10,16 @@ def main():
 
     displayList = createDisplayList(questionList)
     print(displayList)
+
+
+    # master = Tk()
+    # Label(master, text='First Name').grid(row=0)
+    # Label(master, text='Last Name').grid(row=1)
+    # e1 = Entry(master)
+    # e2 = Entry(master)
+    # e1.grid(row=0, column=1)
+    # e2.grid(row=1, column=1)
+    # mainloop()
 
 
 def parseIntoQuestionObjectsList():
@@ -37,12 +48,13 @@ def processParseQuestionBank(str_to_parse):
             for val in questionContainer:
                 if(limitIndex > 1):
                     # while(isContinueCalculating):
-                    questionObj.parseAnswer(val)
+
                     print(val)
                         # print(val.find("Correct"))
                     if(val.find("Correct") == 0):
                         isContinueCalculating = False
                         break
+                    questionObj.parseAnswer(val)
                 limitIndex += 1
                 intervalIndex += 1
             print(questionObj.getAnswerListComposite())
