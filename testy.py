@@ -209,41 +209,4 @@
 
 
 
-from tkinter import *
 
-#Radio button. create radiobutton by list entries
-cb_strings = ['item 1', 'item 2', 'item 3', 'Correct']
-
-def sel():
-   print("You selected the option " + str(selectedAnswer.get()))
-
-root = Tk()
-root.geometry('1400x800')
-selectedAnswer = StringVar()
-selectedAnswer.set(cb_strings[0])
-
-for item in cb_strings:
-    radiobutton = Radiobutton(root, text=item, variable=selectedAnswer, value=item, command=sel)
-    radiobutton.pack(anchor=W)
-
-
-correctAnswer = 'Error: Check \'Correct\' answer format'
-for val in cb_strings:
-    if (val.find("Correct") == 0):
-        correctAnswer = val
-        break
-
-
-def confirmAnswer():
-    if(correctAnswer == selectedAnswer.get()):
-        print("Correct! selected: "+ selectedAnswer.get())
-    else:
-        print("Answer: " +selectedAnswer.get() +" was incorrect, correct answer is: "+ correctAnswer)
-
-
-
-confirmAnswerButton = Button(text="Confirm Answer", command=confirmAnswer)
-confirmAnswerButton.place(x=70, y=150)
-
-
-root.mainloop()
