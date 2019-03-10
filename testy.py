@@ -66,6 +66,10 @@
 
 
 
+# age = input("What is your age? ")
+# print("Your age is: ", age)
+
+
 
 
 # from tkinter import *
@@ -210,3 +214,21 @@
 
 
 
+import tkinter as tk
+root = tk.Tk()
+questionlist = ["room quality", "food quality", "value for money"]
+answers = []
+
+def ShowChoice():
+	for v in answers:
+		print(v.get())
+
+for counter, question in enumerate(questionlist, 1):
+	tk.Label(root, text=question).grid(row=counter, column = 0)
+	var = tk.IntVar()
+	for i in range(1,6):
+		button = tk.Radiobutton(root, variable = var, value = i, command = ShowChoice)
+		button.grid(row = counter, column = i)
+	answers.append(var)
+
+root.mainloop()

@@ -1,40 +1,46 @@
 from tkinter import *
 
 def main():
-    # age = input("What is your age? ")
-    # print("Your age is: ", age)
     f = open("demofile.txt", "r")
     stringText = f.read()
 
     questionObjectComposite = processParseQuestionBank(stringText)
 
-    # displayList = createDisplayList(questionList)
-    # print(questionList)
-    # print(questionObjectComposite[0].getProblem())
-    print(questionObjectComposite[0].getCorrectAnswer())
-    # print(questionObjectComposite[0].getAnswerListComposite())
+    # print(questionObjectComposite[0].getCorrectAnswer())
+
+
+
+    # for questionObj in questionObjectComposite:
+    #     print(questionObj.getCorrectAnswer())
+        # possibleAnswerList = questionObjectComposite[0].getAnswerListComposite()
+        # correctAnswer = questionObjectComposite[0].getCorrectAnswer()
+
+    # questionObjectComposite =
+
+    possibleAnswerList = questionObjectComposite[0].getAnswerListComposite()
+    correctAnswer = questionObjectComposite[0].getCorrectAnswer()
+
+    # print(correctAnswer)
+
+    initialQuestionObject = questionObjectComposite[0]
 
     # Radio button. create radiobutton by list entries
-    cb_strings = ['item 1', 'item 2', 'item 3', 'Correct']
     # cb_strings = ['item 1', 'item 2', 'item 3', 'Correct']
-
-    def sel():
-        print("You selected the option " + str(selectedAnswer.get()))
+    cb_strings = initialQuestionObject.getAnswerListComposite()
 
     root = Tk()
     root.geometry('1400x800')
     selectedAnswer = StringVar()
     selectedAnswer.set(cb_strings[0])
+    def sel():
+        print("You selected the option " + str(selectedAnswer.get()))
 
+    questionLabel = Label(text=initialQuestionObject.getProblem()).pack(anchor=W)
     for item in cb_strings:
-        radiobutton = Radiobutton(root, text=item, variable=selectedAnswer, value=item, command=sel)
+        textAssociation = item[0]+" "+item[1]
+        print(textAssociation)
+        radiobutton = Radiobutton(root, text=textAssociation, variable=selectedAnswer, value=textAssociation, command=sel)
         radiobutton.pack(anchor=W)
-
-    correctAnswer = 'Error: Check \'Correct\' answer format'
-    for val in cb_strings:
-        if (val.find("Correct") == 0):
-            correctAnswer = val
-            break
 
     def confirmAnswer():
         if (correctAnswer == selectedAnswer.get()):
@@ -61,36 +67,44 @@ def randomizeQuestion():
 def processParseQuestionBank(str_to_parse):
     data_set_group_0_1 = str_to_parse.split('QUESTION')
 
-    data_set_group_0_2 = []
+    # data_set_group_0_2 = []
     data_set_group_0_1.pop(0)
     questionObjectComposite = []
     intervalIndex = 0
     for val in data_set_group_0_1:
-        if(intervalIndex == 0):
-            questionContainer = val.splitlines()
-            questionContainer = list(filter(None, questionContainer))
-            questionNumber = questionContainer[0].replace(' ','')
-            # data_set_group_0_2.append(questionContainer)
-            # print(questionContainer)
-            #create data object
-            questionObj = QuestionObject()
+        # if(intervalIndex == 0):
+        possibleAnswerIndex = 0
+        questionContainer = val.splitlines()
+        questionContainer = list(filter(None, questionContainer))
+        questionNumber = questionContainer[0].replace(' ','')
+        #create data object
+        questionObj = QuestionObject()
 
-            questionObj.setQuestionNumber(questionNumber)
-            questionObj.setProblem(questionContainer[1])
-            questionObj.setCorrectAnswer(questionContainer[(len(questionContainer)-1)])
-            questionObjectComposite.append(questionObj)
-            limitIndex = 0
-            for val in questionContainer:
-                if(limitIndex > 1):
-                    # while(isContinueCalculating):
-                    print(val)
-                        # print(val.find("Correct"))
-                    if(val.find("Correct") == 0):
-                        isContinueCalculating = False
-                        break
-                    questionObj.parseAnswer(val)
-                limitIndex += 1
-            # print(questionObj.getAnswerListComposite())
+        # print(questionContainer)
+
+        questionObj.setQuestionNumber(questionNumber)
+        questionObj.setProblem(questionContainer[1])
+        questionPieceIndex = 0
+
+        # Parse correct answer
+        for questionPiece in questionContainer:
+            if (questionPiece.find("Correct") == 0):
+                questionObj.setCorrectAnswer(questionPiece)
+            questionPieceIndex += 1
+
+        questionObjectComposite.append(questionObj)
+
+        # Parse answer list
+        for val in questionContainer:
+            if(possibleAnswerIndex > 1):
+                # print(val)
+                if(val.find("Correct") == 0):
+                    isContinueCalculating = False
+                    break
+                questionObj.parseAnswer(val)
+            possibleAnswerIndex += 1
+
+        intervalIndex += 1
 
     return questionObjectComposite
 
@@ -106,14 +120,9 @@ def createDisplayList(questionList):
 
 
 class QuestionObject:
-    __instance = None
-
-    def __new__(self):
-        if self.__instance == None:
-            self.__instance = object.__new__(self)
-            self.answerListComposite = []
-        return self.__instance
-
+    def __init__(self):
+        self.correctAnswer = 'Error: Check \'Correct\' answer format'
+        self.answerListComposite = []
     def setQuestionNumber(self, questionNumber):
         self.questionNumber = questionNumber
     def getQuestionNumber(self):
