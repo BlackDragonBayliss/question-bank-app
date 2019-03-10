@@ -11,17 +11,6 @@ def main():
     displayList = createDisplayList(questionList)
     print(displayList)
 
-
-    # master = Tk()
-    # Label(master, text='First Name').grid(row=0)
-    # Label(master, text='Last Name').grid(row=1)
-    # e1 = Entry(master)
-    # e2 = Entry(master)
-    # e1.grid(row=0, column=1)
-    # e2.grid(row=1, column=1)
-    # mainloop()
-
-
 def parseIntoQuestionObjectsList():
     pass
 def instantiateQuestion():
@@ -98,7 +87,5 @@ class QuestionObject:
         self.answerListComposite.append(answerList)
     def getAnswerListComposite(self):
         return self.answerListComposite
-    def print(self):
-        print("hey hey")
 
 if __name__ == "__main__": main()
