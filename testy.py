@@ -218,6 +218,7 @@ def sel():
    print("You selected the option " + str(selectedAnswer.get()))
 
 root = Tk()
+root.geometry('1400x800')
 selectedAnswer = StringVar()
 selectedAnswer.set(cb_strings[0])
 
@@ -236,10 +237,12 @@ for val in cb_strings:
         # if text of answer == selectedAnswer
 # correctAnswer = cb_strings[]
 
+
 def confirmAnswer():
-    # if()
-    print("answer selected: "+ selectedAnswer.get())
-    print("correct answer: "+ correctAnswer)
+    if(correctAnswer == selectedAnswer.get()):
+        print("Correct! selected: "+ selectedAnswer.get())
+    else:
+        print("Answer: " +selectedAnswer.get() +" was incorrect, correct answer is: "+ correctAnswer)
 
 
 
