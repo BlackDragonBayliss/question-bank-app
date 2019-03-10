@@ -232,10 +232,6 @@ for val in cb_strings:
     if (val.find("Correct") == 0):
         correctAnswer = val
         break
-# How to get a handle on correct answer
-    # Instantiate answer
-        # if text of answer == selectedAnswer
-# correctAnswer = cb_strings[]
 
 
 def confirmAnswer():
@@ -251,21 +247,3 @@ confirmAnswerButton.place(x=70, y=150)
 
 
 root.mainloop()
-
-
-
-
-
-
-
-
-
-
-# from tkinter import *
-# master = Tk()
-# var1 = IntVar()
-# Checkbutton(master, text='male', variable=var1).grid(row=0, sticky=W)
-# var2 = IntVar()
-# Checkbutton(master, text='female', variable=var2).grid(row=1, sticky=W)
-#
-# mainloop()
