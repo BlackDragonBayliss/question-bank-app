@@ -1,52 +1,151 @@
 from tkinter import *
 
 def main():
-    f = open("demofile.txt", "r")
-    stringText = f.read()
-
-    questionObjectComposite = processParseQuestionBank(stringText)
-
-    # print(questionObjectComposite[0].getCorrectAnswer())
-
-
-
-    # for questionObj in questionObjectComposite:
-    #     print(questionObj.getCorrectAnswer())
-        # possibleAnswerList = questionObjectComposite[0].getAnswerListComposite()
-        # correctAnswer = questionObjectComposite[0].getCorrectAnswer()
-
-    # questionObjectComposite =
-
-    possibleAnswerList = questionObjectComposite[0].getAnswerListComposite()
-    correctAnswer = questionObjectComposite[0].getCorrectAnswer()
-
-    # print(correctAnswer)
-
-    initialQuestionObject = questionObjectComposite[0]
-
-    # Radio button. create radiobutton by list entries
-    # cb_strings = ['item 1', 'item 2', 'item 3', 'Correct']
-    cb_strings = initialQuestionObject.getAnswerListComposite()
+    # f = open("demofile.txt", "r")
+    # stringText = f.read()
+    #
+    # questionObjectComposite = processParseQuestionBank(stringText)
+    #
+    # possibleAnswerList = questionObjectComposite[0].getAnswerListComposite()
+    # correctAnswer = questionObjectComposite[0].getCorrectAnswer()
+    correctAnswerList = ["A","B","C"]
+    # initialQuestionObject = questionObjectComposite[0]
+    #
+    # # Radio button. create radiobutton by list entries
+    # # cb_strings = ['item 1', 'item 2', 'item 3', 'Correct']
+    # cb_strings = initialQuestionObject.getAnswerListComposite()
 
     root = Tk()
     root.geometry('1400x800')
-    selectedAnswer = StringVar()
-    selectedAnswer.set(cb_strings[0])
-    def sel():
-        print("You selected the option " + str(selectedAnswer.get()))
 
-    questionLabel = Label(text=initialQuestionObject.getProblem()).pack(anchor=W)
-    for item in cb_strings:
-        textAssociation = item[0]+" "+item[1]
-        print(textAssociation)
-        radiobutton = Radiobutton(root, text=textAssociation, variable=selectedAnswer, value=textAssociation, command=sel)
-        radiobutton.pack(anchor=W)
+    questionlist = ["A", "B", "C"]
+    selectedAnswerList = []
+    textAnswerList = []
+    def ShowChoice():
+        for selectedAnswer in selectedAnswerList:
+            print(selectedAnswer.get())
+
+    for counter, choiceText in enumerate(questionlist, 1):
+        Label(root, text=choiceText).grid(row=counter, column=0)
+        var = IntVar()
+        for i in range(1, 2):
+            textAnswerList.append([counter,choiceText])
+            print("I value created: "+str(i))
+            button = Radiobutton(root, variable=var, value=i, command=ShowChoice)
+            button.grid(row=counter, column=i)
+            selectedAnswerList.append(var)
+
+
+    # selectedAnswer = StringVar()
+    # selectedAnswer.set(cb_strings[0])
+    # def sel():
+    #     print("You selected the option " + str(selectedAnswer.get()))
+    #
+    # questionLabel = Label(text=initialQuestionObject.getProblem()).pack(anchor=W)
+
+
+
+
+
+    # for item in cb_strings:
+    #     textAssociation = item[0]+" "+item[1]
+    #     print(textAssociation)
+    #     radiobutton = Radiobutton(root, text=textAssociation, variable=selectedAnswer, value=textAssociation, command=sel)
+    #     radiobutton.pack(anchor=W)
+
+    #transform selectedAnswerList
+    tempSelectedAnswerList = []
+    # for selectedAnswer in selectedAnswerList:
+    #     tempSelectedAnswerList.append(selectedAnswer.get())
+    #
+    # selectedAnswerList = tempSelectedAnswerList
+    # print(selectedAnswerList)
+
 
     def confirmAnswer():
-        if (correctAnswer == selectedAnswer.get()):
-            print("Correct! selected: " + selectedAnswer.get())
-        else:
-            print("Answer: " + selectedAnswer.get() + " was incorrect, correct answer is: " + correctAnswer)
+        answerMatchingComposite = []
+
+        # for selectedAnswer in selectedAnswerList:
+        #     print(selectedAnswer.get())
+
+
+
+        # print(textAnswerList)
+        # print(correctAnswerList)
+
+        # create answerBooleanList
+        answerBooleanList = []
+        selectedAnswerIndex = 0
+        for selectedAnswer in selectedAnswerList:
+            # print("hit "+str(selectedAnswer))
+            # for each selected answer, if case met return true, continue
+            # else return false
+            if(selectedAnswer.get() == 1):
+                # print("true at index: "+str(selectedAnswerIndex))
+                answerBooleanList.append(True)
+            else:
+                answerBooleanList.append(False)
+            selectedAnswerIndex += 1
+
+        # print(answerBooleanList)
+
+
+
+        appendTrueSelectedValueCount = 0
+        for selectedAnswer in textAnswerList:
+
+            if (len(selectedAnswer) == 2):
+                print("I'm at index 2")
+            if (len(selectedAnswer) == 3):
+                print("I'm at index 3")
+                del selectedAnswer[2,3]
+            if (len(selectedAnswer) == 4):
+                print("I'm at index 4")
+            #     selectedAnswer = selectedAnswer[:-1]
+            selectedAnswer.append(answerBooleanList[appendTrueSelectedValueCount])
+            # print("selectedAnswer length: " + str(len(selectedAnswer)))
+            # if (len(selectedAnswer) > 2):
+            #     selectedAnswer = selectedAnswer[:-1]
+            #     print("selectedAnswer length now: " + str(len(selectedAnswer)))
+            appendTrueSelectedValueCount += 1
+
+        print(textAnswerList)
+        print(str(len(textAnswerList)))
+
+
+
+
+
+        #
+        for selectedAnswer in textAnswerList:
+            correctAnswerIndex = 0
+            answerMatchingList = [selectedAnswer]
+            selectedAnswerText = selectedAnswer[1]
+
+            answerMatchingComposite.append(answerMatchingList)
+            for correctAnswer in correctAnswerList:
+                if(selectedAnswerText == correctAnswer):
+                    isAnswerMatching = True
+                else:
+                    isAnswerMatching = False
+                answerMatchingList.append(isAnswerMatching)
+
+        # print(textAnswerList)
+        # print(answerMatchingComposite)
+
+            #iterate through corr
+
+                # print(correctAnswer)
+
+        # for selectedAnswer in selectedAnswerList:
+        #     if(selectedAnswer.find(correctAnswer[]) == 0):
+        #         questionObj.setCorrectAnswer(questionPiece)
+        #     if()
+        #     questionPieceIndex += 1
+        # if (correctAnswer == selectedAnswer.get()):
+        #     print("Correct! selected: " + selectedAnswer.get())
+        # else:
+        #     print("Answer: " + selectedAnswer.get() + " was incorrect, correct answer is: " + correctAnswer)
 
     confirmAnswerButton = Button(text="Confirm Answer", command=confirmAnswer)
     confirmAnswerButton.place(x=70, y=150)
