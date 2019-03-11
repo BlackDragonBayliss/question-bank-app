@@ -14,8 +14,8 @@
       <file leaf-file-name="baysim.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/../question-bank-app/baysim.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="493">
-              <caret line="114" column="0" lean-forward="true" selection-start-line="114" selection-start-column="0" selection-end-line="114" selection-end-column="0" />
+            <state relative-caret-position="331">
+              <caret line="119" column="38" lean-forward="true" selection-start-line="119" selection-start-column="38" selection-end-line="119" selection-end-column="38" />
               <folding />
             </state>
           </provider>
@@ -34,8 +34,8 @@
       <file leaf-file-name="testy.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../question-bank-app/testy.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="256">
-              <caret line="226" column="33" lean-forward="false" selection-start-line="226" selection-start-column="25" selection-end-line="226" selection-end-column="33" />
+            <state relative-caret-position="273">
+              <caret line="161" column="8" lean-forward="false" selection-start-line="161" selection-start-column="8" selection-end-line="161" selection-end-column="29" />
               <folding />
             </state>
           </provider>
@@ -44,7 +44,7 @@
       <file leaf-file-name="demofile.txt" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../question-bank-app/demofile.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="83">
+            <state relative-caret-position="315">
               <caret line="21" column="39" lean-forward="true" selection-start-line="21" selection-start-column="39" selection-end-line="21" selection-end-column="39" />
               <folding />
             </state>
@@ -69,11 +69,13 @@
       <find>setCorrectAnswer</find>
       <find>print</find>
       <find>questionContainer</find>
-      <find>QUESTION</find>
       <find>for</find>
       <find>questionlist</find>
-      <find>question</find>
       <find>selectedAnswerIndex</find>
+      <find>selectedAnswerList</find>
+      <find>QUESTION</find>
+      <find>question</find>
+      <find>answerBooleanList</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -218,14 +220,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../question-bank-app/demofile.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="83">
-          <caret line="21" column="39" lean-forward="true" selection-start-line="21" selection-start-column="39" selection-end-line="21" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../question-bank-app/test.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -234,18 +228,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/../question-bank-app/demofile.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="21" column="39" lean-forward="true" selection-start-line="21" selection-start-column="39" selection-end-line="21" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/../question-bank-app/testy.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="256">
-          <caret line="226" column="33" lean-forward="false" selection-start-line="226" selection-start-column="25" selection-end-line="226" selection-end-column="33" />
+        <state relative-caret-position="273">
+          <caret line="161" column="8" lean-forward="false" selection-start-line="161" selection-start-column="8" selection-end-line="161" selection-end-column="29" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../question-bank-app/baysim.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="114" column="0" lean-forward="true" selection-start-line="114" selection-start-column="0" selection-end-line="114" selection-end-column="0" />
+        <state relative-caret-position="331">
+          <caret line="119" column="38" lean-forward="true" selection-start-line="119" selection-start-column="38" selection-end-line="119" selection-end-column="38" />
           <folding />
         </state>
       </provider>

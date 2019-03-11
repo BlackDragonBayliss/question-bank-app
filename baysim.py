@@ -21,7 +21,9 @@ def main():
     questionlist = ["A", "B", "C"]
     selectedAnswerList = []
     textAnswerList = []
+    buttonList = []
     def ShowChoice():
+        # pass
         for selectedAnswer in selectedAnswerList:
             print(selectedAnswer.get())
 
@@ -29,10 +31,11 @@ def main():
         Label(root, text=choiceText).grid(row=counter, column=0)
         var = IntVar()
         for i in range(1, 2):
-            textAnswerList.append([counter,choiceText])
+            textAnswerList.append([str(counter),choiceText])
             print("I value created: "+str(i))
             button = Radiobutton(root, variable=var, value=i, command=ShowChoice)
             button.grid(row=counter, column=i)
+            buttonList.append(button)
             selectedAnswerList.append(var)
 
 
@@ -62,18 +65,12 @@ def main():
     # print(selectedAnswerList)
 
 
+
+
     def confirmAnswer():
         answerMatchingComposite = []
 
-        # for selectedAnswer in selectedAnswerList:
-        #     print(selectedAnswer.get())
-
-
-
-        # print(textAnswerList)
-        # print(correctAnswerList)
-
-        # create answerBooleanList
+        # create answerBooleanList to be appended later to textAnswerList
         answerBooleanList = []
         selectedAnswerIndex = 0
         for selectedAnswer in selectedAnswerList:
@@ -82,33 +79,22 @@ def main():
             # else return false
             if(selectedAnswer.get() == 1):
                 # print("true at index: "+str(selectedAnswerIndex))
-                answerBooleanList.append(True)
+                answerBooleanList.append("1")
             else:
-                answerBooleanList.append(False)
+                answerBooleanList.append("0")
             selectedAnswerIndex += 1
 
-        # print(answerBooleanList)
 
 
-
+        #append is selected
         appendTrueSelectedValueCount = 0
-        for selectedAnswer in textAnswerList:
-
-            if (len(selectedAnswer) == 2):
-                print("I'm at index 2")
-            if (len(selectedAnswer) == 3):
+        for textAnswer in textAnswerList:
+            if (len(textAnswer) == 3):
                 print("I'm at index 3")
-                del selectedAnswer[2,3]
-            if (len(selectedAnswer) == 4):
-                print("I'm at index 4")
-            #     selectedAnswer = selectedAnswer[:-1]
-            selectedAnswer.append(answerBooleanList[appendTrueSelectedValueCount])
-            # print("selectedAnswer length: " + str(len(selectedAnswer)))
-            # if (len(selectedAnswer) > 2):
-            #     selectedAnswer = selectedAnswer[:-1]
-            #     print("selectedAnswer length now: " + str(len(selectedAnswer)))
+                del textAnswer[2:3]
+            textAnswer.append(answerBooleanList[appendTrueSelectedValueCount])
             appendTrueSelectedValueCount += 1
-
+        # print(selectedAnswerList)
         print(textAnswerList)
         print(str(len(textAnswerList)))
 
@@ -116,36 +102,46 @@ def main():
 
 
 
-        #
-        for selectedAnswer in textAnswerList:
+        # instantiate is matching list
+        for textAnswer in textAnswerList:
             correctAnswerIndex = 0
-            answerMatchingList = [selectedAnswer]
-            selectedAnswerText = selectedAnswer[1]
-
+            answerMatchingList = [textAnswer]
             answerMatchingComposite.append(answerMatchingList)
+            selectedAnswerText = textAnswer[1]
+
             for correctAnswer in correctAnswerList:
                 if(selectedAnswerText == correctAnswer):
                     isAnswerMatching = True
                 else:
                     isAnswerMatching = False
                 answerMatchingList.append(isAnswerMatching)
+        # print(correctAnswerList)
+        print(textAnswerList)
+        print(answerMatchingComposite)
 
-        # print(textAnswerList)
-        # print(answerMatchingComposite)
+
+
+        # filter isAnswerMatchingList, if isNotTrue found then tag answer as incorrect.
+        # Case in which success? Case in which fail?
+        # Given that all answers in correct answer list criteria need to be met, or wrong.
+            # Also not too many answers given, or wrong answers selected.
+            # Perhaps finding where criteria is not met, and if found then wrong.
 
             #iterate through corr
 
                 # print(correctAnswer)
 
-        # for selectedAnswer in selectedAnswerList:
-        #     if(selectedAnswer.find(correctAnswer[]) == 0):
-        #         questionObj.setCorrectAnswer(questionPiece)
-        #     if()
-        #     questionPieceIndex += 1
-        # if (correctAnswer == selectedAnswer.get()):
-        #     print("Correct! selected: " + selectedAnswer.get())
-        # else:
-        #     print("Answer: " + selectedAnswer.get() + " was incorrect, correct answer is: " + correctAnswer)
+
+
+    def deselectAnswers():
+        for selectedAnswer in selectedAnswerList:
+            selectedAnswer.set(0)
+
+        print(textAnswerList)
+        print(str(len(textAnswerList)))
+
+    deselectOptionsButton = Button(text="Deselect Answers", command=deselectAnswers)
+    deselectOptionsButton.place(x=70, y=200)
 
     confirmAnswerButton = Button(text="Confirm Answer", command=confirmAnswer)
     confirmAnswerButton.place(x=70, y=150)
