@@ -1,14 +1,14 @@
 from tkinter import *
 
 def main():
-    # f = open("demofile.txt", "r")
-    # stringText = f.read()
-    #
-    # questionObjectComposite = processParseQuestionBank(stringText)
+    f = open("demofile.txt", "r")
+    stringText = f.read()
+
+    questionObjectComposite = processParseQuestionBank(stringText)
     #
     # possibleAnswerList = questionObjectComposite[0].getAnswerListComposite()
-    # correctAnswer = questionObjectComposite[0].getCorrectAnswer()
-    correctAnswerList = ["A","B","C"]
+    correctAnswersList = questionObjectComposite[0].getCorrectAnswer()
+    # correctAnswerList = ["A","B","C"]
     # initialQuestionObject = questionObjectComposite[0]
     #
     # # Radio button. create radiobutton by list entries
@@ -65,11 +65,11 @@ def main():
     # print(selectedAnswerList)
 
 
+    correctAnswersList =  []# correctAnswersList
 
 
+    answerMatchingComposite = []
     def confirmAnswer():
-        answerMatchingComposite = []
-
         # create answerBooleanList to be appended later to textAnswerList
         answerBooleanList = []
         selectedAnswerIndex = 0
@@ -115,10 +115,10 @@ def main():
                 else:
                     isAnswerMatching = False
                 answerMatchingList.append(isAnswerMatching)
-        # print(correctAnswerList)
         print(textAnswerList)
         print(answerMatchingComposite)
 
+        # calculate are answers correct
 
 
         # filter isAnswerMatchingList, if isNotTrue found then tag answer as incorrect.
@@ -127,9 +127,26 @@ def main():
             # Also not too many answers given, or wrong answers selected.
             # Perhaps finding where criteria is not met, and if found then wrong.
 
-            #iterate through corr
-
+            # iterate through corr
                 # print(correctAnswer)
+
+        selectedChoices = []
+        for selectedAnswer in selectedAnswerList:
+            # print(selectedAnswer.get())
+            selectedChoices.append(selectedAnswer.get())
+        print(selectedChoices)
+
+
+        # selectedChoices = [0,0,0,0,1,1,0,0]
+        answersList = [1,1,1,0,0,0,0,0]
+
+        # index = 0
+        # while(index < len(selectedChoices)):
+        #     if(selectedChoices[index] == answersList[index]):
+        #         print("true")
+        #     else:
+        #         print("false")
+        #     index += 1
 
 
 
