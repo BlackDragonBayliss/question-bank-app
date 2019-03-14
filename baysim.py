@@ -1,13 +1,29 @@
 from tkinter import *
+from random import shuffle
 
 def main():
     f = open("demofile.txt", "r")
     stringText = f.read()
 
-    questionObjectComposite = processParseQuestionBank(stringText)
-    #
+    questionObjectManager = QuestionObjectManager()
+    questionComposite = processParseQuestionBank(stringText)
+
+    print("question Composite: "+str(questionComposite))
+    questionObjectManager.setQuestionList(questionComposite)
+
     # possibleAnswerList = questionObjectComposite[0].getAnswerListComposite()
-    correctAnswersList = questionObjectComposite[0].getCorrectAnswer()
+    # firstQuestion = questionObjectComposite[0]
+    # correctAnswersList = firstQuestion.getCorrectAnswer()
+    # questionList = firstQuestion.getAnswerListComposite()
+    # print(correctAnswersList)
+    # print(questionList)
+
+    #construct question, randomizing answers
+    questionObjectManager.createTest(False)
+
+    #get randomized question list
+
+
     # correctAnswerList = ["A","B","C"]
     # initialQuestionObject = questionObjectComposite[0]
     #
@@ -22,6 +38,8 @@ def main():
     selectedAnswerList = []
     textAnswerList = []
     buttonList = []
+
+
     def ShowChoice():
         # pass
         for selectedAnswer in selectedAnswerList:
@@ -32,7 +50,7 @@ def main():
         var = IntVar()
         for i in range(1, 2):
             textAnswerList.append([str(counter),choiceText])
-            print("I value created: "+str(i))
+            # print("I value created: "+str(i))
             button = Radiobutton(root, variable=var, value=i, command=ShowChoice)
             button.grid(row=counter, column=i)
             buttonList.append(button)
@@ -212,6 +230,12 @@ class QuestionObject:
     def __init__(self):
         self.correctAnswer = 'Error: Check \'Correct\' answer format'
         self.answerListComposite = []
+        self.randomizedList = []
+
+    def setRandomizedList(self, randomizedList):
+        self.randomizedList = randomizedList
+    def getRandomizedList(self):
+        return self.randomizedList
     def setQuestionNumber(self, questionNumber):
         self.questionNumber = questionNumber
     def getQuestionNumber(self):
@@ -224,24 +248,55 @@ class QuestionObject:
         self.correctAnswer = correctAnswer
     def getCorrectAnswer(self):
         return self.correctAnswer
-
     def parseAnswer(self, answerString):
-        # answerArray = []
         answerList = answerString.split(". ")
-        self.appendAnswerList(answerList)
-        # print(answerArray)
-    def appendAnswerList(self, answerList):
         self.answerListComposite.append(answerList)
     def getAnswerListComposite(self):
         return self.answerListComposite
 
-class QuestionObjectComposite:
+
+    # def isCorrectAnswerListSubmited(self, questionList, answerList):
+
+
+class QuestionObjectManager:
     def __init__(self):
         ranomizedQuestionsList = []
+        questionList = []
 
+    #start on first question or randomize questions.
+    #saving state of test completed
+    #sampling or entirety
+    #I want a 50 queston sample
+
+    #I want to iterate through entire list,
+    def createTest(self, isSample):
+        if(isSample):
+            pass
+        else:
+            print("questionList: "+str(self.getQuestionList()))
+            for question in self.getQuestionList():
+                print(question.getAnswerListComposite())
+
+                question.setRandomizedList(self.randomizeQuestionAnswers(question.getAnswerListComposite()))
+                # print(question.getRandomizedList())
+                # print(question.getQuestionNumber())
+
+    def createQuestion(self):
+        pass
+
+    def setQuestionList(self, questionList):
+        self.questionList = questionList
+    def getQuestionList(self):
+        return self.questionList
+    def setCurrentQuestion(self, questionObject):
+        pass
     def randomizeQuestions(self):
         # getOriginalAnswerFormation()
         pass
+    def randomizeQuestionAnswers(self, answerList):
+        shuffledList = shuffle(answerList)
+        print("shuffle: "+ str(shuffledList))
+        return shuffledList
     def getOriginalAnswerFormation(self):
         pass
 
