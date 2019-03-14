@@ -213,24 +213,62 @@
 
 
 
-from tkinter import *
-def main():
-    root = Tk()
-    questionlist = ["room quality", "food quality", "value for money", "value for money"]
-    answers = []
+# from tkinter import *
+# def main():
+#     root = Tk()
+#     questionlist = ["room quality", "food quality", "value for money", "value for money"]
+#     answers = []
+#
+#     def ShowChoice():
+#         for v in answers:
+#             print(v.get())
+#
+#     for counter, question in enumerate(questionlist, 1):
+#         Label(root, text=question).grid(row=counter, column = 0)
+#         var = IntVar()
+#         for i in range(1,2):
+#             button = Radiobutton(root, variable = var, value = i, command = ShowChoice)
+#             button.grid(row = counter, column = i)
+#         answers.append(var)
+#
+#     root.mainloop()
+#
+# if __name__ == "__main__": main()
 
-    def ShowChoice():
-        for v in answers:
-            print(v.get())
 
-    for counter, question in enumerate(questionlist, 1):
-        Label(root, text=question).grid(row=counter, column = 0)
-        var = IntVar()
-        for i in range(1,2):
-            button = Radiobutton(root, variable = var, value = i, command = ShowChoice)
-            button.grid(row = counter, column = i)
-        answers.append(var)
+questionObjectComposite
+randomizeQuestions
+getOriginalAnswerFormation()
+self.ranomizedAnswersList = mixed answers
+getRanomizedQuestionsList():
+return self.ranomizedQuestionsList
+setOriginalQuestionList()
+getOriginalQuestionList()
 
-    root.mainloop()
 
-if __name__ == "__main__": main()
+questionObject
+
+setOriginalAnswerFormation()
+# Intake [0,0,0]
+getOriginalAnswerFormation()
+# Intake [0,0,0]
+setCurrentAnswerFormation()
+# Intake [0,0,0]
+getCurrentAnswerFormation()
+# Intake [0,0,0]
+
+setCorrectAnswersFormation()
+# Intake [0,1,0]
+randomizeAnswers():
+getOriginalAnswerFormation()
+self.ranomizedAnswersList = mixed answers
+getRanomizedAnswersList():
+return self.ranomizedAnswersList
+
+calculateCorrectAnswersFormation()
+# Intake [correctAnswerText]
+# Return [[correctAnswers]]
+# Further parse correct answers.
+# Find if correctAnswer equates to currentAnswerFormation.index
+# if true, place "1", else 0
+setCorrectAnswersFormation(returnedValue)
