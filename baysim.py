@@ -19,17 +19,7 @@ def main():
     # print(questionList)
 
     #construct question, randomizing answers
-    questionObjectManager.createTest(False)
-
-    #get randomized question list
-
-
-    # correctAnswerList = ["A","B","C"]
-    # initialQuestionObject = questionObjectComposite[0]
-    #
-    # # Radio button. create radiobutton by list entries
-    # # cb_strings = ['item 1', 'item 2', 'item 3', 'Correct']
-    # cb_strings = initialQuestionObject.getAnswerListComposite()
+    questionObjectManager.createTest(False)"
 
     root = Tk()
     root.geometry('1400x800')
@@ -299,9 +289,6 @@ class QuestionObjectManager:
         return shuffledList
     def getOriginalAnswerFormation(self):
         pass
-
-    # self.ranomizedAnswersList = mixed
-    # answers
 
     def getRanomizedQuestionsList(self):
         return self.ranomizedQuestionsList
