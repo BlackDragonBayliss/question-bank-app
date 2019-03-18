@@ -19,7 +19,22 @@ def main():
     # print(questionList)
 
     #construct question, randomizing answers
-    questionObjectManager.createTest(False)"
+    questionObjectManager.createTest(False)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     root = Tk()
     root.geometry('1400x800')
@@ -31,7 +46,6 @@ def main():
 
 
     def ShowChoice():
-        # pass
         for selectedAnswer in selectedAnswerList:
             print(selectedAnswer.get())
 
@@ -47,13 +61,10 @@ def main():
             selectedAnswerList.append(var)
 
 
-
-
-
     correctAnswersList =  []# correctAnswersList
 
-
     answerMatchingComposite = []
+
     def confirmAnswer():
         # create answerBooleanList to be appended later to textAnswerList
         answerBooleanList = []
@@ -121,7 +132,6 @@ def main():
             selectedChoices.append(selectedAnswer.get())
         print(selectedChoices)
 
-
         # selectedChoices = [0,0,0,0,1,1,0,0]
         answersList = [1,1,1,0,0,0,0,0]
 
@@ -132,7 +142,6 @@ def main():
         #     else:
         #         print("false")
         #     index += 1
-
 
 
     def deselectAnswers():
@@ -244,7 +253,10 @@ class QuestionObject:
     def getAnswerListComposite(self):
         return self.answerListComposite
 
-
+    def getIsAnswered(self):
+        return self.isAnswered
+    def setIsAnswered(self, isAnswered):
+        self.isAnswered = isAnswered
     # def isCorrectAnswerListSubmited(self, questionList, answerList):
 
 
@@ -257,19 +269,79 @@ class QuestionObjectManager:
     #saving state of test completed
     #sampling or entirety
     #I want a 50 queston sample
+    #I want to iterate through entire list
 
-    #I want to iterate through entire list,
-    def createTest(self, isSample):
-        if(isSample):
+    def createTest(self, caseType):
+        if(0):
+            # Support for sample sized test
             pass
-        else:
-            print("questionList: "+str(self.getQuestionList()))
-            for question in self.getQuestionList():
-                print(question.getAnswerListComposite())
+        if (1):
+            # print("questionList: "+str(self.getQuestionList()))
+            # This is wrong it needs to be one individual question per.... Ah needs to randomize questions first.
+            # Set randomized list at another time.
+            self.shuffleQuestionList()
 
-                question.setRandomizedList(self.randomizeQuestionAnswers(question.getAnswerListComposite()))
+            testInstance = Test()
+
+
+            testInstance.setQuestionBank(QuestionObjectManager.getQuestionList())
+
+            testInstance.randomizeQuestionList()
+            testInstance.setCurrentQuestion()
+
+
+
+
+
+        if (2):
+            # Support for loading test states from previous exams
+            pass
+
+
+
+
+
+
+            # print("shuffle: " + str(shuffledList))
+                # print(question.getAnswerListComposite())
+                # question.setRandomizedList(self.randomizeQuestionAnswers(question.getAnswerListComposite()))
+
+
+
+
+
+            # self.setCurrentQuestion()
+
                 # print(question.getRandomizedList())
                 # print(question.getQuestionNumber())
+
+    def shuffleQuestionList(self):
+        self.setQuestionList(shuffle(self.getQuestionList()))
+
+    def calculateQuestionSuccess(self):
+        self.associateQuestionAnswersWithRandomizedResults()
+
+
+
+
+    def associateQuestionAnswersWithRandomizedResults(self):
+        # It knows the current question, randomized question list, answer list,
+        # Need selected answer positioning.
+
+        self.getRanomizedQuestionsList()
+
+        #associate placement?
+        #Or... check if match, check if match
+            # position selected equates to answer list,
+               # check if answerList selected matches currently selected.
+                # currently selected returned as a list.
+
+
+        #
+
+
+
+
 
     def createQuestion(self):
         pass
@@ -281,8 +353,15 @@ class QuestionObjectManager:
     def setCurrentQuestion(self, questionObject):
         pass
     def randomizeQuestions(self):
-        # getOriginalAnswerFormation()
-        pass
+        shuffledList = shuffle(self.getRanomizedQuestionList())
+        print("shuffle: " + str(shuffledList))
+        return shuffledList
+
+    def getRanomizedQuestionList(self):
+        return self.ranomizedQuestionsList
+    def setRanomizedQuestionList(self, randomizedQuestionList):
+        self.randomizedQuestionList = randomizedQuestionList
+
     def randomizeQuestionAnswers(self, answerList):
         shuffledList = shuffle(answerList)
         print("shuffle: "+ str(shuffledList))
@@ -290,11 +369,42 @@ class QuestionObjectManager:
     def getOriginalAnswerFormation(self):
         pass
 
-    def getRanomizedQuestionsList(self):
-        return self.ranomizedQuestionsList
-    def setOriginalQuestionList(self, question):
 
+    def setOriginalQuestionList(self, question):
         pass
     def getOriginalQuestionList():
         pass
+
+
+class Test:
+    def __init__(self):
+        self.randomizedQuestionList = []
+        self.questionList = []
+        self.completedQuestions = []
+        self.currentQuestionIndex = 0
+
+    def randomizeQuestionList(self):
+        self.randomizedQuestionList = shuffle(self.getQuestionList())
+
+    def setQuestionList(self, questionList):
+         self.questionList = questionList
+    def getQuestionList(self):
+        return self.questionList
+
+    def changeToNextQuestion(self):
+        # Handled elsewhere to give functionality to go back to previous questions without adding to completed list issues.
+        self.handleCompletedQuestionChange()
+        self.setCurrentQuestion()
+    def handleCompletedQuestionChange(self):
+        # If currentQuestion has already been added,
+
+        pass
+        # for questionObject
+        # currentQuestionIndex
+
+    def setCurrentQuestion(self, currentQuestion):
+        self.currentQuestion = currentQuestion
+    def getCurrentQuestion(self):
+        return self.currentQuestion
+
 if __name__ == "__main__": main()
