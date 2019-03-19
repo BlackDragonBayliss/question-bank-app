@@ -290,22 +290,7 @@ class Test:
     def getCurrentQuestion(self):
         return self.currentQuestion
 
-
-
-    def startTest(self):
-
-        root = Tk()
-        root.geometry('1400x800')
-
-        questionlist = self.getQuestionList()#["A", "B", "C"]
-        selectedAnswerList = []
-        textAnswerList = []
-        buttonList = []
-
-        def ShowChoice():
-            for selectedAnswer in selectedAnswerList:
-                print(selectedAnswer.get())
-
+    def displayGUIRadioButtons(self):
         for counter, choiceText in enumerate(questionlist, 1):
             Label(root, text=choiceText).grid(row=counter, column=0)
             var = IntVar()
@@ -317,88 +302,103 @@ class Test:
                 buttonList.append(button)
                 selectedAnswerList.append(var)
 
-        correctAnswersList = []  # correctAnswersList
+    def ShowChoice():
+        for selectedAnswer in selectedAnswerList:
+            print(selectedAnswer.get())
 
-        answerMatchingComposite = []
+    correctAnswersList = []  # correctAnswersList
+    answerMatchingComposite = []
 
-        def confirmAnswer():
-            # create answerBooleanList to be appended later to textAnswerList
-            answerBooleanList = []
-            selectedAnswerIndex = 0
-            for selectedAnswer in selectedAnswerList:
-                # print("hit "+str(selectedAnswer))
-                # for each selected answer, if case met return true, continue
-                # else return false
-                if (selectedAnswer.get() == 1):
-                    # print("true at index: "+str(selectedAnswerIndex))
-                    answerBooleanList.append("1")
+    def confirmAnswer():
+        # create answerBooleanList to be appended later to textAnswerList
+        answerBooleanList = []
+        selectedAnswerIndex = 0
+        for selectedAnswer in selectedAnswerList:
+            # print("hit "+str(selectedAnswer))
+            # for each selected answer, if case met return true, continue
+            # else return false
+            if (selectedAnswer.get() == 1):
+                # print("true at index: "+str(selectedAnswerIndex))
+                answerBooleanList.append("1")
+            else:
+                answerBooleanList.append("0")
+            selectedAnswerIndex += 1
+
+        # append is selected
+        appendTrueSelectedValueCount = 0
+        for textAnswer in textAnswerList:
+            if (len(textAnswer) == 3):
+                print("I'm at index 3")
+                del textAnswer[2:3]
+            textAnswer.append(answerBooleanList[appendTrueSelectedValueCount])
+            appendTrueSelectedValueCount += 1
+        # print(selectedAnswerList)
+        print(textAnswerList)
+        print(str(len(textAnswerList)))
+
+        # instantiate is matching list
+        for textAnswer in textAnswerList:
+            correctAnswerIndex = 0
+            answerMatchingList = [textAnswer]
+            answerMatchingComposite.append(answerMatchingList)
+            selectedAnswerText = textAnswer[1]
+
+            for correctAnswer in correctAnswerList:
+                if (selectedAnswerText == correctAnswer):
+                    isAnswerMatching = True
                 else:
-                    answerBooleanList.append("0")
-                selectedAnswerIndex += 1
+                    isAnswerMatching = False
+                answerMatchingList.append(isAnswerMatching)
+        print(textAnswerList)
+        print(answerMatchingComposite)
 
-            # append is selected
-            appendTrueSelectedValueCount = 0
-            for textAnswer in textAnswerList:
-                if (len(textAnswer) == 3):
-                    print("I'm at index 3")
-                    del textAnswer[2:3]
-                textAnswer.append(answerBooleanList[appendTrueSelectedValueCount])
-                appendTrueSelectedValueCount += 1
-            # print(selectedAnswerList)
-            print(textAnswerList)
-            print(str(len(textAnswerList)))
-
-            # instantiate is matching list
-            for textAnswer in textAnswerList:
-                correctAnswerIndex = 0
-                answerMatchingList = [textAnswer]
-                answerMatchingComposite.append(answerMatchingList)
-                selectedAnswerText = textAnswer[1]
-
-                for correctAnswer in correctAnswerList:
-                    if (selectedAnswerText == correctAnswer):
-                        isAnswerMatching = True
-                    else:
-                        isAnswerMatching = False
-                    answerMatchingList.append(isAnswerMatching)
-            print(textAnswerList)
-            print(answerMatchingComposite)
-
-            # calculate are answers correct
+        # calculate are answers correct
 
 
-            # filter isAnswerMatchingList, if isNotTrue found then tag answer as incorrect.
-            # Case in which success? Case in which fail?
-            # Given that all answers in correct answer list criteria need to be met, or wrong.
-            # Also not too many answers given, or wrong answers selected.
-            # Perhaps finding where criteria is not met, and if found then wrong.
+        # filter isAnswerMatchingList, if isNotTrue found then tag answer as incorrect.
+        # Case in which success? Case in which fail?
+        # Given that all answers in correct answer list criteria need to be met, or wrong.
+        # Also not too many answers given, or wrong answers selected.
+        # Perhaps finding where criteria is not met, and if found then wrong.
 
-            # iterate through corr
-            # print(correctAnswer)
+        # iterate through corr
+        # print(correctAnswer)
 
-            selectedChoices = []
-            for selectedAnswer in selectedAnswerList:
-                # print(selectedAnswer.get())
-                selectedChoices.append(selectedAnswer.get())
-            print(selectedChoices)
+        selectedChoices = []
+        for selectedAnswer in selectedAnswerList:
+            # print(selectedAnswer.get())
+            selectedChoices.append(selectedAnswer.get())
+        print(selectedChoices)
 
-            # selectedChoices = [0,0,0,0,1,1,0,0]
-            answersList = [1, 1, 1, 0, 0, 0, 0, 0]
+        # selectedChoices = [0,0,0,0,1,1,0,0]
+        answersList = [1, 1, 1, 0, 0, 0, 0, 0]
 
-            # index = 0
-            # while(index < len(selectedChoices)):
-            #     if(selectedChoices[index] == answersList[index]):
-            #         print("true")
-            #     else:
-            #         print("false")
-            #     index += 1
+        # index = 0
+        # while(index < len(selectedChoices)):
+        #     if(selectedChoices[index] == answersList[index]):
+        #         print("true")
+        #     else:
+        #         print("false")
+        #     index += 1
 
-        def deselectAnswers():
-            for selectedAnswer in selectedAnswerList:
-                selectedAnswer.set(0)
+    def deselectAnswers():
+        for selectedAnswer in selectedAnswerList:
+            selectedAnswer.set(0)
 
-            print(textAnswerList)
-            print(str(len(textAnswerList)))
+        print(textAnswerList)
+        print(str(len(textAnswerList)))
+
+    def startTest(self):
+
+        root = Tk()
+        root.geometry('1400x800')
+
+        questionlist = self.getQuestionList()#["A", "B", "C"]
+        selectedAnswerList = []
+        textAnswerList = []
+        buttonList = []
+
+
 
         deselectOptionsButton = Button(text="Deselect Answers", command=deselectAnswers)
         deselectOptionsButton.place(x=70, y=200)
