@@ -236,39 +236,39 @@
 # if __name__ == "__main__": main()
 
 
-questionObjectComposite
-randomizeQuestions
-getOriginalAnswerFormation()
-self.ranomizedAnswersList = mixed answers
-getRanomizedQuestionsList():
-return self.ranomizedQuestionsList
-setOriginalQuestionList()
-getOriginalQuestionList()
-
-
-questionObject
-
-setOriginalAnswerFormation()
-# Intake [0,0,0]
-getOriginalAnswerFormation()
-# Intake [0,0,0]
-setCurrentAnswerFormation()
-# Intake [0,0,0]
-getCurrentAnswerFormation()
-# Intake [0,0,0]
-
-setCorrectAnswersFormation()
-# Intake [0,1,0]
-randomizeAnswers():
-getOriginalAnswerFormation()
-self.ranomizedAnswersList = mixed answers
-getRanomizedAnswersList():
-return self.ranomizedAnswersList
-
-calculateCorrectAnswersFormation()
-# Intake [correctAnswerText]
-# Return [[correctAnswers]]
-# Further parse correct answers.
-# Find if correctAnswer equates to currentAnswerFormation.index
-# if true, place "1", else 0
-setCorrectAnswersFormation(returnedValue)
+# questionObjectComposite
+# randomizeQuestions
+# getOriginalAnswerFormation()
+# self.ranomizedAnswersList = mixed answers
+# getRanomizedQuestionsList():
+# return self.ranomizedQuestionsList
+# setOriginalQuestionList()
+# getOriginalQuestionList()
+#
+#
+# questionObject
+#
+# setOriginalAnswerFormation()
+# # Intake [0,0,0]
+# getOriginalAnswerFormation()
+# # Intake [0,0,0]
+# setCurrentAnswerFormation()
+# # Intake [0,0,0]
+# getCurrentAnswerFormation()
+# # Intake [0,0,0]
+#
+# setCorrectAnswersFormation()
+# # Intake [0,1,0]
+# randomizeAnswers():
+# getOriginalAnswerFormation()
+# self.ranomizedAnswersList = mixed answers
+# getRanomizedAnswersList():
+# return self.ranomizedAnswersList
+#
+# calculateCorrectAnswersFormation()
+# # Intake [correctAnswerText]
+# # Return [[correctAnswers]]
+# # Further parse correct answers.
+# # Find if correctAnswer equates to currentAnswerFormation.index
+# # if true, place "1", else 0
+# setCorrectAnswersFormation(returnedValue)
