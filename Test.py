@@ -1,10 +1,20 @@
 
+from random import shuffle
+from DisplayManager import DisplayManager
+from QuestionObjectManager import *
+from QuestionObject import QuestionObject
+
 class Test:
     def __init__(self):
         self.randomizedQuestionList = []
         self.questionList = []
         self.completedQuestions = []
         self.currentQuestionIndex = 0
+        self.instanceDisplayManager = DisplayManager()
+        self.instanceDisplayManager.setup(self)
+
+    # def operate(self):
+    #     pass
 
     def randomizeQuestionList(self):
         self.randomizedQuestionList = shuffle(self.getQuestionList())
@@ -32,26 +42,9 @@ class Test:
     def getCurrentQuestion(self):
         return self.currentQuestion
 
-    def displayGUIRadioButtons(self):
-        for counter, choiceText in enumerate(questionlist, 1):
-            Label(root, text=choiceText).grid(row=counter, column=0)
-            var = IntVar()
-            for i in range(1, 2):
-                textAnswerList.append([str(counter), choiceText])
-                # print("I value created: "+str(i))
-                button = Radiobutton(root, variable=var, value=i, command=ShowChoice)
-                button.grid(row=counter, column=i)
-                buttonList.append(button)
-                selectedAnswerList.append(var)
 
-    def ShowChoice():
-        for selectedAnswer in selectedAnswerList:
-            print(selectedAnswer.get())
 
-    correctAnswersList = []  # correctAnswersList
-    answerMatchingComposite = []
-
-    def confirmAnswer():
+    def confirmAnswer(self):
         # create answerBooleanList to be appended later to textAnswerList
         answerBooleanList = []
         selectedAnswerIndex = 0
@@ -123,29 +116,135 @@ class Test:
         #         print("false")
         #     index += 1
 
-    def deselectAnswers(self):
-        for selectedAnswer in selectedAnswerList:
-            selectedAnswer.set(0)
 
-        print(textAnswerList)
-        print(str(len(textAnswerList)))
-
-    def startTest(self):
-
-        root = Tk()
-        root.geometry('1400x800')
-
-        questionlist = self.getQuestionList()#["A", "B", "C"]
-        selectedAnswerList = []
-        textAnswerList = []
-        buttonList = []
+    def operate(self):
+        f = open("demofile.txt", "r")
+        stringText = f.read()
+        questionObjectManager = QuestionObjectManager()
 
 
+        #Intake feed, process into question bank
+        questionComposite = self.processParseQuestionBank(stringText)
+        # print("question Composite: "+str(questionComposite))
 
-        deselectOptionsButton = Button(text="Deselect Answers", command=deselectAnswers)
-        deselectOptionsButton.place(x=70, y=200)
 
-        confirmAnswerButton = Button(text="Confirm Answer", command=confirmAnswer)
-        confirmAnswerButton.place(x=70, y=150)
+        #Set question list
+        questionObjectManager.setQuestionList(questionComposite)
+        print("question Composite in QOM: " + str(questionObjectManager.getQuestionList()))
 
-        root.mainloop()
+        # possibleAnswerList = questionObjectComposite[0].getAnswerListComposite()
+        # firstQuestion = questionObjectComposite[0]
+        # correctAnswersList = firstQuestion.getCorrectAnswer()
+        # questionList = firstQuestion.getAnswerListComposite()
+        # print(correctAnswersList)
+        # print(questionList)
+
+
+        #Construct question, randomizing answers
+        self.createTest(1)
+
+
+    #
+    def processParseQuestionBank(self, str_to_parse):
+        data_set_group_0_1 = str_to_parse.split('QUESTION')
+
+        # data_set_group_0_2 = []
+        data_set_group_0_1.pop(0)
+        questionObjectComposite = []
+        intervalIndex = 0
+        for val in data_set_group_0_1:
+            # if(intervalIndex == 0):
+            possibleAnswerIndex = 0
+            questionContainer = val.splitlines()
+            questionContainer = list(filter(None, questionContainer))
+            questionNumber = questionContainer[0].replace(' ','')
+            #create data object
+            questionObj = QuestionObject()
+
+            # print(questionContainer)
+
+            questionObj.setQuestionNumber(questionNumber)
+            questionObj.setProblem(questionContainer[1])
+            questionPieceIndex = 0
+
+            # Parse correct answer
+            for questionPiece in questionContainer:
+                if (questionPiece.find("Correct") == 0):
+                    questionObj.setCorrectAnswer(questionPiece)
+                questionPieceIndex += 1
+
+            questionObjectComposite.append(questionObj)
+
+            # Parse answer list
+            for val in questionContainer:
+                if(possibleAnswerIndex > 1):
+                    # print(val)
+                    if(val.find("Correct") == 0):
+                        isContinueCalculating = False
+                        break
+                    questionObj.parseAnswer(val)
+                possibleAnswerIndex += 1
+            intervalIndex += 1
+
+        return questionObjectComposite
+
+    def createDisplayList(self, questionList):
+        displayContainer = []
+        for question in questionList:
+            displayObject = "Question "+question[0]
+
+            #associateAnswer with bound correct answer object
+            #Append new line questionList attributes
+            displayContainer.append(displayObject)
+        return displayContainer
+
+    def parseIntoQuestionObjectsList(self):
+        pass
+    def instantiateQuestion(self):
+        pass
+    def randomizeQuestion(self):
+        pass
+
+    def createTest(self, caseType):
+        if(0):
+            # Support for sample sized test
+            pass
+        if (1):
+            # print("questionList: "+str(self.getQuestionList()))
+            # This is wrong it needs to be one individual question per.... Ah needs to randomize questions first.
+            # Set randomized list at another time.
+            # print("Question list1 " + str(self.getQuestionList()))
+
+
+            # self.shuffleQuestionList()
+
+            # testInstance = Test()
+
+            print("Question list1 "+ str(self.getQuestionList()))
+            self.setQuestionList(self.getQuestionList())
+            #
+            print("Question list2 " + str(self.getQuestionList()))
+            # self.getQuestionList()
+
+
+            # testInstance.randomizeQuestionList()
+            # testInstance.setCurrentQuestion()
+
+
+
+            self.instanceDisplayManager.displayTest()
+
+        if (2):
+            # Support for loading test states from previous exams
+            pass
+
+            # print("shuffle: " + str(shuffledList))
+                # print(question.getAnswerListComposite())
+                # question.setRandomizedList(self.randomizeQuestionAnswers(question.getAnswerListComposite()))
+
+
+            # self.setCurrentQuestion()
+
+                # print(question.getRandomizedList())
+                # print(question.getQuestionNumber())
+

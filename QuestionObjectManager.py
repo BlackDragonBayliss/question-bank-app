@@ -1,3 +1,4 @@
+# from Test import Test
 
 class QuestionObjectManager:
     def __init__(self):
@@ -16,61 +17,13 @@ class QuestionObjectManager:
         return self.questionList
 
 
-    def createTest(self, caseType):
-        if(0):
-            # Support for sample sized test
-            pass
-        if (1):
-            # print("questionList: "+str(self.getQuestionList()))
-            # This is wrong it needs to be one individual question per.... Ah needs to randomize questions first.
-            # Set randomized list at another time.
-            # print("Question list1 " + str(self.getQuestionList()))
-            self.shuffleQuestionList()
-
-            testInstance = Test()
-
-            print("Question list1 "+ str(self.getQuestionList()))
-            testInstance.setQuestionList(self.getQuestionList())
-            #
-            print("Question list2 " + str(testInstance.getQuestionList()))
-            testInstance.getQuestionList()
 
 
-            testInstance.randomizeQuestionList()
-            # testInstance.setCurrentQuestion()
-            testInstance.startTest()
-
-
-
-        if (2):
-            # Support for loading test states from previous exams
-            pass
-
-
-
-
-
-
-            # print("shuffle: " + str(shuffledList))
-                # print(question.getAnswerListComposite())
-                # question.setRandomizedList(self.randomizeQuestionAnswers(question.getAnswerListComposite()))
-
-
-
-
-
-            # self.setCurrentQuestion()
-
-                # print(question.getRandomizedList())
-                # print(question.getQuestionNumber())
-
-
-
-    def shuffleQuestionList(self):
-        list = self.getQuestionList()#[20, 16, 10, 5];
-        shuffle(list)
-        print("Reshuffled list : ", list)
-        self.setQuestionList(list)
+    # def shuffleQuestionList(self):
+    #     list = self.getQuestionList()#[20, 16, 10, 5];
+    #     shuffle(list)
+    #     print("Reshuffled list : ", list)
+    #     self.setQuestionList(list)
 
     def calculateQuestionSuccess(self):
         self.associateQuestionAnswersWithRandomizedResults()
@@ -103,10 +56,10 @@ class QuestionObjectManager:
     def setRandomizedQuestionList(self, randomizedQuestionList):
         self.randomizedQuestionList = randomizedQuestionList
 
-    def randomizeQuestionAnswers(self, answerList):
-        shuffledList = shuffle(answerList)
-        print("shuffle: "+ str(shuffledList))
-        return shuffledList
+    # def randomizeQuestionAnswers(self, answerList):
+    #     shuffledList = shuffle(answerList)
+    #     print("shuffle: "+ str(shuffledList))
+    #     return shuffledList
     def getOriginalAnswerFormation(self):
         pass
 
