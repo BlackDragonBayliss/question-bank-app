@@ -12,6 +12,7 @@ class Test:
         self.answerMatchingList = []
         self.answerMatchingComposite = []
         self.correctAnswerList = []
+        self.selectedAnswerIndexTotal = 0
         self.currentQuestionIndex = 0
         self.instanceDisplayManager = DisplayManager()
         self.instanceQuestionObjectManager = QuestionObjectManager()
@@ -75,37 +76,36 @@ class Test:
         print(str(len(self.instanceDisplayManager.textAnswerList)))
         #
         # # instantiate is matching list
-        for textAnswer in self.instanceDisplayManager.textAnswerList:
+        for selectedAnswer in self.instanceDisplayManager.textAnswerList:
             correctAnswerIndex = 0
             # self.answerMatchingList = [textAnswer]
         #
             # self.answerMatchingComposite.append(self.answerMatchingList)
-            selectedAnswerKey = textAnswer[1][0]
+            selectedAnswerKey = selectedAnswer#textAnswer[1][0]
 
+            if(selectedAnswerKey[2] == "1"):
+                print("1 at: " + str(selectedAnswerKey))
+                currentQuestionObject = self.instanceQuestionObjectManager.getCurrentQuestionObject()
+                self.correctAnswerList = currentQuestionObject.getCorrectAnswerList()
+                print("selectedAnswerKey: "+str(selectedAnswerKey))
 
-            #support for multiple correct answers, in parsing, if multiple create list
+                for correctAnswer in self.correctAnswerList:
+                    if (selectedAnswerKey[1][0] == correctAnswer):
+                        self.answerMatchingList.append(selectedAnswerKey)
+                    else:
+                        pass
+                self.selectedAnswerIndexTotal += 1
 
-            #Handle on question.answerList
-
-            currentQuestionObject = self.instanceQuestionObjectManager.getCurrentQuestionObject()
-            self.correctAnswerList = currentQuestionObject.getCorrectAnswerList()
-            print("selectedAnswerKey: "+str(selectedAnswerKey))
-
-            for correctAnswer in self.correctAnswerList:
-                if (selectedAnswerKey == correctAnswer):
-                    self.answerMatchingList.append(selectedAnswerKey)
-                else:
-                    pass
-
-
+        print("selectedAnswerIndexTotal: "+str(self.selectedAnswerIndexTotal))
         print("answerMatch: "+str(self.answerMatchingList))
         print("correctAnswerList: " + str(len(self.correctAnswerList)))
-        if(len(self.answerMatchingList) == len(self.correctAnswerList)):
+        if(len(self.answerMatchingList) == len(self.correctAnswerList) and self.selectedAnswerIndexTotal == len(self.correctAnswerList)):
             print("CORRECT")
         else:
             print("INCORRECT")
 
         self.answerMatchingList = []
+        self.selectedAnswerIndexTotal = 0
 
         # print("answer matching list: " + str(self.answerMatchingList))
         # # # print(textAnswerList)
