@@ -107,58 +107,16 @@ class Test:
         self.answerMatchingList = []
         self.selectedAnswerIndexTotal = 0
 
-        # print("answer matching list: " + str(self.answerMatchingList))
-        # # # print(textAnswerList)
-        # print("composite answer: "+str(self.answerMatchingComposite))
-        #
-        # # calculate are answers correct
-        #
-        #
-        # # filter isAnswerMatchingList, if isNotTrue found then tag answer as incorrect.
-        # # Case in which success? Case in which fail?
-        # # Given that all answers in correct answer list criteria need to be met, or wrong.
-        # # Also not too many answers given, or wrong answers selected.
-        # # Perhaps finding where criteria is not met, and if found then wrong.
-
-        # iterate through corr
-        # print(correctAnswer)
-
-        # selectedChoices = []
-        # for selectedAnswer in self.instanceDisplayManager.selectedAnswerList:
-        #     # print(selectedAnswer.get())
-        #     selectedChoices.append(selectedAnswer.get())
-        # print(selectedChoices)
-
-        # selectedChoices = [0,0,0,0,1,1,0,0]
-        # answersList = [1, 1, 1, 0, 0, 0, 0, 0]
-
-        # # index = 0
-        # # while(index < len(selectedChoices)):
-        # #     if(selectedChoices[index] == answersList[index]):
-        # #         print("true")
-        # #     else:
-        # #         print("false")
-        # #     index += 1
-
 
     def operate(self):
         self.readQuestionBank()
         self.instanceDisplayManager.setup(self)
         self.createTest(1)
 
-        # possibleAnswerList = questionObjectComposite[0].getAnswerListComposite()
-        # firstQuestion = questionObjectComposite[0]
-        # correctAnswersList = firstQuestion.getCorrectAnswer()
-        # questionList = firstQuestion.getAnswerListComposite()
-        # print(correctAnswersList)
-        # print(questionList)
-
-
 
     def readQuestionBank(self):
         f = open("demofile.txt", "r")
         stringText = f.read()
-
 
         # Intake feed, process into question bank
         questionComposite = self.processParseQuestionBank(stringText)
