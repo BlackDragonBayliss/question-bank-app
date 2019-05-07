@@ -1,7 +1,7 @@
 
 class QuestionObject:
     def __init__(self):
-        self.correctAnswer = 'Error: Check \'Correct\' answer format'
+        self.correctAnswerList = []
         self.answerListComposite = []
         self.randomizedList = []
 
@@ -17,10 +17,10 @@ class QuestionObject:
         self.problem = problem
     def getProblem(self):
         return self.problem
-    def setCorrectAnswer(self, correctAnswer):
-        self.correctAnswer = correctAnswer
-    def getCorrectAnswer(self):
-        return self.correctAnswer
+    def setCorrectAnswerList(self, correctAnswerList):
+        self.correctAnswerList = correctAnswerList
+    def getCorrectAnswerList(self):
+        return self.correctAnswerList
     def parseAnswer(self, answerString):
         answerList = answerString.split(". ")
         self.answerListComposite.append(answerList)

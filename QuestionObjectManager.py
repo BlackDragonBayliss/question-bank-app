@@ -44,13 +44,16 @@ class QuestionObjectManager:
                 # currently selected returned as a list.
 
 
-    def setCurrentQuestion(self, questionObject):
-        pass
+
+    def getCurrentQuestionObject(self):
+        return self.currentQuestionObject
+    def setCurrentQuestionObject(self, questionObject):
+        self.currentQuestionObject = questionObject
+
     def randomizeQuestionList(self):
         shuffledList = shuffle(self.getRandomizedQuestionList())
         print("shuffle: " + str(shuffledList))
         return shuffledList
-
     def getRandomizedQuestionList(self):
         return self.randomizedQuestionsList
     def setRandomizedQuestionList(self, randomizedQuestionList):
