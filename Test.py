@@ -29,10 +29,34 @@ class Test:
         return self.questionList
 
     def changeToNextQuestion(self):
-        # Handled elsewhere to give functionality to go back to previous questions without adding to completed list issues.
-        self.handleCompletedQuestionChange()
-        #Set current question isAnswered
-        self.getCurrentQuestion().setIsAnswered(1)
+        # #Handled elsewhere to give functionality to go back to previous questions without adding to completed list issues.
+        # self.handleCompletedQuestionChange()
+
+        # Set current question isAnswered
+        self.instanceQuestionObjectManager.getCurrentQuestionObject().setIsAnswered("1")
+
+        #Move to next question
+        #
+        #Handle on current question index
+        self.currentQuestionIndex = 0
+
+        #Handle on questionList
+        questionList = self.instanceQuestionObjectManager.getQuestionList()
+
+        #Handle on next question object,
+        nextQuestion = questionList[self.currentQuestionIndex+1]
+
+        #Handle on set nextQuestion
+        self.instanceQuestionObjectManager.setCurrentQuestionObject(nextQuestion)
+
+        # #Handle displayManager paint new question
+        # self.instanceDisplayManager.displayTest()
+
+        #Handle memory location where retrieving current question, hot swap in DisplayManager
+
+
+
+
 
         # self.setCurrentQuestion()
     def handleCompletedQuestionChange(self):
@@ -41,10 +65,10 @@ class Test:
         # for questionObject
         # currentQuestionIndex
 
-    def setCurrentQuestion(self, currentQuestion):
-        self.currentQuestion = currentQuestion
-    def getCurrentQuestion(self):
-        return self.currentQuestion
+    # def setCurrentQuestion(self, currentQuestion):
+    #     self.currentQuestion = currentQuestion
+    # def getCurrentQuestion(self):
+    #     return self.currentQuestion
 
 
 
