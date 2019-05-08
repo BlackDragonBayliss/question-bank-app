@@ -31,9 +31,6 @@ class DisplayManager:
         for selectedAnswer in self.selectedAnswerList:
             selectedAnswer.set(0)
 
-        # print(self.textAnswerList)
-        # print(str(len(self.textAnswerList)))
-
     def displayTest(self):
 
         root = Tk()
