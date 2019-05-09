@@ -13,12 +13,8 @@ class Test:
         self.answerMatchingComposite = []
         self.correctAnswerList = []
         self.selectedAnswerIndexTotal = 0
-        self.currentQuestionIndex = 0
         self.instanceDisplayManager = DisplayManager()
         self.instanceQuestionObjectManager = QuestionObjectManager()
-
-    # def operate(self):
-    #     pass
 
     def randomizeQuestionList(self):
         self.randomizedQuestionList = shuffle(self.getQuestionList())
@@ -29,51 +25,16 @@ class Test:
         return self.questionList
 
     def changeToNextQuestion(self):
-        # #Handled elsewhere to give functionality to go back to previous questions without adding to completed list issues.
-        # self.handleCompletedQuestionChange()
-
         # Set current question isAnswered
         self.instanceQuestionObjectManager.getCurrentQuestionObject().setIsAnswered("1")
-
-        #Move to next question
-        #
-        #Handle on current question index
-        self.currentQuestionIndex = 0
-
-        #Handle on questionList
-        questionList = self.instanceQuestionObjectManager.getQuestionList()
-
-        #Handle on next question object,
-        nextQuestion = questionList[self.currentQuestionIndex+1]
-
         #Handle on set nextQuestion
-        self.instanceQuestionObjectManager.setCurrentQuestionObject(nextQuestion)
-
+        # self.instanceQuestionObjectManager.setCurrentQuestionObject(nextQuestion)
+        self.instanceQuestionObjectManager.processNextQuestion()
         # #Handle displayManager paint new question
-        # self.instanceDisplayManager.displayTest()
-
-        #Handle memory location where retrieving current question, hot swap in DisplayManager
-
-
-
-
-
-        # self.setCurrentQuestion()
-    def handleCompletedQuestionChange(self):
-        # If currentQuestion has already been added,
-        pass
-        # for questionObject
-        # currentQuestionIndex
-
-    # def setCurrentQuestion(self, currentQuestion):
-    #     self.currentQuestion = currentQuestion
-    # def getCurrentQuestion(self):
-    #     return self.currentQuestion
-
+        self.instanceDisplayManager.displayTest()
 
 
     def confirmAnswer(self):
-
         # create answerBooleanList to be appended later to textAnswerList
         answerBooleanList = []
         selectedAnswerIndex = 0
@@ -130,6 +91,8 @@ class Test:
 
         self.answerMatchingList = []
         self.selectedAnswerIndexTotal = 0
+        self.changeToNextQuestion()
+
 
 
     def operate(self):

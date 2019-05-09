@@ -4,6 +4,7 @@ class QuestionObjectManager:
     def __init__(self):
         self.ranomizedQuestionsList = []
         self.questionList = []
+        self.currentQuestionIndex = 0
 
     #start on first question or randomize questions.
     #saving state of test completed
@@ -49,6 +50,10 @@ class QuestionObjectManager:
         return self.currentQuestionObject
     def setCurrentQuestionObject(self, questionObject):
         self.currentQuestionObject = questionObject
+    def processNextQuestion(self):
+        self.currentQuestionIndex +=1
+        nextQuestion = self.getQuestionList()[self.currentQuestionIndex]
+        self.setCurrentQuestionObject(nextQuestion)
 
     def randomizeQuestionList(self):
         shuffledList = shuffle(self.getRandomizedQuestionList())

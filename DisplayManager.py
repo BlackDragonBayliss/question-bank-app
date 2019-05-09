@@ -36,12 +36,19 @@ class DisplayManager:
         root = Tk()
         root.geometry('1400x800')
 
+        self.displayQuestion()
 
-        questionList = self.instanceTest.getQuestionObjectManager().getQuestionList()#["A", "B", "C"]
+
+        root.mainloop()
+
+    def displayQuestion(self):
+        questionList = self.instanceTest.getQuestionObjectManager().getQuestionList()  # ["A", "B", "C"]
         self.selectedAnswerList = []
-        self.questionText = questionList[0].getProblem()
-        self.questionListAnswerKeys = ["A","B"] #questionList[0].getAnswerListComposite()#["ok","hi"]
-        self.questionListAnswerTexts = ["Groovy","Not groovy"]
+        self.currentQuestion = self.instanceTest.getQuestionObjectManager().getCurrentQuestionObject()
+
+        self.questionText = self.currentQuestion.getProblem()
+        self.questionListAnswerKeys = ["A", "B"]  # questionList[0].getAnswerListComposite()#["ok","hi"]
+        self.questionListAnswerTexts = ["Groovy", "Not groovy"]
 
         self.textAnswerList = []
         self.buttonList = []
@@ -49,7 +56,8 @@ class DisplayManager:
         questionLabel = Label(text=self.questionText)
         questionLabel.place(x=10, y=10)
 
-        self.displayGUIRadioButtons(root, self.questionText, self.questionListAnswerKeys, self.questionListAnswerTexts, self.textAnswerList,self.buttonList,self.selectedAnswerList)
+        self.displayGUIRadioButtons(self.root, self.questionText, self.questionListAnswerKeys, self.questionListAnswerTexts,
+                                    self.textAnswerList, self.buttonList, self.selectedAnswerList)
 
         confirmAnswerButton = Button(text="Confirm Answer", command=self.instanceTest.confirmAnswer)
         confirmAnswerButton.place(x=self.xPositionConfirmButton, y=150)
@@ -57,7 +65,6 @@ class DisplayManager:
         deselectOptionsButton = Button(text="Deselect Answers", command=self.deselectAnswers)
         deselectOptionsButton.place(x=self.xPositionDeslectButton, y=200)
 
-        root.mainloop()
 
     def displayGUIRadioButtons(self, root, questionText, questionListAnswerKeys, questionListAnswerTexts, textAnswerList, buttonList, selectedAnswerList):
 
