@@ -13,6 +13,7 @@ class Test:
         self.answerMatchingComposite = []
         self.correctAnswerList = []
         self.selectedAnswerIndexTotal = 0
+        self.answerListIndex = 0
         self.instanceDisplayManager = DisplayManager()
         self.instanceQuestionObjectManager = QuestionObjectManager()
 
@@ -45,27 +46,24 @@ class Test:
             else:
                 answerBooleanList.append("0")
             selectedAnswerIndex += 1
-        print(str(answerBooleanList))
+        # print(str(answerBooleanList))
 
         # append selectedBool to answerList
         appendTrueSelectedValueCount = 0
         for textAnswer in self.instanceDisplayManager.textAnswerList:
             if (len(textAnswer) == 3):
-                print("I'm at index 3")
+                # print("I'm at index 3")
                 del textAnswer[2:3]
             textAnswer.append(answerBooleanList[appendTrueSelectedValueCount])
             appendTrueSelectedValueCount += 1
         #
         # # print(selectedAnswerList)
         print(self.instanceDisplayManager.textAnswerList)
-        print(str(len(self.instanceDisplayManager.textAnswerList)))
+        # print(str(len(self.instanceDisplayManager.textAnswerList)))
         #
         # # instantiate is matching list
         for selectedAnswer in self.instanceDisplayManager.textAnswerList:
             correctAnswerIndex = 0
-            # self.answerMatchingList = [textAnswer]
-        #
-            # self.answerMatchingComposite.append(self.answerMatchingList)
             selectedAnswerKey = selectedAnswer#textAnswer[1][0]
 
             if(selectedAnswerKey[2] == "1"):
@@ -74,7 +72,10 @@ class Test:
                 self.correctAnswerList = currentQuestionObject.getCorrectAnswerList()
                 print("selectedAnswerKey: "+str(selectedAnswerKey))
 
+
                 for correctAnswer in self.correctAnswerList:
+                    print("correctAnswer: "+correctAnswer)
+                    print("selectedAnswerKey[1][0]: " + selectedAnswerKey[1][0])
                     if (selectedAnswerKey[1][0] == correctAnswer):
                         self.answerMatchingList.append(selectedAnswerKey)
                     else:
@@ -180,20 +181,33 @@ class Test:
                 if (questionPiece.find("Correct") == 0):
 
                     answerUnparsed = questionPiece.split(":")
-                    print(answerUnparsed[1])
+                    # print(answerUnparsed[1])
 
-                    answerList = answerUnparsed[1].split(" ")
+                    self.answerList = answerUnparsed[1].split(" ")
                     # Remove leading white space index
-                    del answerList[0:1]
-                    questionObj.setCorrectAnswerList(answerList)
-
-
-
-
-                    print("correct answer: "+str(questionObj.getCorrectAnswerList()))
-
+                    del self.answerList[0:1]
 
                 questionPieceIndex += 1
+
+
+
+
+
+
+            #Reiterate through answers, if matching correct answerList, set text as correct answer in object
+            for answer in self.answerList:
+                for questionPiece in questionContainer:
+                    if (questionPiece.find(self.answerList[self.answerListIndex]) == 0):
+                        answerListSplit = questionPiece.split(". ")
+                        # print(answerListSplit[1])
+
+                        questionObj.addCorrectAnswer(answerListSplit[1])
+                self.answerListIndex +=1
+                    #
+                print("correct answer: "+str(questionObj.getCorrectAnswerList()))
+
+            self.answerListIndex = 0
+                # questionPieceIndex += 1
 
             questionObjectComposite.append(questionObj)
 

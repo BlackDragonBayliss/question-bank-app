@@ -17,8 +17,8 @@ class QuestionObject:
         self.problem = problem
     def getProblem(self):
         return self.problem
-    def setCorrectAnswerList(self, correctAnswerList):
-        self.correctAnswerList = correctAnswerList
+    def addCorrectAnswer(self, addCorrectAnswer):
+        self.correctAnswerList.append(addCorrectAnswer)
     def getCorrectAnswerList(self):
         return self.correctAnswerList
     def parseAnswer(self, answerString):
