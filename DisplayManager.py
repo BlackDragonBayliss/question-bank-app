@@ -87,9 +87,9 @@ class DisplayManager:
 
 
     def displayGUIRadioButtons(self, root, questionText, questionListAnswerKeys, questionListAnswerTexts, textAnswerList, buttonList, selectedAnswerList):
-
-        for counter, choiceText in enumerate(questionListAnswerKeys, 1):
-            key = Label(root, text=choiceText)
+        radioButtonIndex = 0
+        for counter, choiceText in enumerate(questionListAnswerTexts, 1):
+            key = Label(root, text=questionListAnswerKeys[radioButtonIndex])
             key.place(x=self.xPositionKey, y=self.yPositionGlobalIterate)
             self.keyList.append(key)
 
@@ -108,6 +108,7 @@ class DisplayManager:
 
                 self.internalRadialIndex += 1
                 self.updateYPositionGlobalIterate()
+            radioButtonIndex += 1
 
     def updateYPositionGlobalIterate(self):
         self.yPositionIndex += 1

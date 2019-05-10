@@ -51,6 +51,7 @@ class Test:
         # append selectedBool to answerList
         appendTrueSelectedValueCount = 0
         for textAnswer in self.instanceDisplayManager.textAnswerList:
+
             if (len(textAnswer) == 3):
                 # print("I'm at index 3")
                 del textAnswer[2:3]
@@ -58,8 +59,9 @@ class Test:
             appendTrueSelectedValueCount += 1
         #
         # # print(selectedAnswerList)
-        print(self.instanceDisplayManager.textAnswerList)
+        print("textAnswerList: "+str(self.instanceDisplayManager.textAnswerList))
         # print(str(len(self.instanceDisplayManager.textAnswerList)))
+        #
         #
         # # instantiate is matching list
         for selectedAnswer in self.instanceDisplayManager.textAnswerList:
