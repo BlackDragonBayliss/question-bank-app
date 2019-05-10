@@ -14,6 +14,7 @@ class Test:
         self.correctAnswerList = []
         self.selectedAnswerIndexTotal = 0
         self.answerListIndex = 0
+        self.questionInteration = 0
         self.instanceDisplayManager = DisplayManager()
         self.instanceQuestionObjectManager = QuestionObjectManager()
 
@@ -77,8 +78,8 @@ class Test:
 
                 for correctAnswer in self.correctAnswerList:
                     print("correctAnswer: "+correctAnswer)
-                    print("selectedAnswerKey[1][0]: " + selectedAnswerKey[1][0])
-                    if (selectedAnswerKey[1][0] == correctAnswer):
+                    print("selectedAnswerKey[1]: " + selectedAnswerKey[1])
+                    if (selectedAnswerKey[1] == correctAnswer):
                         self.answerMatchingList.append(selectedAnswerKey)
                     else:
                         pass
@@ -115,6 +116,11 @@ class Test:
         # Set question list
         self.instanceQuestionObjectManager.setQuestionList(questionComposite)
         self.instanceQuestionObjectManager.setCurrentQuestionObject(questionComposite[0])
+
+        # Randomize question answers
+        self.instanceQuestionObjectManager.randomizeQuestionList()
+
+
         # print("question Composite in QOM: " + str(self.questionObjectManager.getQuestionList()))
 
     def createTest(self, caseType):
@@ -122,24 +128,8 @@ class Test:
             # Support for sample sized test
             pass
         if (1):
-            # print("questionList: "+str(self.getQuestionList()))
-            # This is wrong it needs to be one individual question per.... Ah needs to randomize questions first.
-            # Set randomized list at another time.
-            # print("Question list1 " + str(self.getQuestionList()))
-
-            # self.shuffleQuestionList()
-
-            # testInstance = Test()
-
-            # print("Question list1 "+ str(self.getQuestionList()))
-            # self.setQuestionList(self.getQuestionList())
-            #
-            # print("Question list2 " + str(self.getQuestionList()))
-            # self.getQuestionList()
-
             # testInstance.randomizeQuestionList()
-            # testInstance.setCurrentQuestion()
-
+            # self.instanceQuestionObjectManager.randomizeQuestionList()
             self.instanceDisplayManager.displayTest()
 
         if (2):
@@ -150,13 +140,14 @@ class Test:
                 # print(question.getAnswerListComposite())
                 # question.setRandomizedList(self.randomizeQuestionAnswers(question.getAnswerListComposite()))
 
-
             # self.setCurrentQuestion()
 
                 # print(question.getRandomizedList())
                 # print(question.getQuestionNumber())
 
     def processParseQuestionBank(self, str_to_parse):
+
+
         data_set_group_0_1 = str_to_parse.split('QUESTION')
 
         # data_set_group_0_2 = []
@@ -164,6 +155,7 @@ class Test:
         questionObjectComposite = []
         intervalIndex = 0
         for val in data_set_group_0_1:
+            print(self.questionInteration)
             # if(intervalIndex == 0):
             possibleAnswerIndex = 0
             questionContainer = val.splitlines()
@@ -197,20 +189,23 @@ class Test:
 
 
             #Reiterate through answers, if matching correct answerList, set text as correct answer in object
+            print("Incoming answerList: "+str(self.answerList))
             for answer in self.answerList:
                 for questionPiece in questionContainer:
-                    if (questionPiece.find(self.answerList[self.answerListIndex]) == 0):
+                    print("Parsing questionPiece: "+questionPiece)
+                    questionPieceKey = self.answerList[self.answerListIndex] + "."
+                    # print("KEYuestionPiece: "+questionPieceKey)
+                    if (questionPiece.find(questionPieceKey) == 0):
                         answerListSplit = questionPiece.split(". ")
-                        # print(answerListSplit[1])
+                        # print("Internal answerListSplit: "+str(answerListSplit))
+                        correctAnswerToAppend = answerListSplit[1]
+                        # print("Process questionPiece: "+correctAnswerToAppend)
 
-                        questionObj.addCorrectAnswer(answerListSplit[1])
+                        questionObj.addCorrectAnswer(correctAnswerToAppend)
                 self.answerListIndex +=1
-                    #
                 print("correct answer: "+str(questionObj.getCorrectAnswerList()))
 
             self.answerListIndex = 0
-                # questionPieceIndex += 1
-
             questionObjectComposite.append(questionObj)
 
             # Parse answer list
@@ -224,6 +219,7 @@ class Test:
                 possibleAnswerIndex += 1
             intervalIndex += 1
 
+            self.questionInteration += 1
         return questionObjectComposite
 
     def createDisplayList(self, questionList):

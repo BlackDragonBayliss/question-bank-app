@@ -14,7 +14,7 @@ A. OI 2001:DB8::/48 [110/100] via FE80::A8BB:CCFF:FE00:6F00, Ethernet0/0
 B. OI 2001:DB8::/24 [110/100] via FE80::A8BB:CCFF:FE00:6F00, Ethernet0/0
 C. OI 2001:DB8::/32 [110/100] via FE80::A8BB:CCFF:FE00:6F00, Ethernet0/0
 D. OI 2001:DB8::/64 [110/100] via FE80::A8BB:CCFF:FE00:6F00, Ethernet0/0
-Correct Answer: A
+Correct Answer: C
 Section: (none)
 Explanation
 Explanation/Reference:
@@ -39,6 +39,20 @@ B. Dual stack means that devices are able to run IPv4 and IPv6 in parallel.
 C. Dual stack translates IPv4 addresses to IPv6 addresses.
 D. Dual stack changes the IP addresses on hosts from IPv4 to IPv6 automatically.
 Correct Answer: B
+Section: (none)
+Explanation
+Explanation/Reference:
+
+QUESTION 115
+Which statement about dual stack is true?
+A. Dual stack translates IPv6 addresses to IPv4 addresses.
+B. Dual stack means that devices are able to run IPv4 and IPv6 in parallel.
+C. Dual stack translates IPv4 addresses to IPv6 addresses.
+D. Dual stack changes the IP addresses on hosts from IPv4 to IPv6 automatically.
+E. Blah
+F. Blah1
+G. Blah2
+Correct Answer: B C G
 Section: (none)
 Explanation
 Explanation/Reference:
