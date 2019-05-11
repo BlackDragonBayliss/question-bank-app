@@ -18,17 +18,15 @@ class Test:
         self.instanceDisplayManager = DisplayManager()
         self.instanceQuestionObjectManager = QuestionObjectManager()
 
-
-
     def operate(self):
         self.readQuestionBank()
         self.instanceDisplayManager.setup(self)
         self.instanceDisplayManager.startScreen()
-        self.createTest(1)
 
 
     def testOption1(self):
         self.instanceDisplayManager.displayQuestion()
+        # self.instanceDisplayManager.displayScoreScreen()
 
     def testOption2(self):
         self.instanceQuestionObjectManager.randomizeQuestionList()
@@ -71,8 +69,6 @@ class Test:
                 # print(question.getQuestionNumber())
 
     def processParseQuestionBank(self, str_to_parse):
-
-
         data_set_group_0_1 = str_to_parse.split('QUESTION')
 
         # data_set_group_0_2 = []
@@ -161,10 +157,11 @@ class Test:
         # Set current question isAnswered
         self.instanceQuestionObjectManager.getCurrentQuestionObject().setIsAnswered("1")
         #Handle on set nextQuestion
-        self.instanceQuestionObjectManager.processNextQuestion()
-        # #Handle displayManager paint new question
-        self.instanceDisplayManager.displayTest()
-
+        if(self.instanceQuestionObjectManager.processNextQuestion()):
+        # Handle displayManager paint new question
+            self.instanceDisplayManager.displayQuestion()
+        else:
+            self.instanceDisplayManager.displayScoreScreen()
 
     def confirmAnswer(self):
         # create answerBooleanList to be appended later to textAnswerList
@@ -220,12 +217,26 @@ class Test:
         print("correctAnswerList: " + str(len(self.correctAnswerList)))
         if(len(self.answerMatchingList) == len(self.correctAnswerList) and self.selectedAnswerIndexTotal == len(self.correctAnswerList)):
             print("CORRECT")
+            self.isQuestionCorrectOutcome = True
         else:
             print("INCORRECT")
+            self.isQuestionCorrectOutcome = False
+        self.instanceDisplayManager.displayQuestionOutcomeScreen()
+        self.isQuestionCorrectOutcome =  False
 
         self.answerMatchingList = []
         self.selectedAnswerIndexTotal = 0
         self.changeToNextQuestion()
+
+
+    def calculateScore(self):
+
+        questionList = self.instanceQuestionObjectManager.questionList
+        totalCountQuestions = len(questionList)
+        print(totalCountQuestions)
+        # for question in questionList:
+            # if(question.)
+            # correctQuestionAnsweredCount +
 
     def getInstanceQuestionObjectManager(self):
         return self.instanceQuestionObjectManager

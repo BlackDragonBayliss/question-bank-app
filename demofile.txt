@@ -29,30 +29,3 @@ C. GETVPN
 D. GREVPN
 Correct Answer: B
 Section: (none)
-
-Explanation
-Explanation/Reference:
-QUESTION 114
-Which statement about dual stack is true?
-A. Dual stack translates IPv6 addresses to IPv4 addresses.
-B. Dual stack means that devices are able to run IPv4 and IPv6 in parallel.
-C. Dual stack translates IPv4 addresses to IPv6 addresses.
-D. Dual stack changes the IP addresses on hosts from IPv4 to IPv6 automatically.
-Correct Answer: B
-Section: (none)
-Explanation
-Explanation/Reference:
-
-QUESTION 115
-Which statement about dual stack is true?
-A. Dual stack translates IPv6 addresses to IPv4 addresses.
-B. Dual stack means that devices are able to run IPv4 and IPv6 in parallel.
-C. Dual stack translates IPv4 addresses to IPv6 addresses.
-D. Dual stack changes the IP addresses on hosts from IPv4 to IPv6 automatically.
-E. Blah
-F. Blah1
-G. Blah2
-Correct Answer: B C G
-Section: (none)
-Explanation
-Explanation/Reference:

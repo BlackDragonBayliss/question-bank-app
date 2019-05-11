@@ -4,6 +4,7 @@ from QuestionObject import QuestionObject
 
 class DisplayManager:
     def __init__(self):
+        self.questionCount = 0
         self.internalRadialIndex = 0
         self.yPositionIndex = 1
         self.yPositionGlobalIterate = self.yPositionIndex * 50
@@ -20,54 +21,35 @@ class DisplayManager:
         self.questionListAnswerTexts = []
         self.keyList = []
         self.keyAnswerList = []
-        # self.buttonList = None
-        self.isInitialClearIndex = True
 
+        self.questionListAnswerKeys = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M"]
+        self.textAnswerList = []
+        self.buttonList = []
+
+        self.isInitialClearIndex = True
 
     def setup(self, test):
         self.instanceTest = test
 
-    def showChoice(self):
-        for selectedAnswer in self.selectedAnswerList:
-            pass
-            # print(selectedAnswer.get())
-
-        correctAnswersList = []  # correctAnswersList
-        answerMatchingComposite = []
-
     def deselectAnswers(self):
         for selectedAnswer in self.selectedAnswerList:
             selectedAnswer.set(0)
-        # self.root.destroy()
+
     def startScreen(self):
         self.root.geometry('1400x800')
-
         self.beginTest1Button = Button(text="Begin Test 1", command=self.instanceTest.testOption1)
         self.beginTest1Button.place(x=self.xPositionConfirmButton, y=self.yPositionGlobalIterate)
         self.updateYPositionGlobalIterate()
         self.beginTest2Button = Button(text="Begin Test 2", command=self.instanceTest.testOption2)
         self.beginTest2Button.place(x=self.xPositionDeslectButton, y=self.yPositionGlobalIterate)
-
         self.root.mainloop()
-
-    def displayTest(self):
-        self.root.geometry('1400x800')
-        self.root.mainloop()
-        self.displayQuestion()
-
-
-
-
-
 
     def displayQuestion(self):
-        self.clearWidgets()
-        self.resetYPositionGlobalIterate()
-        self.questionListAnswerKeys = []
-        self.questionListAnswerTexts = []
-        self.internalRadialIndex = 0
+        self.resetScreenVariables()
         # self.xPositionRadialButton
-
+        instanceQuestionObjectManager = self.instanceTest.getInstanceQuestionObjectManager()
+        # if(self.questionCount <= len(instanceQuestionObjectManager.getQuestionList())):
+        self.questionCount += 1
         questionList = self.instanceTest.getInstanceQuestionObjectManager().getQuestionList()  # ["A", "B", "C"]
         self.selectedAnswerList = []
         self.currentQuestion = self.instanceTest.getInstanceQuestionObjectManager().getCurrentQuestionObject()
@@ -78,12 +60,6 @@ class DisplayManager:
         for index in self.currentQuestion.getAnswerListComposite():
             self.questionListAnswerKeys.append(index[0])#["ok","hi"]
             self.questionListAnswerTexts.append(index[1])
-
-
-        self.questionListAnswerKeys = ["A","B","C","D","E","F","G","H","I","J","K","L","M"]
-
-        self.textAnswerList = []
-        self.buttonList = []
 
         self.questionLabel = Label(text=self.questionText)
         self.questionLabel.place(x=10, y=10)
@@ -97,6 +73,12 @@ class DisplayManager:
         self.deselectOptionsButton = Button(text="Deselect Answers", command=self.deselectAnswers)
         self.deselectOptionsButton.place(x=self.xPositionDeslectButton, y=self.yPositionGlobalIterate)
 
+    def displayScoreScreen(self):
+        self.resetScreenVariables()
+        scoreText = self.instanceTest.calculateScore()
+        # self.score
+        score = Label(self.root, text="Fin")
+        score.place(x=self.xPositionKey, y=self.yPositionGlobalIterate)
 
 
     def displayGUIRadioButtons(self, root, questionText, questionListAnswerKeys, questionListAnswerTexts, textAnswerList, buttonList, selectedAnswerList):
@@ -122,6 +104,15 @@ class DisplayManager:
                 self.internalRadialIndex += 1
                 self.updateYPositionGlobalIterate()
             radioButtonIndex += 1
+
+    def resetScreenVariables(self):
+        self.clearWidgets()
+        self.resetYPositionGlobalIterate()
+        self.questionListAnswerKeys = []
+        self.questionListAnswerTexts = []
+        self.internalRadialIndex = 0
+
+    def displayQuestionOutcomeScreen(self):
 
     def updateYPositionGlobalIterate(self):
         self.yPositionIndex += 1

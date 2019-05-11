@@ -45,8 +45,6 @@ class QuestionObjectManager:
                # check if answerList selected matches currently selected.
                 # currently selected returned as a list.
 
-
-
     def getCurrentQuestionObject(self):
         return self.currentQuestionObject
     def setCurrentQuestionObject(self, questionObject):
@@ -54,8 +52,17 @@ class QuestionObjectManager:
 
     def processNextQuestion(self):
         self.currentQuestionIndex +=1
-        nextQuestion = self.getQuestionList()[self.currentQuestionIndex]
-        self.setCurrentQuestionObject(nextQuestion)
+        print("currentQuestionIndex: "+ str(self.currentQuestionIndex))
+        print("getQuestionList: " + str(len(self.getQuestionList())))
+
+        if (self.currentQuestionIndex < len(self.getQuestionList())):
+            nextQuestion = self.getQuestionList()[self.currentQuestionIndex]
+            self.setCurrentQuestionObject(nextQuestion)
+            print("index in")
+            return True
+        else:
+            print("index out")
+            return False
 
     # def randomizeQuestionList(self):
     #     shuffledList = shuffle(self.getRandomizedQuestionList())
@@ -64,6 +71,10 @@ class QuestionObjectManager:
 
     def randomizeQuestionList(self):
         shuffle(self.questionList)
+        for question in self.questionList:
+            print(question.getQuestionNumber())
+
+        self.setCurrentQuestionObject(self.getQuestionList()[0])
 
     def randomizeQuestionAnswerLists(self):
         for questionObject in self.questionList:
