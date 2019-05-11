@@ -41,13 +41,5 @@ class QuestionObject:
         return self.isAnsweredCorrectly
     def setIsAnsweredCorrectly(self, isAnsweredCorrectly):
         self.isAnsweredCorrectly = isAnsweredCorrectly
-
-    # def isCorrectAnswerListSubmited(self, questionList, answerList):
-
     def randomizeAnswerList(self):
-        print("AnswerListComposite"+str(self.getAnswerListComposite()))
         shuffle(self.answerListComposite)
-        # print("shuffle: " + str(shuffledList))
-        # self.setAnswerListComposite(shuffledList)
-        # self.setRandomizedList(shuffledList)
-        # return shuffledList
