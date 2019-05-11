@@ -9,6 +9,8 @@ class DisplayManager:
         self.yPositionIndex = 1
         self.yPositionGlobalIterate = self.yPositionIndex * 50
 
+        self.yPositionContinueButton = 250
+
         self.xPositionKey = 10
         self.xPositionRadialButton = 30
         self.xPositionAnswer = 55
@@ -86,13 +88,6 @@ class DisplayManager:
         self.deselectOptionsButton = Button(text="Deselect Answers", command=self.deselectAnswers)
         self.deselectOptionsButton.place(x=self.xPositionDeslectButton, y=self.yPositionGlobalIterate)
 
-    def displayScoreScreen(self):
-        self.resetScreenVariables()
-        self.clearWidgets()
-        scoreText = self.instanceTest.calculateScore()
-        score = Label(self.root, text="Fin")
-        score.place(x=self.xPositionKey, y=self.yPositionGlobalIterate)
-
     def displayGUIRadioButtons(self, root, questionText, questionListAnswerKeys, questionListAnswerTexts, textAnswerList, buttonList, selectedAnswerList):
         radioButtonIndex = 0
         print("questionListAnswerKeys: "+ str(questionListAnswerKeys))
@@ -133,7 +128,15 @@ class DisplayManager:
         self.labelQuestionOutcome.place(x=self.xPositionKey, y=self.yPositionGlobalIterate)
         self.updateYPositionGlobalIterate()
         self.buttonConfirmQuestionOutcome = Button(text="Continue", command=self.instanceTest.changeToNextQuestion)
-        self.buttonConfirmQuestionOutcome.place(x=self.xPositionButtonConfirmQuestionOutcome, y=self.yPositionGlobalIterate)
+        self.buttonConfirmQuestionOutcome.place(x=self.xPositionButtonConfirmQuestionOutcome, y=self.yPositionContinueButton)
+
+    def displayScoreScreen(self):
+        self.resetScreenVariables()
+        self.clearWidgets()
+        scoreText = str(round(self.instanceTest.calculateScore(), 1))
+
+        score = Label(self.root, text="Total correct: "+str(scoreText)+"%")
+        score.place(x=self.xPositionKey, y=self.yPositionGlobalIterate)
 
     def resetScreenVariables(self):
         self.resetYPositionGlobalIterate()

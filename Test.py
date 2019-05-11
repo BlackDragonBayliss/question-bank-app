@@ -15,6 +15,7 @@ class Test:
         self.selectedAnswerIndexTotal = 0
         self.answerListIndex = 0
         self.questionInteration = 0
+        self.correctQuestionAnsweredCount = 0
         self.isQuestionCorrectOutcome = False
         self.instanceDisplayManager = DisplayManager()
         self.instanceQuestionObjectManager = QuestionObjectManager()
@@ -47,46 +48,33 @@ class Test:
         # Randomize question answers
         self.instanceQuestionObjectManager.randomizeQuestionAnswerLists()
 
-    def createTest(self, caseType):
-        if(0):
-            # Support for sample sized test
-            pass
-        if (1):
-            # testInstance.randomizeQuestionList()
-            # self.instanceQuestionObjectManager.randomizeQuestionList()
-            self.instanceDisplayManager.displayTest()
+    # def createTest(self, caseType):
+    #     if(0):
+    #         # Support for sample sized test
+    #         pass
+    #     if (1):
+    #         # testInstance.randomizeQuestionList()
+    #         # self.instanceQuestionObjectManager.randomizeQuestionList()
+    #         self.instanceDisplayManager.displayTest()
+    #
+    #     if (2):
+    #         # Support for loading test states from previous exams
+    #         pass
 
-        if (2):
-            # Support for loading test states from previous exams
-            pass
-
-            # print("shuffle: " + str(shuffledList))
-                # print(question.getAnswerListComposite())
-                # question.setRandomizedList(self.randomizeQuestionAnswers(question.getAnswerListComposite()))
-
-            # self.setCurrentQuestion()
-
-                # print(question.getRandomizedList())
-                # print(question.getQuestionNumber())
 
     def processParseQuestionBank(self, str_to_parse):
         data_set_group_0_1 = str_to_parse.split('QUESTION')
 
-        # data_set_group_0_2 = []
         data_set_group_0_1.pop(0)
         questionObjectComposite = []
         intervalIndex = 0
         for val in data_set_group_0_1:
-            # print(self.questionInteration)
-            # if(intervalIndex == 0):
             possibleAnswerIndex = 0
             questionContainer = val.splitlines()
             questionContainer = list(filter(None, questionContainer))
             questionNumber = questionContainer[0].replace(' ','')
             #create data object
             questionObj = QuestionObject()
-
-            # print(questionContainer)
 
             questionObj.setQuestionNumber(questionNumber)
             questionObj.setProblem(questionContainer[1])
@@ -104,11 +92,6 @@ class Test:
                     del self.answerList[0:1]
 
                 questionPieceIndex += 1
-
-
-
-
-
 
             #Reiterate through answers, if matching correct answerList, set text as correct answer in object
             # print("Incoming answerList: "+str(self.answerList))
@@ -156,7 +139,7 @@ class Test:
 
     def changeToNextQuestion(self):
         # Set current question isAnswered
-        self.instanceQuestionObjectManager.getCurrentQuestionObject().setIsAnswered("1")
+        self.instanceQuestionObjectManager.getCurrentQuestionObject().setIsAnswered(True)
         #Handle on set nextQuestion
         if(self.instanceQuestionObjectManager.processNextQuestion()):
         # Handle displayManager paint new question
@@ -177,8 +160,6 @@ class Test:
             selectedAnswerIndex += 1
         print("answerBooleanList: "+str(answerBooleanList))
 
-
-
         # append selectedBool to answerList
         appendTrueSelectedValueCount = 0
         print("self.instanceDisplayManager.textAnswerList: "+str(self.instanceDisplayManager.textAnswerList))
@@ -193,42 +174,37 @@ class Test:
             print("textAnswer: "+str(textAnswer))
 
             appendTrueSelectedValueCount += 1
-        #
-        # # print(selectedAnswerList)
-        # print("textAnswerList: "+str(self.instanceDisplayManager.textAnswerList))
-        # print(str(len(self.instanceDisplayManager.textAnswerList)))
-        #
-        #
         # # instantiate is matching list
         for selectedAnswer in self.instanceDisplayManager.textAnswerList:
             correctAnswerIndex = 0
             selectedAnswerKey = selectedAnswer#textAnswer[1][0]
 
             if(selectedAnswerKey[2] == "1"):
-                # print("1 at: " + str(selectedAnswerKey))
                 currentQuestionObject = self.instanceQuestionObjectManager.getCurrentQuestionObject()
                 self.correctAnswerList = currentQuestionObject.getCorrectAnswerList()
-                # print("selectedAnswerKey: "+str(selectedAnswerKey))
-
-
                 for correctAnswer in self.correctAnswerList:
-                    # print("correctAnswer: "+correctAnswer)
-                    # print("selectedAnswerKey[1]: " + selectedAnswerKey[1])
                     if (selectedAnswerKey[1] == correctAnswer):
                         self.answerMatchingList.append(selectedAnswerKey)
                     else:
                         pass
                 self.selectedAnswerIndexTotal += 1
 
-        print("selectedAnswerIndexTotal: "+str(self.selectedAnswerIndexTotal))
-        print("answerMatch: "+str(self.answerMatchingList))
-        print("correctAnswerList: " + str(len(self.correctAnswerList)))
-        if(len(self.answerMatchingList) == len(self.correctAnswerList) and self.selectedAnswerIndexTotal == len(self.correctAnswerList)):
-            print("CORRECT")
-            self.isQuestionCorrectOutcome = True
-        else:
-            print("INCORRECT")
-            self.isQuestionCorrectOutcome = False
+        # Handle if no answers selected, default to answer being incorrect
+        if(self.selectedAnswerIndexTotal != 0):
+            print("answerMatchingList: "+str(self.answerMatchingList))
+            print("selectedAnswerIndexTotal: " + str(self.selectedAnswerIndexTotal))
+            print("correctAnswerList: " + str(self.correctAnswerList))
+
+            print("problemNumber: " + str(self.instanceQuestionObjectManager.getCurrentQuestionObject().getQuestionNumber()))
+
+            if(len(self.answerMatchingList) == len(self.correctAnswerList) and self.selectedAnswerIndexTotal == len(self.correctAnswerList)):
+                print("CORRECT")
+                self.isQuestionCorrectOutcome = True
+            else:
+                print("INCORRECT")
+                self.isQuestionCorrectOutcome = False
+
+        self.instanceQuestionObjectManager.getCurrentQuestionObject().setIsAnsweredCorrectly(self.isQuestionCorrectOutcome)
         self.instanceDisplayManager.displayQuestionOutcomeScreen()
         self.isQuestionCorrectOutcome =  False
 
@@ -240,10 +216,17 @@ class Test:
     def calculateScore(self):
         questionList = self.instanceQuestionObjectManager.questionList
         totalCountQuestions = len(questionList)
-        print(totalCountQuestions)
-        # for question in questionList:
-            # if(question.)
-            # correctQuestionAnsweredCount +
+
+        # self.instanceQuestionObjectManager.getCurrentQuestionObject().setIsAnsweredCorrectly(True)
+        for question in questionList:
+            if(question.getIsAnsweredCorrectly()):
+                self.correctQuestionAnsweredCount += 1
+
+        print("self.correctQuestionAnsweredCount: "+str(self.correctQuestionAnsweredCount))
+        print("totalCountQuestions: " + str(totalCountQuestions))
+        percentageCorrect = (self.correctQuestionAnsweredCount / totalCountQuestions) * 100
+        return percentageCorrect
+
 
     def getIsQuestionCorrectOutcome(self):
         return self.isQuestionCorrectOutcome

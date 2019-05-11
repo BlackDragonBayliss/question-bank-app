@@ -5,6 +5,7 @@ class QuestionObject:
         self.correctAnswerList = []
         self.answerListComposite = []
         self.randomizedList = []
+        self.isAnsweredCorrectly = False
 
     def setRandomizedList(self, randomizedList):
         self.randomizedList = randomizedList
@@ -35,6 +36,12 @@ class QuestionObject:
         return self.isAnswered
     def setIsAnswered(self, isAnswered):
         self.isAnswered = isAnswered
+
+    def getIsAnsweredCorrectly(self):
+        return self.isAnsweredCorrectly
+    def setIsAnsweredCorrectly(self, isAnsweredCorrectly):
+        self.isAnsweredCorrectly = isAnsweredCorrectly
+
     # def isCorrectAnswerListSubmited(self, questionList, answerList):
 
     def randomizeAnswerList(self):
