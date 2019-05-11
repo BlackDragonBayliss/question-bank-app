@@ -15,6 +15,7 @@ class Test:
         self.selectedAnswerIndexTotal = 0
         self.answerListIndex = 0
         self.questionInteration = 0
+        self.isQuestionCorrectOutcome = False
         self.instanceDisplayManager = DisplayManager()
         self.instanceQuestionObjectManager = QuestionObjectManager()
 
@@ -174,16 +175,23 @@ class Test:
             else:
                 answerBooleanList.append("0")
             selectedAnswerIndex += 1
-        # print(str(answerBooleanList))
+        print("answerBooleanList: "+str(answerBooleanList))
+
+
 
         # append selectedBool to answerList
         appendTrueSelectedValueCount = 0
-        for textAnswer in self.instanceDisplayManager.textAnswerList:
+        print("self.instanceDisplayManager.textAnswerList: "+str(self.instanceDisplayManager.textAnswerList))
 
+        for textAnswer in self.instanceDisplayManager.textAnswerList:
             if (len(textAnswer) == 3):
                 # print("I'm at index 3")
                 del textAnswer[2:3]
+
+            print("appendTrueSelectedValueCount: "+str(appendTrueSelectedValueCount))
             textAnswer.append(answerBooleanList[appendTrueSelectedValueCount])
+            print("textAnswer: "+str(textAnswer))
+
             appendTrueSelectedValueCount += 1
         #
         # # print(selectedAnswerList)
@@ -226,17 +234,19 @@ class Test:
 
         self.answerMatchingList = []
         self.selectedAnswerIndexTotal = 0
-        self.changeToNextQuestion()
+        # self.changeToNextQuestion()
 
 
     def calculateScore(self):
-
         questionList = self.instanceQuestionObjectManager.questionList
         totalCountQuestions = len(questionList)
         print(totalCountQuestions)
         # for question in questionList:
             # if(question.)
             # correctQuestionAnsweredCount +
+
+    def getIsQuestionCorrectOutcome(self):
+        return self.isQuestionCorrectOutcome
 
     def getInstanceQuestionObjectManager(self):
         return self.instanceQuestionObjectManager

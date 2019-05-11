@@ -16,17 +16,22 @@ class DisplayManager:
         self.xPositionConfirmButton = 10
         self.xPositionDeslectButton = 10
 
+        self.xPositionButtonConfirmQuestionOutcome = 50
+
+        self.displayQuestionCallIndex = 0
+        self.resetScreenVariablesCallIndex = 0
+
         self.root = Tk()
         self.questionListAnswerKeys = []
         self.questionListAnswerTexts = []
         self.keyList = []
         self.keyAnswerList = []
 
-        self.questionListAnswerKeys = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M"]
         self.textAnswerList = []
         self.buttonList = []
 
         self.isInitialClearIndex = True
+        self.isQuestionOutcomeScreen = False
 
     def setup(self, test):
         self.instanceTest = test
@@ -34,6 +39,10 @@ class DisplayManager:
     def deselectAnswers(self):
         for selectedAnswer in self.selectedAnswerList:
             selectedAnswer.set(0)
+
+    def showChoice(self):
+        print("showChoice")
+        # pass
 
     def startScreen(self):
         self.root.geometry('1400x800')
@@ -45,12 +54,14 @@ class DisplayManager:
         self.root.mainloop()
 
     def displayQuestion(self):
+        self.displayQuestionCallIndex += 1
+        # self.resetScreenVariables()
         self.resetScreenVariables()
-        # self.xPositionRadialButton
+        self.clearWidgets()
+
         instanceQuestionObjectManager = self.instanceTest.getInstanceQuestionObjectManager()
-        # if(self.questionCount <= len(instanceQuestionObjectManager.getQuestionList())):
         self.questionCount += 1
-        questionList = self.instanceTest.getInstanceQuestionObjectManager().getQuestionList()  # ["A", "B", "C"]
+        questionList = self.instanceTest.getInstanceQuestionObjectManager().getQuestionList()
         self.selectedAnswerList = []
         self.currentQuestion = self.instanceTest.getInstanceQuestionObjectManager().getCurrentQuestionObject()
 
@@ -58,11 +69,13 @@ class DisplayManager:
         print(str(self.currentQuestion.getAnswerListComposite()))
 
         for index in self.currentQuestion.getAnswerListComposite():
-            self.questionListAnswerKeys.append(index[0])#["ok","hi"]
+            # self.questionListAnswerKeys.append(index[0])
             self.questionListAnswerTexts.append(index[1])
 
         self.questionLabel = Label(text=self.questionText)
         self.questionLabel.place(x=10, y=10)
+
+        self.questionListAnswerKeys = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M"]
 
         self.displayGUIRadioButtons(self.root, self.questionText, self.questionListAnswerKeys, self.questionListAnswerTexts,
                                     self.textAnswerList, self.buttonList, self.selectedAnswerList)
@@ -75,14 +88,14 @@ class DisplayManager:
 
     def displayScoreScreen(self):
         self.resetScreenVariables()
+        self.clearWidgets()
         scoreText = self.instanceTest.calculateScore()
-        # self.score
         score = Label(self.root, text="Fin")
         score.place(x=self.xPositionKey, y=self.yPositionGlobalIterate)
 
-
     def displayGUIRadioButtons(self, root, questionText, questionListAnswerKeys, questionListAnswerTexts, textAnswerList, buttonList, selectedAnswerList):
         radioButtonIndex = 0
+        print("questionListAnswerKeys: "+ str(questionListAnswerKeys))
         for counter, choiceText in enumerate(questionListAnswerTexts, 1):
             key = Label(root, text=questionListAnswerKeys[radioButtonIndex])
             key.place(x=self.xPositionKey, y=self.yPositionGlobalIterate)
@@ -105,14 +118,29 @@ class DisplayManager:
                 self.updateYPositionGlobalIterate()
             radioButtonIndex += 1
 
-    def resetScreenVariables(self):
+    def displayQuestionOutcomeScreen(self):
+        self.resetScreenVariables()
         self.clearWidgets()
+
+        self.isQuestionOutcomeScreen = True
+        outcomeText = "Incorrect"
+        if(self.instanceTest.getIsQuestionCorrectOutcome()):
+            outcomeText = "Correct"
+        else:
+            outcomeText = "Incorrect"
+
+        self.labelQuestionOutcome = Label(self.root, text=outcomeText)
+        self.labelQuestionOutcome.place(x=self.xPositionKey, y=self.yPositionGlobalIterate)
+        self.updateYPositionGlobalIterate()
+        self.buttonConfirmQuestionOutcome = Button(text="Continue", command=self.instanceTest.changeToNextQuestion)
+        self.buttonConfirmQuestionOutcome.place(x=self.xPositionButtonConfirmQuestionOutcome, y=self.yPositionGlobalIterate)
+
+    def resetScreenVariables(self):
         self.resetYPositionGlobalIterate()
         self.questionListAnswerKeys = []
         self.questionListAnswerTexts = []
         self.internalRadialIndex = 0
-
-    def displayQuestionOutcomeScreen(self):
+        self.textAnswerList = []
 
     def updateYPositionGlobalIterate(self):
         self.yPositionIndex += 1
@@ -123,6 +151,9 @@ class DisplayManager:
         self.yPositionGlobalIterate = self.yPositionIndex * 50
 
     def clearWidgets(self):
+        print("displayQuestionCallIndex: "+str(self.displayQuestionCallIndex))
+        print("resetScreenVariablesCallIndex: " + str(self.resetScreenVariablesCallIndex))
+
         if(self.isInitialClearIndex):
             self.isInitialClearIndex = False
             self.beginTest1Button.destroy()
@@ -137,8 +168,14 @@ class DisplayManager:
             for widget in self.keyAnswerList:
                 widget.destroy()
 
-            # self.key.destroy()
-            # self.answer.destroy()
             self.questionLabel.destroy()
             self.confirmAnswerButton.destroy()
             self.deselectOptionsButton.destroy()
+
+        print("self.isQuestionOutcomeScreen: "+str(self.isQuestionOutcomeScreen))
+
+        # Handle destroy if isOutcomeScreen
+        if(self.isQuestionOutcomeScreen):
+            self.labelQuestionOutcome.destroy()
+            self.buttonConfirmQuestionOutcome.destroy()
+            self.isQuestionOutcomeScreen = False
