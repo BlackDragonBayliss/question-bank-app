@@ -20,7 +20,7 @@ class DisplayManager:
         self.questionListAnswerTexts = []
         self.keyList = []
         self.keyAnswerList = []
-
+        # self.buttonList = None
         self.isInitialClearIndex = True
 
 
@@ -39,15 +39,26 @@ class DisplayManager:
         for selectedAnswer in self.selectedAnswerList:
             selectedAnswer.set(0)
         # self.root.destroy()
+    def startScreen(self):
+        self.root.geometry('1400x800')
 
+        self.beginTest1Button = Button(text="Begin Test 1", command=self.instanceTest.testOption1)
+        self.beginTest1Button.place(x=self.xPositionConfirmButton, y=self.yPositionGlobalIterate)
+        self.updateYPositionGlobalIterate()
+        self.beginTest2Button = Button(text="Begin Test 2", command=self.instanceTest.testOption2)
+        self.beginTest2Button.place(x=self.xPositionDeslectButton, y=self.yPositionGlobalIterate)
+
+        self.root.mainloop()
 
     def displayTest(self):
         self.root.geometry('1400x800')
-
+        self.root.mainloop()
         self.displayQuestion()
 
 
-        self.root.mainloop()
+
+
+
 
     def displayQuestion(self):
         self.clearWidgets()
@@ -57,9 +68,9 @@ class DisplayManager:
         self.internalRadialIndex = 0
         # self.xPositionRadialButton
 
-        questionList = self.instanceTest.getQuestionObjectManager().getQuestionList()  # ["A", "B", "C"]
+        questionList = self.instanceTest.getInstanceQuestionObjectManager().getQuestionList()  # ["A", "B", "C"]
         self.selectedAnswerList = []
-        self.currentQuestion = self.instanceTest.getQuestionObjectManager().getCurrentQuestionObject()
+        self.currentQuestion = self.instanceTest.getInstanceQuestionObjectManager().getCurrentQuestionObject()
 
         self.questionText = self.currentQuestion.getProblem()
         print(str(self.currentQuestion.getAnswerListComposite()))
@@ -68,6 +79,8 @@ class DisplayManager:
             self.questionListAnswerKeys.append(index[0])#["ok","hi"]
             self.questionListAnswerTexts.append(index[1])
 
+
+        self.questionListAnswerKeys = ["A","B","C","D","E","F","G","H","I","J","K","L","M"]
 
         self.textAnswerList = []
         self.buttonList = []
@@ -121,6 +134,8 @@ class DisplayManager:
     def clearWidgets(self):
         if(self.isInitialClearIndex):
             self.isInitialClearIndex = False
+            self.beginTest1Button.destroy()
+            self.beginTest2Button.destroy()
         else:
             for widget in self.buttonList:
                 widget.destroy()

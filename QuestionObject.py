@@ -1,3 +1,4 @@
+from random import shuffle
 
 class QuestionObject:
     def __init__(self):
@@ -24,6 +25,9 @@ class QuestionObject:
     def parseAnswer(self, answerString):
         answerList = answerString.split(". ")
         self.answerListComposite.append(answerList)
+
+    def setAnswerListComposite(self, answerListComposite):
+        self.answerListComposite = answerListComposite
     def getAnswerListComposite(self):
         return self.answerListComposite
 
@@ -32,3 +36,11 @@ class QuestionObject:
     def setIsAnswered(self, isAnswered):
         self.isAnswered = isAnswered
     # def isCorrectAnswerListSubmited(self, questionList, answerList):
+
+    def randomizeAnswerList(self):
+        print("AnswerListComposite"+str(self.getAnswerListComposite()))
+        shuffle(self.answerListComposite)
+        # print("shuffle: " + str(shuffledList))
+        # self.setAnswerListComposite(shuffledList)
+        # self.setRandomizedList(shuffledList)
+        # return shuffledList

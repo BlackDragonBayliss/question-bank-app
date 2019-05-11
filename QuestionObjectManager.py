@@ -1,4 +1,5 @@
 # from Test import Test
+from random import shuffle
 
 class QuestionObjectManager:
     def __init__(self):
@@ -50,15 +51,26 @@ class QuestionObjectManager:
         return self.currentQuestionObject
     def setCurrentQuestionObject(self, questionObject):
         self.currentQuestionObject = questionObject
+
     def processNextQuestion(self):
         self.currentQuestionIndex +=1
         nextQuestion = self.getQuestionList()[self.currentQuestionIndex]
         self.setCurrentQuestionObject(nextQuestion)
 
+    # def randomizeQuestionList(self):
+    #     shuffledList = shuffle(self.getRandomizedQuestionList())
+    #     print("shuffle: " + str(shuffledList))
+    #     return shuffledList
+
     def randomizeQuestionList(self):
-        shuffledList = shuffle(self.getRandomizedQuestionList())
-        print("shuffle: " + str(shuffledList))
-        return shuffledList
+        shuffle(self.questionList)
+
+    def randomizeQuestionAnswerLists(self):
+        for questionObject in self.questionList:
+            questionObject.randomizeAnswerList()
+            print(questionObject.getQuestionNumber())
+
+
     def getRandomizedQuestionList(self):
         return self.randomizedQuestionsList
     def setRandomizedQuestionList(self, randomizedQuestionList):
