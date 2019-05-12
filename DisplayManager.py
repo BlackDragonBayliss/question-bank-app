@@ -42,14 +42,33 @@ class DisplayManager:
     def showChoice(self):
         pass
 
+    def displayEntry(self):
+        print(str(self.entryNumberQuestions.get()))
     def startScreen(self):
+
         self.root.geometry('1400x800')
+
+        self.labelInfoNumberQuestions = Label(self.root, text="Enter number of questions for test")
+        self.labelInfoNumberQuestions.place(x=self.xPositionKey, y=self.yPositionGlobalIterate)
+        self.updateYPositionGlobalIterate()
+
+
+        self.entryNumberQuestions = Entry(self.root)
+        self.entryNumberQuestions.place(x=self.xPositionConfirmButton, y=self.yPositionGlobalIterate)
+        self.updateYPositionGlobalIterate()
+
+        # self.entryButton = Button(text="displayEntry", command=self.displayEntry)
+        # self.entryButton.place(x=self.xPositionConfirmButton, y=self.yPositionGlobalIterate)
+        # self.updateYPositionGlobalIterate()
+
         self.beginTest1Button = Button(text="Begin Test 1", command=self.instanceTest.testOption1)
         self.beginTest1Button.place(x=self.xPositionConfirmButton, y=self.yPositionGlobalIterate)
         self.updateYPositionGlobalIterate()
         self.beginTest2Button = Button(text="Begin Test 2", command=self.instanceTest.testOption2)
         self.beginTest2Button.place(x=self.xPositionDeslectButton, y=self.yPositionGlobalIterate)
+
         self.root.mainloop()
+
 
     def displayQuestion(self):
         self.resetScreenVariables()
@@ -57,7 +76,7 @@ class DisplayManager:
 
         instanceQuestionObjectManager = self.instanceTest.getInstanceQuestionObjectManager()
         self.questionCount += 1
-        questionList = self.instanceTest.getInstanceQuestionObjectManager().getQuestionList()
+        questionList = self.instanceTest.getInstanceQuestionObjectManager().getBatchSizeQuestionList()
         self.selectedAnswerList = []
         self.currentQuestion = self.instanceTest.getInstanceQuestionObjectManager().getCurrentQuestionObject()
         self.questionText = self.currentQuestion.getProblem()
@@ -118,6 +137,13 @@ class DisplayManager:
         self.labelQuestionOutcome = Label(self.root, text=outcomeText)
         self.labelQuestionOutcome.place(x=self.xPositionKey, y=self.yPositionGlobalIterate)
         self.updateYPositionGlobalIterate()
+
+        outcomeAnswer = self.instanceTest.getInstanceQuestionObjectManager().getCurrentQuestionObject().getCorrectAnswerList()
+
+        self.labelQuestionOutcomeCorrectAnswer = Label(self.root, text=outcomeAnswer)
+        self.labelQuestionOutcomeCorrectAnswer.place(x=self.xPositionKey, y=self.yPositionGlobalIterate)
+        self.updateYPositionGlobalIterate()
+
         self.buttonConfirmQuestionOutcome = Button(text="Continue", command=self.instanceTest.changeToNextQuestion)
         self.buttonConfirmQuestionOutcome.place(x=self.xPositionButtonConfirmQuestionOutcome, y=self.yPositionContinueButton)
 
@@ -147,6 +173,10 @@ class DisplayManager:
     def clearWidgets(self):
         if(self.isInitialClearIndex):
             self.isInitialClearIndex = False
+
+            self.labelInfoNumberQuestions.destroy()
+            self.entryNumberQuestions.destroy()
+
             self.beginTest1Button.destroy()
             self.beginTest2Button.destroy()
         else:
@@ -164,5 +194,7 @@ class DisplayManager:
         # Handle destroy if isOutcomeScreen
         if(self.isQuestionOutcomeScreen):
             self.labelQuestionOutcome.destroy()
+            self.labelQuestionOutcomeCorrectAnswer.destroy()
             self.buttonConfirmQuestionOutcome.destroy()
             self.isQuestionOutcomeScreen = False
+

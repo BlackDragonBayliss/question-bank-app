@@ -7,6 +7,11 @@ class QuestionObjectManager:
         self.questionList = []
         self.currentQuestionIndex = 0
 
+    def setBatchSizeQuestionList(self, batchSizeQuestionList):
+        self.batchSizeQuestionList = batchSizeQuestionList
+    def getBatchSizeQuestionList(self):
+        return self.batchSizeQuestionList
+
     def setQuestionList(self, questionList):
         self.questionList = questionList
     def getQuestionList(self):
@@ -19,7 +24,7 @@ class QuestionObjectManager:
 
     def processNextQuestion(self):
         self.currentQuestionIndex +=1
-        if (self.currentQuestionIndex < len(self.getQuestionList())):
+        if (self.currentQuestionIndex < len(self.getBatchSizeQuestionList())):
             nextQuestion = self.getQuestionList()[self.currentQuestionIndex]
             self.setCurrentQuestionObject(nextQuestion)
             return True
