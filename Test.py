@@ -13,6 +13,15 @@ class Test:
         self.answerMatchingComposite = []
         self.correctAnswerList = []
         self.questionPieceContainer = []
+        # Fault fixing variables
+        self.faultResolutionQueryStringContainer = []
+        self.filterList1 = []
+        self.listResultsDuplicantAnswerOnSameLineFaultCorrected = []
+        self.faultCorrectedAtIndexContainer = []
+        self.possibleDuplicantAnswerOnSameLineFaultCorrectedAtIndex = 0
+        self.duplicantAnswerOnSameLineFaultCorrectedAtIndex = 0
+        self.questionPieceFaultIndex = 0
+
         self.selectedAnswerIndexTotal = 0
         self.answerListIndex = 0
         self.questionInteration = 0
@@ -20,7 +29,9 @@ class Test:
         self.vceFaultIndex = 0
         self.isQuestionCorrectOutcome = False
         self.isVceFault = False
+        self.isFaultAppended = False
         self.isFirstRoundStrAddition = True
+        self.isFaultDuplicantsAppended = True
         self.instanceDisplayManager = DisplayManager()
         self.instanceQuestionObjectManager = QuestionObjectManager()
 
@@ -56,40 +67,24 @@ class Test:
             questionNumber = faultQuestionContainer[0].replace(' ', '')
 
             # Handle VCE faults
-            # faultIndex = 0
-            # for questionPiece in faultQuestionContainer:
-            #     print("questionPiece: "+questionPiece)
-            #     if("www.vceplus.com " in questionPiece):
-            #         print("hit")
-            #         self.vceFaultIndex = faultIndex
-            #         self.isVceFault = True
-            #     faultIndex += 1
-            # print("vceFaultIndex: " + str(self.vceFaultIndex))
-            # # print("vceFault in faultQuestionContainer: "+faultQuestionContainer[self.vceFaultIndex])
-            # if(self.isVceFault):
-            #     faultQuestionContainer.pop(self.vceFaultIndex)
-            #     for questionPiece in faultQuestionContainer:
-            #         print("reworked QP: " + questionPiece)
-            #     self.isVceFault = False
-            # self.vceFaultIndex = 0
-
-            # sampleTest1 = ["A. asko. dsak B. odsokdsod"]
-            # sampleTest2 = ["C. as.ko.dsak D. odsokdsod"]
-
+            faultIndex = 0
+            for questionPiece in faultQuestionContainer:
+                print("questionPiece: "+questionPiece)
+                if("www.vceplus.com " in questionPiece):
+                    print("hit")
+                    self.vceFaultIndex = faultIndex
+                    self.isVceFault = True
+                faultIndex += 1
+            print("vceFaultIndex: " + str(self.vceFaultIndex))
+            # print("vceFault in faultQuestionContainer: "+faultQuestionContainer[self.vceFaultIndex])
+            if(self.isVceFault):
+                faultQuestionContainer.pop(self.vceFaultIndex)
+                for questionPiece in faultQuestionContainer:
+                    print("reworked QP: " + questionPiece)
+                self.isVceFault = False
+            self.vceFaultIndex = 0
 
             # Handle duplicant answers on same line faults
-            # faultIndex = 0
-            self.faultResolutionQueryStringContainer = []
-            self.filterList1 = []
-            self.listResultsDuplicantAnswerOnSameLineFaultCorrected = []
-            self.faultCorrectedAtIndexContainer = []
-
-
-            self.possibleDuplicantAnswerOnSameLineFaultCorrectedAtIndex = 0
-            self.duplicantAnswerOnSameLineFaultCorrectedAtIndex = 0
-            self.questionPieceFaultIndex = 0
-
-
             print("faultQuestionContainer: "+str(faultQuestionContainer))
             for questionPiece in faultQuestionContainer:
                 self.questionPieceFaultIndex += 1
@@ -105,23 +100,31 @@ class Test:
             print("faultCorrectedAtIndexContainer: "+str(self.faultCorrectedAtIndexContainer))
             # Handle if answers added twice, handle at index
             print(self.listResultsDuplicantAnswerOnSameLineFaultCorrected)
-
             # add all pieces to container, if piece is at index of fault corrected, add fault pieces corresponding
             indexAddlistFinalQuestionPieceResults = 0
             self.listFinalQuestionPieceResults = []
+            print("faultQuestionContainer: "+str(faultQuestionContainer))
+
             for questionPiece in faultQuestionContainer:
-
                 for faultIndex in self.faultCorrectedAtIndexContainer:
-
                     if(indexAddlistFinalQuestionPieceResults == faultIndex):
                         print("Fault fixing at: "+str(indexAddlistFinalQuestionPieceResults))
-                    else:
-                        self.listFinalQuestionPieceResults.append()
-
+                        print("self.listResultsDuplicantAnswerOnSameLineFaultCorrected: "+str(self.listResultsDuplicantAnswerOnSameLineFaultCorrected))
+                        if(self.isFaultDuplicantsAppended):
+                            for faultCorrected in self.listResultsDuplicantAnswerOnSameLineFaultCorrected:
+                                print("appending faultCorrected: "+faultCorrected)
+                                self.listFinalQuestionPieceResults.append(faultCorrected)
+                                self.isFaultDuplicantsAppended = False
+                        self.isFaultAppended = True
+                        continue
                 indexAddlistFinalQuestionPieceResults += 1
-            print("self.listFinalQuestionPieceResults: "+self.listFinalQuestionPieceResults)
+                if(self.isFaultAppended):
+                    self.isFaultAppended = False
+                    continue
+                self.listFinalQuestionPieceResults.append(questionPiece)
+                # indexAddlistFinalQuestionPieceResults += 1
+            print("self.listFinalQuestionPieceResults: "+str(self.listFinalQuestionPieceResults))
 
-            # self.
 
 
                 # Handle store question pieces in container
