@@ -73,6 +73,7 @@ class Test:
 
         for val in data_set_group_0_1:
         #     possibleAnswerIndex = 0
+            self.faultCorrectedAtIndexContainer = []
             faultQuestionContainer = val.splitlines()
             faultQuestionContainer = list(filter(None, faultQuestionContainer))
 
@@ -109,7 +110,7 @@ class Test:
                     self.faultCorrectedAtIndexContainer.append(self.possibleDuplicantAnswerOnSameLineFaultCorrectedAtIndex)
                 self.possibleDuplicantAnswerOnSameLineFaultCorrectedAtIndex += 1
 
-            # print("faultCorrectedAtIndexContainer: "+str(self.faultCorrectedAtIndexContainer))
+            print("faultCorrectedAtIndexContainer: "+str(self.faultCorrectedAtIndexContainer))
             # Handle if answers added twice, handle at index
             # print(self.listResultsDuplicantAnswerOnSameLineFaultCorrected)
             # add all pieces to container, if piece is at index of fault corrected, add fault pieces corresponding
@@ -165,11 +166,13 @@ class Test:
             print(str(self.listFinalQuestionPieceResults))
 
     def handleDuplicantAnswersOnSameLineFault(self, questionPiece):
+        self.questionPieceListSplit = []
         self.questionPieceListSplit = questionPiece.split(" ")
         # print("fixing duplicantAnswersOnSameLineFault: "+str(questionPiece))
         self.questionPieceSplitIndex = 0
         self.filterList1 = []
         self.faultResolutionQueryStringContainer = []
+        self.nextFilterPieceIndex = 0
         for piece in self.questionPieceListSplit:
             # print("piece: " + piece)
             if ("A." in piece or "B." in piece or "C." in piece or "D." in piece
@@ -178,7 +181,7 @@ class Test:
                 # print("hit piece: " + piece)
             self.questionPieceSplitIndex += 1
 
-        # print("filterList1: " + str(self.filterList1))
+        print("filterList1: " + str(self.filterList1))
         newQuestionPieceList = []
         self.nextFilterPieceIndex = 0
         # construct individual questions from split filter
@@ -229,8 +232,10 @@ class Test:
                     # print("questionString: " + str(questionString))
                     # print("currentFilterIndex: " + str(currentFilterIndex))
                     currentFilterIndex += 1
+
             self.faultResolutionQueryStringContainer.append(questionString)
             filterListIterationIndex += 1
+            print("POOP: "+str(self.faultResolutionQueryStringContainer))
         return self.faultResolutionQueryStringContainer
 
 
