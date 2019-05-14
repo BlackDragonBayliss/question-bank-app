@@ -60,6 +60,17 @@ class Test:
         # questionObjectComposite = []
         # intervalIndex = 0
         valIndex = 0
+        self.vceFaultIndex = 0
+        self.questionPieceFaultIndex = 0
+        self.listResultsDuplicantAnswerOnSameLineFaultCorrected = []
+        self.faultCorrectedAtIndexContainer = []
+        self.listResultsDuplicantAnswerOnSameLineFaultCorrected = []
+        self.listFinalQuestionPieceResults = []
+        self.possibleDuplicantAnswerOnSameLineFaultCorrectedAtIndex = 0
+        self.spaceFaultQuestionPieceList = []
+        self.strPieceSpaceCorrectAnswerFault = ""
+        # self.listFinalQuestionPieceResults = []
+
         for val in data_set_group_0_1:
         #     possibleAnswerIndex = 0
             faultQuestionContainer = val.splitlines()
@@ -158,6 +169,7 @@ class Test:
         # print("fixing duplicantAnswersOnSameLineFault: "+str(questionPiece))
         self.questionPieceSplitIndex = 0
         self.filterList1 = []
+        self.faultResolutionQueryStringContainer = []
         for piece in self.questionPieceListSplit:
             # print("piece: " + piece)
             if ("A." in piece or "B." in piece or "C." in piece or "D." in piece
