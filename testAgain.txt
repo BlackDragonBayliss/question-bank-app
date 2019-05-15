@@ -1,0 +1,8 @@
+QUESTION 64
+A user leaves the workstation frequently and does not want sensitive material to be accessed. In addition, the user does not want to turn off the computer every time in the evening. Which of the following is the BEST solution for securing the workstation?
+A. Setastrongpasswordthatrequiresarenewalevery30days.
+B. Runascreensaverafteroneminuteofnonuseandfingerprintlockforafterhours.
+C. Apply a screen lock after five minutes of nonuse and login time restrictions for afterhours. D. Require a password and fingerprint lock afterhours.
+Correct Answer: C Section: (none) Explanation
+Explanation/Reference:
+Section: Security

@@ -59,19 +59,21 @@ class Test:
         data_set_group_0_1.pop(0)
         # questionObjectComposite = []
         # intervalIndex = 0
-        valIndex = 0
-        self.vceFaultIndex = 0
-        self.questionPieceFaultIndex = 0
-        self.listResultsDuplicantAnswerOnSameLineFaultCorrected = []
-        self.faultCorrectedAtIndexContainer = []
-        self.listResultsDuplicantAnswerOnSameLineFaultCorrected = []
-        self.listFinalQuestionPieceResults = []
-        self.possibleDuplicantAnswerOnSameLineFaultCorrectedAtIndex = 0
-        self.spaceFaultQuestionPieceList = []
-        self.strPieceSpaceCorrectAnswerFault = ""
+
         # self.listFinalQuestionPieceResults = []
 
         for val in data_set_group_0_1:
+            valIndex = 0
+            self.vceFaultIndex = 0
+            self.questionPieceFaultIndex = 0
+            self.listResultsDuplicantAnswerOnSameLineFaultCorrected = []
+            self.faultCorrectedAtIndexContainer = []
+            self.listResultsDuplicantAnswerOnSameLineFaultCorrected = []
+            self.listFinalQuestionPieceResults = []
+            self.possibleDuplicantAnswerOnSameLineFaultCorrectedAtIndex = 0
+            self.spaceFaultQuestionPieceList = []
+            self.strPieceSpaceCorrectAnswerFault = ""
+            self.isFaultDuplicantsAppended = True
         #     possibleAnswerIndex = 0
             self.faultCorrectedAtIndexContainer = []
             faultQuestionContainer = val.splitlines()
@@ -98,19 +100,26 @@ class Test:
             self.vceFaultIndex = 0
 
             # Handle duplicant answers on same line faults
-            # print("faultQuestionContainer: "+str(faultQuestionContainer))
+            # print("1faultQuestionContainer: "+str(faultQuestionContainer))
             for questionPiece in faultQuestionContainer:
                 self.questionPieceFaultIndex += 1
                 if ("A. " in questionPiece or "B. " in questionPiece or "C. " in questionPiece or "D. " in questionPiece
                     or "E. " in questionPiece or "F. " in questionPiece or "G. " in questionPiece or "H. " in questionPiece):
                     # print("Possible duplicantAnswerOnSameLineFault at questionPieceFaultIndex: "+str(self.questionPieceFaultIndex))
-                    self.listResultsDuplicantAnswerOnSameLineFaultCorrected = self.handleDuplicantAnswersOnSameLineFault(questionPiece)
+
+                    #Main problems with fault handling
+                    # if(self.listResultsDuplicantAnswerOnSameLineFaultCorrected)
+                    self.listResultsDuplicantAnswerOnSameLineFaultCorrected.append(self.handleDuplicantAnswersOnSameLineFault(questionPiece))
+                    # self.listResultsDuplicantAnswerOnSameLineFaultCorrected =
                     # print("listResultsDuplicantAnswerOnSameLineFaultCorrected: "+str(self.listResultsDuplicantAnswerOnSameLineFaultCorrected))
                     # faultCorrectedAtIndex
+
+
+
                     self.faultCorrectedAtIndexContainer.append(self.possibleDuplicantAnswerOnSameLineFaultCorrectedAtIndex)
                 self.possibleDuplicantAnswerOnSameLineFaultCorrectedAtIndex += 1
 
-            print("faultCorrectedAtIndexContainer: "+str(self.faultCorrectedAtIndexContainer))
+            # print("faultCorrectedAtIndexContainer: "+str(self.faultCorrectedAtIndexContainer))
             # Handle if answers added twice, handle at index
             # print(self.listResultsDuplicantAnswerOnSameLineFaultCorrected)
             # add all pieces to container, if piece is at index of fault corrected, add fault pieces corresponding
@@ -123,11 +132,15 @@ class Test:
                     if(indexAddlistFinalQuestionPieceResults == faultIndex):
                         # print("Fault fixing at: "+str(indexAddlistFinalQuestionPieceResults))
                         # print("self.listResultsDuplicantAnswerOnSameLineFaultCorrected: "+str(self.listResultsDuplicantAnswerOnSameLineFaultCorrected))
+                        # print("self.isFaultDuplicantsAppended: "+str(self.isFaultDuplicantsAppended))
+
                         if(self.isFaultDuplicantsAppended):
                             for faultCorrected in self.listResultsDuplicantAnswerOnSameLineFaultCorrected:
-                                # print("appending faultCorrected: "+faultCorrected)
-                                self.listFinalQuestionPieceResults.append(faultCorrected)
-                                self.isFaultDuplicantsAppended = False
+                                # print("appending faultCorrected: "+str(faultCorrected))
+                                for fault in faultCorrected:
+                                    self.listFinalQuestionPieceResults.append(fault)
+                                    self.isFaultDuplicantsAppended = False
+
                         self.isFaultAppended = True
                         continue
                 indexAddlistFinalQuestionPieceResults += 1
@@ -163,30 +176,30 @@ class Test:
 
             #find index where correct answer piece, replace with fixed fault correct answer.
             self.listFinalQuestionPieceResults[self.spaceFaultQuestionPieceIndex] = "Correct Answer:"+self.strPieceSpaceCorrectAnswerFault
-            print(str(self.listFinalQuestionPieceResults))
+            print("self.listFinalQuestionPieceResults"+str(self.listFinalQuestionPieceResults))
 
     def handleDuplicantAnswersOnSameLineFault(self, questionPiece):
-        self.questionPieceListSplit = []
-        self.questionPieceListSplit = questionPiece.split(" ")
-        # print("fixing duplicantAnswersOnSameLineFault: "+str(questionPiece))
-        self.questionPieceSplitIndex = 0
-        self.filterList1 = []
-        self.faultResolutionQueryStringContainer = []
+        questionPieceListSplit = []
+        questionPieceListSplit = questionPiece.split(" ")
+        # # print("fixing duplicantAnswersOnSameLineFault: "+str(questionPiece))
+        questionPieceSplitIndex = 0
+        filterList1 = []
+        newQuestionPieceList = []
         self.nextFilterPieceIndex = 0
-        for piece in self.questionPieceListSplit:
+        self.faultResolutionQueryStringContainer = []
+        # self.nextFilterPieceIndex = 0
+        for piece in questionPieceListSplit:
             # print("piece: " + piece)
             if ("A." in piece or "B." in piece or "C." in piece or "D." in piece
                 or "E." in piece or "F." in piece or "G." in piece or "H." in piece):
-                self.filterList1.append(self.questionPieceSplitIndex)
+                filterList1.append(questionPieceSplitIndex)
                 # print("hit piece: " + piece)
-            self.questionPieceSplitIndex += 1
+            questionPieceSplitIndex += 1
 
-        print("filterList1: " + str(self.filterList1))
-        newQuestionPieceList = []
-        self.nextFilterPieceIndex = 0
+        # print("filterList1: " + str(filterList1))
         # construct individual questions from split filter
         filterListIterationIndex = 0
-        for filterIndex in self.filterList1:
+        for filterIndex in filterList1:
             # print("SECOND INTERATION")
             self.isFirstRoundStrAddition = True
             currentFilterIndex = filterIndex
@@ -197,8 +210,8 @@ class Test:
             # print("filterListIterationIndex: " + str(filterListIterationIndex))
             # print("len(self.filterList1): " + str(len(self.filterList1)))
 
-            if (filterListIterationIndex < (len(self.filterList1) - 1)):
-                self.nextFilterPieceIndex = self.filterList1[filterListIterationIndex + 1]
+            if (filterListIterationIndex < (len(filterList1) - 1)):
+                self.nextFilterPieceIndex = filterList1[filterListIterationIndex + 1]
                 # print("nextFilterPieceIndex: " + str(nextFilterPieceIndex))
 
                 # print("self.questionPieceListSplit: " + str(self.questionPieceListSplit))
@@ -207,7 +220,7 @@ class Test:
 
                 # continue to next stop point adding indexs of the questionPieceListSplit together,
                 while (currentFilterIndex < self.nextFilterPieceIndex):
-                    strToAdd = self.questionPieceListSplit[(currentFilterIndex)]
+                    strToAdd = questionPieceListSplit[(currentFilterIndex)]
                     questionString += strToAdd
                     if (self.isFirstRoundStrAddition):
                         questionString += " "
@@ -224,7 +237,7 @@ class Test:
 
                 # continue to next stop point adding indexs of the questionPieceListSplit together,
                 while (currentFilterIndex <= self.nextFilterPieceIndex):
-                    strToAdd = self.questionPieceListSplit[(currentFilterIndex)]
+                    strToAdd = questionPieceListSplit[(currentFilterIndex)]
                     questionString += strToAdd
                     if (self.isFirstRoundStrAddition):
                         questionString += " "
@@ -235,9 +248,8 @@ class Test:
 
             self.faultResolutionQueryStringContainer.append(questionString)
             filterListIterationIndex += 1
-            print("POOP: "+str(self.faultResolutionQueryStringContainer))
+            # print("Check test: "+str(self.faultResolutionQueryStringContainer))
         return self.faultResolutionQueryStringContainer
-
 
 
 

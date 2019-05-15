@@ -15,3 +15,27 @@ D. Cipher lock
 Correct Answer: CD Section: (none) Explanation
 Explanation/Reference:
 Section: Security
+QUESTION 63
+A user wants to save a file into another user’s directory, but the file save is denied. Which of the following is the MOST likely reason the file save cannot be completed?
+A. TheusermustbeamemberoftheUsersgroup
+B. Theuserrequireswritepermissionstothefolder
+C. The user requires read permission to the folder
+D. The user must be a member of the Administrators group
+Correct Answer: B Section: (none) Explanation
+ www.vceplus.com - VCE Exam Simulator - Download A+ VCE (latest) free Open VCE Exams - VCE to PDF Converter - PDF Online
+  Explanation/Reference:
+Section: Security
+QUESTION 64
+A user leaves the workstation frequently and does not want sensitive material to be accessed. In addition, the user does not want to turn off the computer every time in the evening. Which of the following is the BEST solution for securing the workstation?
+A. Setastrongpasswordthatrequiresarenewalevery30days.
+B. Runascreensaverafteroneminuteofnonuseandfingerprintlockforafterhours.
+C. Apply a screen lock after five minutes of nonuse and login time restrictions for afterhours. D. Require a password and fingerprint lock afterhours.
+Correct Answer: C Section: (none) Explanation
+Explanation/Reference:
+Section: Security
+QUESTION 65
+A technician is configuring a SOHO router to ensure network computers can only use secured protocols on the Internet. Which of the following ports should be allowed?
+A. 143 B. 23 C. 443 D. 3269 E. 3389
+Correct Answer: C Section: (none) Explanation
+Explanation/Reference:
+Section: Security
