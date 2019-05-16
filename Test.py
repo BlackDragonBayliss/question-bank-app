@@ -76,45 +76,64 @@ class Test:
 
         # print(stringText)
 
-
-
-
         #Iterate through first question, followed by consec four.
+        questionPieceContainer = []
         stringTextContainer = stringText.splitlines()
         tempContainer = []
         strToAppend = ""
         isBeginTextAppend = False
+        isOperationNormal = True
         index = 0
-        for text in stringTextContainer:
-            if(index >= 20 and index < 40):
+
+
+        # Handle VCE faults here.
+        questionList = self.handleVceFault(stringTextContainer)
+
+        for text in questionList:
+            # if(index > 20 and index < 44):
+            if (index > 40 and index < 64):
+                # print(text)
                 # pass
                 # print(index)
                 # print(str(stringTextContainer[i]))
 
                 # Within question and A.
                 # append question lines then append
-
-
-                if "QUESTION" in text:
-                    # print("Hit question")
-                    tempContainer = []
-                    isBeginTextAppend = True
+                if "A." in text:
+                    # print("Hit A.")
+                    questionPieceContainer.append(strToAppend)
+                    strToAppend = ""
+                    isBeginTextAppend = False
+                    isOperationNormal = True
 
                 if (isBeginTextAppend):
                     strToAppend += text
+                    # print()
+
+                if "QUESTION" in text:
+                    # print("Hit question")
+                    # tempContainer = []
+                    isBeginTextAppend = True
+                    isOperationNormal = False
+                    questionPieceContainer.append(text)
                     # print("strToAppend: " + strToAppend)
 
-                if "A." in text:
-                    # print("Hit A.")
-                    tempContainer.append(strToAppend)
-                    isBeginTextAppend = False
+                if(isOperationNormal):
+                    questionPieceContainer.append(text)
 
             index += 1
 
-        print(str(tempContainer))
 
 
+        #Handle at index question 7 and 8, ensure vce removal process.
 
+
+        # print(str(questionPieceContainer))
+        # print(str(tempContainer))
+
+
+        # Intake feed, process into question bank
+        # questionComposite = self.processParseQuestionBank(questionPieceContainer)
 
             # isBeginTextAppend = False
         # print(str(tempContainer))
@@ -148,8 +167,7 @@ class Test:
 
 
 
-        # Intake feed, process into question bank
-        # questionComposite = self.processParseQuestionBank(questionSplitContainer)
+
 
 
 
@@ -182,7 +200,6 @@ class Test:
             #If "QUESTION" start new data set
             if "QUESTION" in questionPiece:
                 isStartProcessing = True
-
             if(isStartProcessing):
                 if "QUESTION" in questionPiece:
                     # if(currentQuestionSplitIndex == -1):
@@ -256,6 +273,27 @@ class Test:
         #     self.questionInteration += 1
         # return questionObjectComposite
 
+    def handleVceFault(self, questionList):
+        faultIndex = 0
+        for questionPiece in questionList:
+            # print("questionPiece: "+questionPiece)
+            if("www.vceplus.com " in questionPiece):
+                # print("hit")
+                self.vceFaultIndex = faultIndex
+                self.isVceFault = True
+            faultIndex += 1
+        # print("vceFaultIndex: " + str(self.vceFaultIndex))
+        # print("vceFault in faultQuestionContainer: "+faultQuestionContainer[self.vceFaultIndex])
+        if(self.isVceFault):
+            questionList.pop(self.vceFaultIndex)
+            # for questionPiece in faultQuestionContainer:
+                # print("reworked QP: " + questionPiece)
+            self.isVceFault = False
+        self.vceFaultIndex = 0
+
+        return questionList
+
+
     def parseQuestionBankToCorrectFormat(self):
         # file = open("testfile.txt", "w")
         # file.write("Hello World")
@@ -295,22 +333,7 @@ class Test:
             questionNumber = faultQuestionContainer[0].replace(' ', '')
 
             # Handle VCE faults
-            faultIndex = 0
-            for questionPiece in faultQuestionContainer:
-                # print("questionPiece: "+questionPiece)
-                if("www.vceplus.com " in questionPiece):
-                    # print("hit")
-                    self.vceFaultIndex = faultIndex
-                    self.isVceFault = True
-                faultIndex += 1
-            # print("vceFaultIndex: " + str(self.vceFaultIndex))
-            # print("vceFault in faultQuestionContainer: "+faultQuestionContainer[self.vceFaultIndex])
-            if(self.isVceFault):
-                faultQuestionContainer.pop(self.vceFaultIndex)
-                # for questionPiece in faultQuestionContainer:
-                    # print("reworked QP: " + questionPiece)
-                self.isVceFault = False
-            self.vceFaultIndex = 0
+
 
             # Handle duplicant answers on same line faults
             # print("1faultQuestionContainer: "+str(faultQuestionContainer))
