@@ -73,19 +73,67 @@ class Test:
         stringText = self.pdfText #f.read()
         questionSplitContainer = []
         stringTextContainer = []
+
+        # print(stringText)
+
+
+
+
         #Iterate through first question, followed by consec four.
         stringTextContainer = stringText.splitlines()
-        stringTextContainerIndex = 0
-        for stringLine in stringTextContainer:
-            # if(stringTextContainerIndex == 40):
-            #     print("Breaking at index: "+str(stringTextContainerIndex))
-            #     break
+        tempContainer = []
+        strToAppend = ""
+        isBeginTextAppend = False
+        index = 0
+        for text in stringTextContainer:
+            if(index >= 20 and index < 40):
+                # pass
+                # print(index)
+                # print(str(stringTextContainer[i]))
 
-        # starting at certain index begin storing question data lines
-            if(stringTextContainerIndex >= 20):
-                # print(stringLine)
-                questionSplitContainer.append(stringLine)
-            stringTextContainerIndex += 1
+                # Within question and A.
+                # append question lines then append
+
+
+                if "QUESTION" in text:
+                    # print("Hit question")
+                    tempContainer = []
+                    isBeginTextAppend = True
+
+                if (isBeginTextAppend):
+                    strToAppend += text
+                    # print("strToAppend: " + strToAppend)
+
+                if "A." in text:
+                    # print("Hit A.")
+                    tempContainer.append(strToAppend)
+                    isBeginTextAppend = False
+
+            index += 1
+
+        print(str(tempContainer))
+
+
+
+
+            # isBeginTextAppend = False
+        # print(str(tempContainer))
+
+
+        # stringTextContainerIndex = 0
+        # for stringLine in stringTextContainer:
+        #     # if(stringTextContainerIndex == 40):
+        #     #     print("Breaking at index: "+str(stringTextContainerIndex))
+        #     #     break
+        #
+        # # starting at certain index begin storing question data lines
+        #     if(stringTextContainerIndex >= 20):
+        #         # print(stringLine)
+        #         questionSplitContainer.append(stringLine)
+        #     stringTextContainerIndex += 1
+
+
+
 
         # print("questionSplitC
         # ontainer: "+str(questionSplitContainer))
@@ -98,76 +146,114 @@ class Test:
         #
         #     testIndex += 1
 
+
+
         # Intake feed, process into question bank
-        questionComposite = self.processParseQuestionBank(questionSplitContainer)
+        # questionComposite = self.processParseQuestionBank(questionSplitContainer)
+
+
+
+
+
+
+
         # for val in questionComposite:
         #     print(str(val.getAnswerListComposite()))
         # Set question list
-        self.instanceQuestionObjectManager.setQuestionList(questionComposite)
-        self.instanceQuestionObjectManager.setCurrentQuestionObject(questionComposite[0])
-        # Randomize question answers
-        self.instanceQuestionObjectManager.randomizeQuestionAnswerLists()
+        # self.instanceQuestionObjectManager.setQuestionList(questionComposite)
+        # self.instanceQuestionObjectManager.setCurrentQuestionObject(questionComposite[0])
+        # # Randomize question answers
+        # self.instanceQuestionObjectManager.randomizeQuestionAnswerLists()
 
     def processParseQuestionBank(self, questionSplitContainer):
         # data_set_group_0_1 = str_to_parse.split('QUESTION')
         # data_set_group_0_1.pop(0)
         questionObjectComposite = []
         intervalIndex = 0
+        isBeginAddQuestionObject = True
+        isStartProcessing = False
+        questionObjectListContainer = []
+        questionObjectList = []
         # for val in data_set_group_0_1:
-
         # Split at question interval store in question set.
         # Iterate through question pieces, storing at interval of question found in string.
-        for questionPiece in
+        currentQuestionSplitIndex = -1
+        for questionPiece in questionSplitContainer:
+            #If "QUESTION" start new data set
+            if "QUESTION" in questionPiece:
+                isStartProcessing = True
 
-        for val in questionSplitContainer:
-            possibleAnswerIndex = 0
-            questionContainer = val.splitlines()
-            questionContainer = list(filter(None, questionContainer))
-            questionNumber = questionContainer[0].replace(' ','')
-            #create data object
-            questionObj = QuestionObject()
+            if(isStartProcessing):
+                if "QUESTION" in questionPiece:
+                    # if(currentQuestionSplitIndex == -1):
+                    currentQuestionSplitIndex += 1
+                    questionObjectListContainer.append([])
+                    # print("currentQuestionSplitIndex: " + str(currentQuestionSplitIndex))
+                    # print("questionObjectListContainer: " + str(questionObjectListContainer))
+                    questionObjectListContainer[currentQuestionSplitIndex].append(questionPiece)
+                    continue
+                    # if(isBeginAddQuestionObject):
+                    # questionObjectList = []
+                        # isBeginAddQuestionObject = False
+                # print("currentQuestionSplitIndex: "+str(currentQuestionSplitIndex))
+                questionObjectListContainer[(currentQuestionSplitIndex)].append(questionPiece)
 
-            questionObj.setQuestionNumber(questionNumber)
-            questionObj.setProblem(questionContainer[1])
-            questionPieceIndex = 0
 
-            # Parse correct answer
-            for questionPiece in questionContainer:
-                if (questionPiece.find("Correct") == 0):
+        for i in range(5, 8):
+            print("questionObjectListContainer: "+ str(questionObjectListContainer[i]))
+                # questionObjectContainer.append(questionPiece)
+                # print(questionPiece)
 
-                    answerUnparsed = questionPiece.split(":")
-                    # print(answerUnparsed[1])
 
-                    self.answerList = answerUnparsed[1].split(" ")
-                    # Remove leading white space index
-                    del self.answerList[0:1]
-
-                questionPieceIndex += 1
-
-            #Reiterate through answers, if matching correct answerList, set text as correct answer in object
-            for answer in self.answerList:
-                for questionPiece in questionContainer:
-                    questionPieceKey = self.answerList[self.answerListIndex] + "."
-                    if (questionPiece.find(questionPieceKey) == 0):
-                        answerListSplit = questionPiece.split(". ")
-                        correctAnswerToAppend = answerListSplit[1]
-                        questionObj.addCorrectAnswer(correctAnswerToAppend)
-                self.answerListIndex +=1
-            self.answerListIndex = 0
-            questionObjectComposite.append(questionObj)
-
-            # Parse answer list
-            for val in questionContainer:
-                if(possibleAnswerIndex > 1):
-                    # print(val)
-                    if(val.find("Correct") == 0):
-                        isContinueCalculating = False
-                        break
-                    questionObj.parseAnswer(val)
-                possibleAnswerIndex += 1
-            intervalIndex += 1
-
-            self.questionInteration += 1
+        # for val in questionSplitContainer:
+        #     possibleAnswerIndex = 0
+        #     questionContainer = val.splitlines()
+        #     questionContainer = list(filter(None, questionContainer))
+        #     questionNumber = questionContainer[0].replace(' ','')
+        #     #create data object
+        #     questionObj = QuestionObject()
+        #
+        #     questionObj.setQuestionNumber(questionNumber)
+        #     questionObj.setProblem(questionContainer[1])
+        #     questionPieceIndex = 0
+        #
+        #     # Parse correct answer
+        #     for questionPiece in questionContainer:
+        #         if (questionPiece.find("Correct") == 0):
+        #
+        #             answerUnparsed = questionPiece.split(":")
+        #             # print(answerUnparsed[1])
+        #
+        #             self.answerList = answerUnparsed[1].split(" ")
+        #             # Remove leading white space index
+        #             del self.answerList[0:1]
+        #
+        #         questionPieceIndex += 1
+        #
+        #     #Reiterate through answers, if matching correct answerList, set text as correct answer in object
+        #     for answer in self.answerList:
+        #         for questionPiece in questionContainer:
+        #             questionPieceKey = self.answerList[self.answerListIndex] + "."
+        #             if (questionPiece.find(questionPieceKey) == 0):
+        #                 answerListSplit = questionPiece.split(". ")
+        #                 correctAnswerToAppend = answerListSplit[1]
+        #                 questionObj.addCorrectAnswer(correctAnswerToAppend)
+        #         self.answerListIndex +=1
+        #     self.answerListIndex = 0
+        #     questionObjectComposite.append(questionObj)
+        #
+        #     # Parse answer list
+        #     for val in questionContainer:
+        #         if(possibleAnswerIndex > 1):
+        #             # print(val)
+        #             if(val.find("Correct") == 0):
+        #                 isContinueCalculating = False
+        #                 break
+        #             questionObj.parseAnswer(val)
+        #         possibleAnswerIndex += 1
+        #     intervalIndex += 1
+        #
+        #     self.questionInteration += 1
         # return questionObjectComposite
 
     def parseQuestionBankToCorrectFormat(self):
