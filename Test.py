@@ -85,56 +85,62 @@ class Test:
         isOperationNormal = True
         index = 0
 
+        vceTestList = []
+        #Take sample, test removal.
+        vceIndex = 0
+        for text in stringTextContainer:
+            # if (vceIndex > 109 and vceIndex < 125):
+            # if (vceIndex > 109 and vceIndex < 140):
+            vceTestList.append(text)
+            vceIndex += 1
+        # print("vceTestList: "+str(vceTestList))
+
+
+
+
+
+        vceTestList = self.handleVceFault(vceTestList)
+        # print("questionList: "+str(vceTestList))
+
+        revisedEmptyStringAtIndexFaultList = self.handleEmptyStringAtIndexFault(vceTestList)
+
+        # for i in range(80, 120):
+        #     # pass
+        #     print("vceTestList: " + str(vceTestList[i]))
+        #
+
+        # print("questionList: " + str(questionList))
 
         # Handle VCE faults here.
-        questionList = self.handleVceFault(stringTextContainer)
+        # questionList = self.handleVceFault(stringTextContainer)
+        #
+        questionPieceContainer = self.handleProblemConcatenationFault(revisedEmptyStringAtIndexFaultList)
 
-        for text in questionList:
-            # if(index > 20 and index < 44):
-            if (index > 40 and index < 64):
-                # print(text)
-                # pass
-                # print(index)
-                # print(str(stringTextContainer[i]))
+        # questionObjectListContainer
+        #VCE and space fault handled at this point
 
-                # Within question and A.
-                # append question lines then append
-                if "A." in text:
-                    # print("Hit A.")
-                    questionPieceContainer.append(strToAppend)
-                    strToAppend = ""
-                    isBeginTextAppend = False
-                    isOperationNormal = True
-
-                if (isBeginTextAppend):
-                    strToAppend += text
-                    # print()
-
-                if "QUESTION" in text:
-                    # print("Hit question")
-                    # tempContainer = []
-                    isBeginTextAppend = True
-                    isOperationNormal = False
-                    questionPieceContainer.append(text)
-                    # print("strToAppend: " + strToAppend)
-
-                if(isOperationNormal):
-                    questionPieceContainer.append(text)
-
-            index += 1
-
-
-
-        #Handle at index question 7 and 8, ensure vce removal process.
-
+        # for i in range(80, 120):
+        #     print("questionObjectListContainer: " + str(questionPieceContainer[i]))
 
         # print(str(questionPieceContainer))
         # print(str(tempContainer))
 
-
         # Intake feed, process into question bank
-        # questionComposite = self.processParseQuestionBank(questionPieceContainer)
+        questionComposite = self.processParseQuestionBank(questionPieceContainer)
+        # print("questionComposite: "+ str(questionComposite))
 
+
+        for questionObj in questionComposite:
+            print("questionObj number: " + questionObj.getQuestionNumber())
+            print("questionObj problem: " + questionObj.getProblem())
+            print("correct answer: "+str(questionObj.getCorrectAnswerList()))
+        # for i in range(5, 8):
+        #     print("questionComposite: " + str(questionComposite[i]))
+
+
+
+
+        # print("questionComposite: "+questionComposite)
             # isBeginTextAppend = False
         # print(str(tempContainer))
 
@@ -167,14 +173,6 @@ class Test:
 
 
 
-
-
-
-
-
-
-
-
         # for val in questionComposite:
         #     print(str(val.getAnswerListComposite()))
         # Set question list
@@ -182,6 +180,68 @@ class Test:
         # self.instanceQuestionObjectManager.setCurrentQuestionObject(questionComposite[0])
         # # Randomize question answers
         # self.instanceQuestionObjectManager.randomizeQuestionAnswerLists()
+
+    def handleVceFault(self, questionList):
+        faultIndex = 0
+        faultIndexList = []
+        for questionPiece in questionList:
+            # print("questionPiece: "+questionPiece)
+            if("www.vceplus.com " in questionPiece):
+                # print("hit")
+                # self.vceFaultIndex = faultIndex
+                faultIndexList.append(faultIndex)
+                # self.isVceFault = True
+            faultIndex += 1
+        # print("vceFault in faultQuestionContainer: "+questionList[self.vceFaultIndex])
+        # if(self.isVceFault):
+        questionListRevised = []
+        indexProcessing = 0
+        faultFoundIndex = 0
+        # for each piece, add to revised list, if fault, continue a do not add
+        for questionPiece in questionList:
+            if(faultFoundIndex <= len(faultIndexList)):
+                if(indexProcessing == faultIndexList[faultFoundIndex]):
+                    faultFoundIndex += 1
+                    indexProcessing += 1
+                    continue
+            questionListRevised.append(questionPiece)
+            indexProcessing += 1
+        return questionListRevised
+
+    def handleEmptyStringAtIndexFault(self, questionList):
+        emptyStringAtIndexFaultIndex = 0
+        newList = []
+        for piece in questionList:
+            if(len(piece)==0):
+                continue
+            newList.append(piece)
+            emptyStringAtIndexFaultIndex +=1
+        return newList
+
+    def handleProblemConcatenationFault(self, questionPieceList):
+        index = 0
+        questionPieceContainer = []
+        isBeginTextAppend = False
+        strToAppend = ""
+
+        for text in questionPieceList:
+            # Within questionPiece range"QUESTION" - "A."
+            # append question lines into individual lists
+            if "A." in text:
+                questionPieceContainer.append(strToAppend)
+                strToAppend = ""
+                isBeginTextAppend = False
+                isOperationNormal = True
+            if (isBeginTextAppend):
+                strToAppend += text
+            if "QUESTION" in text:
+                isBeginTextAppend = True
+                isOperationNormal = False
+                questionPieceContainer.append(text)
+            if(isOperationNormal):
+                questionPieceContainer.append(text)
+            index += 1
+        return questionPieceContainer
 
     def processParseQuestionBank(self, questionSplitContainer):
         # data_set_group_0_1 = str_to_parse.split('QUESTION')
@@ -192,6 +252,7 @@ class Test:
         isStartProcessing = False
         questionObjectListContainer = []
         questionObjectList = []
+
         # for val in data_set_group_0_1:
         # Split at question interval store in question set.
         # Iterate through question pieces, storing at interval of question found in string.
@@ -215,83 +276,69 @@ class Test:
                 # print("currentQuestionSplitIndex: "+str(currentQuestionSplitIndex))
                 questionObjectListContainer[(currentQuestionSplitIndex)].append(questionPiece)
 
-
-        for i in range(5, 8):
-            print("questionObjectListContainer: "+ str(questionObjectListContainer[i]))
-                # questionObjectContainer.append(questionPiece)
-                # print(questionPiece)
+        # print("questionObjectListContainer: " + str(questionObjectListContainer))
+        # return questionObjectListContainer
 
 
-        # for val in questionSplitContainer:
-        #     possibleAnswerIndex = 0
-        #     questionContainer = val.splitlines()
-        #     questionContainer = list(filter(None, questionContainer))
-        #     questionNumber = questionContainer[0].replace(' ','')
-        #     #create data object
-        #     questionObj = QuestionObject()
-        #
-        #     questionObj.setQuestionNumber(questionNumber)
-        #     questionObj.setProblem(questionContainer[1])
-        #     questionPieceIndex = 0
-        #
-        #     # Parse correct answer
-        #     for questionPiece in questionContainer:
-        #         if (questionPiece.find("Correct") == 0):
-        #
-        #             answerUnparsed = questionPiece.split(":")
-        #             # print(answerUnparsed[1])
-        #
-        #             self.answerList = answerUnparsed[1].split(" ")
-        #             # Remove leading white space index
-        #             del self.answerList[0:1]
-        #
-        #         questionPieceIndex += 1
-        #
-        #     #Reiterate through answers, if matching correct answerList, set text as correct answer in object
-        #     for answer in self.answerList:
-        #         for questionPiece in questionContainer:
-        #             questionPieceKey = self.answerList[self.answerListIndex] + "."
-        #             if (questionPiece.find(questionPieceKey) == 0):
-        #                 answerListSplit = questionPiece.split(". ")
-        #                 correctAnswerToAppend = answerListSplit[1]
-        #                 questionObj.addCorrectAnswer(correctAnswerToAppend)
-        #         self.answerListIndex +=1
-        #     self.answerListIndex = 0
-        #     questionObjectComposite.append(questionObj)
-        #
-        #     # Parse answer list
-        #     for val in questionContainer:
-        #         if(possibleAnswerIndex > 1):
-        #             # print(val)
-        #             if(val.find("Correct") == 0):
-        #                 isContinueCalculating = False
-        #                 break
-        #             questionObj.parseAnswer(val)
-        #         possibleAnswerIndex += 1
-        #     intervalIndex += 1
-        #
-        #     self.questionInteration += 1
-        # return questionObjectComposite
+        questionContainer =[]
+        testIndex = 0
+        for objectPieceList in questionObjectListContainer:
+            if(testIndex == 0):
+                possibleAnswerIndex = 0
+                # questionContainer = val.splitlines()
+                # questionContainer = list(filter(None, questionContainer))
+                # print("questionContainer: "+str(questionContainer))
+                # questionNumber = objectPieceList[0].replace(' ','')
+                # print("objectPieceList: "+str(objectPieceList))
+                questionNumber = objectPieceList[0].split(' ')
+                # print("questionNumber: " + str(questionNumber[1]))
+                #create data object
+                questionObj = QuestionObject()
 
-    def handleVceFault(self, questionList):
-        faultIndex = 0
-        for questionPiece in questionList:
-            # print("questionPiece: "+questionPiece)
-            if("www.vceplus.com " in questionPiece):
-                # print("hit")
-                self.vceFaultIndex = faultIndex
-                self.isVceFault = True
-            faultIndex += 1
-        # print("vceFaultIndex: " + str(self.vceFaultIndex))
-        # print("vceFault in faultQuestionContainer: "+faultQuestionContainer[self.vceFaultIndex])
-        if(self.isVceFault):
-            questionList.pop(self.vceFaultIndex)
-            # for questionPiece in faultQuestionContainer:
-                # print("reworked QP: " + questionPiece)
-            self.isVceFault = False
-        self.vceFaultIndex = 0
+                questionObj.setQuestionNumber(questionNumber[1])
+                questionObj.setProblem(objectPieceList[1])
+                # print("questionObj number: " + questionObj.getQuestionNumber())
+                # print("questionObj problem: " + questionObj.getProblem())
 
-        return questionList
+            # testIndex+=1
+
+            questionPieceIndex = 0
+
+            # Parse correct answer
+            for questionPiece in questionContainer:
+                if (questionPiece.find("Correct") == 0):
+                    answerUnparsed = questionPiece.split(":")
+                    # print(answerUnparsed[1])
+                    self.answerList = answerUnparsed[1].split(" ")
+                    # Remove leading white space index
+                    del self.answerList[0:1]
+                questionPieceIndex += 1
+
+            #Reiterate through answers, if matching correct answerList, set text as correct answer in object
+            for answer in self.answerList:
+                for questionPiece in questionContainer:
+                    questionPieceKey = self.answerList[self.answerListIndex] + "."
+                    if (questionPiece.find(questionPieceKey) == 0):
+                        answerListSplit = questionPiece.split(". ")
+                        correctAnswerToAppend = answerListSplit[1]
+                        questionObj.addCorrectAnswer(correctAnswerToAppend)
+                self.answerListIndex +=1
+            self.answerListIndex = 0
+            questionObjectComposite.append(questionObj)
+
+            # Parse answer list
+            for val in questionContainer:
+                if(possibleAnswerIndex > 1):
+                    # print(val)
+                    if(val.find("Correct") == 0):
+                        isContinueCalculating = False
+                        break
+                    questionObj.parseAnswer(val)
+                possibleAnswerIndex += 1
+            intervalIndex += 1
+            testIndex += 1
+            self.questionInteration += 1
+        return questionObjectComposite
 
 
     def parseQuestionBankToCorrectFormat(self):
