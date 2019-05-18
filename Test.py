@@ -42,8 +42,8 @@ class Test:
         self.readPDF()
         # self.parseQuestionBankToCorrectFormat()
         self.readQuestionBank()
-        # self.instanceDisplayManager.setup(self)
-        # self.instanceDisplayManager.startScreen()
+        self.instanceDisplayManager.setup(self)
+        self.instanceDisplayManager.startScreen()
 
     def readPDF(self):
         # Load your PDF
@@ -130,12 +130,17 @@ class Test:
         # print("questionComposite: "+ str(questionComposite))
 
 
-        for questionObj in questionComposite:
+        # for questionObj in questionComposite:
+        #     print("questionObj number: " + questionObj.getQuestionNumber())
+        #     print("questionObj problem: " + questionObj.getProblem())
+        #     print("correct answer: "+str(questionObj.getCorrectAnswerList()))
+        for i in range(5, 8):
+            # print("questionComposite: " + str(questionComposite[i]))
+            questionObj = questionComposite[i]
             print("questionObj number: " + questionObj.getQuestionNumber())
             print("questionObj problem: " + questionObj.getProblem())
-            print("correct answer: "+str(questionObj.getCorrectAnswerList()))
-        # for i in range(5, 8):
-        #     print("questionComposite: " + str(questionComposite[i]))
+            print("correct answer: " + str(questionObj.getCorrectAnswerList()))
+
 
 
 
@@ -176,10 +181,10 @@ class Test:
         # for val in questionComposite:
         #     print(str(val.getAnswerListComposite()))
         # Set question list
-        # self.instanceQuestionObjectManager.setQuestionList(questionComposite)
-        # self.instanceQuestionObjectManager.setCurrentQuestionObject(questionComposite[0])
+        self.instanceQuestionObjectManager.setQuestionList(questionComposite)
+        self.instanceQuestionObjectManager.setCurrentQuestionObject(questionComposite[0])
         # # Randomize question answers
-        # self.instanceQuestionObjectManager.randomizeQuestionAnswerLists()
+        self.instanceQuestionObjectManager.randomizeQuestionAnswerLists()
 
     def handleVceFault(self, questionList):
         faultIndex = 0
@@ -283,30 +288,31 @@ class Test:
         questionContainer =[]
         testIndex = 0
         for objectPieceList in questionObjectListContainer:
-            if(testIndex == 0):
-                possibleAnswerIndex = 0
-                # questionContainer = val.splitlines()
-                # questionContainer = list(filter(None, questionContainer))
-                # print("questionContainer: "+str(questionContainer))
-                # questionNumber = objectPieceList[0].replace(' ','')
-                # print("objectPieceList: "+str(objectPieceList))
-                questionNumber = objectPieceList[0].split(' ')
-                # print("questionNumber: " + str(questionNumber[1]))
-                #create data object
-                questionObj = QuestionObject()
+            # if(testIndex == 0):
+            possibleAnswerIndex = 0
+            # questionContainer = val.splitlines()
+            # questionContainer = list(filter(None, questionContainer))
+            # print("questionContainer: "+str(questionContainer))
+            # questionNumber = objectPieceList[0].replace(' ','')
+            # print("objectPieceList: "+str(objectPieceList))
+            questionNumber = objectPieceList[0].split(' ')
+            # print("questionNumber: " + str(questionNumber[1]))
+            #create data object
+            questionObj = QuestionObject()
 
-                questionObj.setQuestionNumber(questionNumber[1])
-                questionObj.setProblem(objectPieceList[1])
-                # print("questionObj number: " + questionObj.getQuestionNumber())
-                # print("questionObj problem: " + questionObj.getProblem())
+            questionObj.setQuestionNumber(questionNumber[1])
+            questionObj.setProblem(objectPieceList[1])
+            # print("questionObj number: " + questionObj.getQuestionNumber())
+            # print("questionObj problem: " + questionObj.getProblem())
 
             # testIndex+=1
 
             questionPieceIndex = 0
 
             # Parse correct answer
-            for questionPiece in questionContainer:
+            for questionPiece in objectPieceList:
                 if (questionPiece.find("Correct") == 0):
+                    print("hit correct")
                     answerUnparsed = questionPiece.split(":")
                     # print(answerUnparsed[1])
                     self.answerList = answerUnparsed[1].split(" ")
@@ -316,7 +322,7 @@ class Test:
 
             #Reiterate through answers, if matching correct answerList, set text as correct answer in object
             for answer in self.answerList:
-                for questionPiece in questionContainer:
+                for questionPiece in objectPieceList:
                     questionPieceKey = self.answerList[self.answerListIndex] + "."
                     if (questionPiece.find(questionPieceKey) == 0):
                         answerListSplit = questionPiece.split(". ")
@@ -327,7 +333,7 @@ class Test:
             questionObjectComposite.append(questionObj)
 
             # Parse answer list
-            for val in questionContainer:
+            for val in objectPieceList:
                 if(possibleAnswerIndex > 1):
                     # print(val)
                     if(val.find("Correct") == 0):
@@ -335,6 +341,7 @@ class Test:
                         break
                     questionObj.parseAnswer(val)
                 possibleAnswerIndex += 1
+
             intervalIndex += 1
             testIndex += 1
             self.questionInteration += 1
