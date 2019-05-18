@@ -125,7 +125,6 @@ class Test:
         questionPieceContainer = []
         isBeginTextAppend = False
         strToAppend = ""
-
         for text in questionPieceList:
             # Within questionPiece range"QUESTION" - "A."
             # append question lines into individual lists
@@ -146,16 +145,12 @@ class Test:
         return questionPieceContainer
 
     def processParseQuestionBank(self, questionSplitContainer):
-        # data_set_group_0_1 = str_to_parse.split('QUESTION')
-        # data_set_group_0_1.pop(0)
         questionObjectComposite = []
         intervalIndex = 0
         isBeginAddQuestionObject = True
         isStartProcessing = False
         questionObjectListContainer = []
         questionObjectList = []
-
-        # for val in data_set_group_0_1:
         # Split at question interval store in question set.
         # Iterate through question pieces, storing at interval of question found in string.
         currentQuestionSplitIndex = -1
@@ -181,7 +176,6 @@ class Test:
         # print("questionObjectListContainer: " + str(questionObjectListContainer))
         # return questionObjectListContainer
 
-
         questionContainer =[]
         testIndex = 0
         for objectPieceList in questionObjectListContainer:
@@ -201,11 +195,8 @@ class Test:
             questionObj.setProblem(objectPieceList[1])
             # print("questionObj number: " + questionObj.getQuestionNumber())
             # print("questionObj problem: " + questionObj.getProblem())
-
             # testIndex+=1
-
             questionPieceIndex = 0
-
             # Parse correct answer
             for questionPiece in objectPieceList:
                 if (questionPiece.find("Correct") == 0):
@@ -238,7 +229,6 @@ class Test:
                         break
                     questionObj.parseAnswer(val)
                 possibleAnswerIndex += 1
-
             intervalIndex += 1
             testIndex += 1
             self.questionInteration += 1
@@ -259,11 +249,6 @@ class Test:
     def parseForFaults(self, stringText):
         data_set_group_0_1 = stringText.split('QUESTION')
         data_set_group_0_1.pop(0)
-        # questionObjectComposite = []
-        # intervalIndex = 0
-
-        # self.listFinalQuestionPieceResults = []
-
         for val in data_set_group_0_1:
             valIndex = 0
             self.vceFaultIndex = 0
@@ -282,12 +267,6 @@ class Test:
             faultQuestionContainer = list(filter(None, faultQuestionContainer))
 
             questionNumber = faultQuestionContainer[0].replace(' ', '')
-
-            # Handle VCE faults
-
-
-            # Handle duplicant answers on same line faults
-            # print("1faultQuestionContainer: "+str(faultQuestionContainer))
             for questionPiece in faultQuestionContainer:
                 self.questionPieceFaultIndex += 1
                 if ("A. " in questionPiece or "B. " in questionPiece or "C. " in questionPiece or "D. " in questionPiece
@@ -300,8 +279,6 @@ class Test:
                     # self.listResultsDuplicantAnswerOnSameLineFaultCorrected =
                     # print("listResultsDuplicantAnswerOnSameLineFaultCorrected: "+str(self.listResultsDuplicantAnswerOnSameLineFaultCorrected))
                     # faultCorrectedAtIndex
-
-
 
                     self.faultCorrectedAtIndexContainer.append(self.possibleDuplicantAnswerOnSameLineFaultCorrectedAtIndex)
                 self.possibleDuplicantAnswerOnSameLineFaultCorrectedAtIndex += 1
@@ -337,7 +314,6 @@ class Test:
                 self.listFinalQuestionPieceResults.append(questionPiece)
                 # indexAddlistFinalQuestionPieceResults += 1
             # print("self.listFinalQuestionPieceResults: "+str(self.listFinalQuestionPieceResults))
-
 
             # Handle correct answer spacing faults
             # Parse correct answer
