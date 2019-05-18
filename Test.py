@@ -20,6 +20,7 @@ class Test:
         self.filterList1 = []
         self.listResultsDuplicantAnswerOnSameLineFaultCorrected = []
         self.faultCorrectedAtIndexContainer = []
+        self.batchRangeList = []
         self.possibleDuplicantAnswerOnSameLineFaultCorrectedAtIndex = 0
         self.duplicantAnswerOnSameLineFaultCorrectedAtIndex = 0
         self.questionPieceFaultIndex = 0
@@ -79,7 +80,7 @@ class Test:
 
         # Set question list
         self.instanceQuestionObjectManager.setQuestionList(questionComposite)
-        self.instanceQuestionObjectManager.setCurrentQuestionObject(questionComposite[0])
+        # self.instanceQuestionObjectManager.setCurrentQuestionObject(questionComposite[0])
         # # Randomize question answers
         self.instanceQuestionObjectManager.randomizeQuestionAnswerLists()
 
@@ -172,39 +173,22 @@ class Test:
                         # isBeginAddQuestionObject = False
                 # print("currentQuestionSplitIndex: "+str(currentQuestionSplitIndex))
                 questionObjectListContainer[(currentQuestionSplitIndex)].append(questionPiece)
-
-        # print("questionObjectListContainer: " + str(questionObjectListContainer))
-        # return questionObjectListContainer
-
         questionContainer =[]
         testIndex = 0
         for objectPieceList in questionObjectListContainer:
-            # if(testIndex == 0):
             possibleAnswerIndex = 0
-            # questionContainer = val.splitlines()
-            # questionContainer = list(filter(None, questionContainer))
-            # print("questionContainer: "+str(questionContainer))
-            # questionNumber = objectPieceList[0].replace(' ','')
-            # print("objectPieceList: "+str(objectPieceList))
             questionNumber = objectPieceList[0].split(' ')
-            # print("questionNumber: " + str(questionNumber[1]))
             #create data object
             questionObj = QuestionObject()
 
             questionObj.setQuestionNumber(questionNumber[1])
             questionObj.setProblem(objectPieceList[1])
-            # print("questionObj number: " + questionObj.getQuestionNumber())
-            # print("questionObj problem: " + questionObj.getProblem())
-            # testIndex+=1
             questionPieceIndex = 0
             # Parse correct answer
             for questionPiece in objectPieceList:
                 if (questionPiece.find("Correct") == 0):
-                    print("hit correct")
                     answerUnparsed = questionPiece.split(":")
-                    # print(answerUnparsed[1])
                     self.answerList = answerUnparsed[1].split(" ")
-                    # Remove leading white space index
                     del self.answerList[0:1]
                 questionPieceIndex += 1
 
@@ -443,10 +427,19 @@ class Test:
                 else:
                     print("results are good: "+str(whiteSpaceClearedList))
                     # Handle second value is larger than first
-                    val1 = whiteSpaceClearedList[0]
-                    val2 = whiteSpaceClearedList[1]
-                    if(val1 < val2):
-                        self.isEntryBatchSizeValid = True
+                    val1 = int(whiteSpaceClearedList[0])
+                    val2 = int(whiteSpaceClearedList[1])
+
+                    integerTransformedList = [val1,val2]
+                    if(val1 < val2 and val1 != 0):
+                        # Handle if end index is within questionList
+                        questionList = self.instanceQuestionObjectManager.getQuestionList()
+                        if(val2 <= len(questionList)):
+                            # Set self.batchRangeList that is used in future processing
+                            self.batchRangeList = integerTransformedList
+                            self.isEntryBatchSizeValid = True
+                        else:
+                            self.isEntryBatchSizeValid = False
                     else:
                         self.isEntryBatchSizeValid = False
             else:
@@ -463,39 +456,44 @@ class Test:
             return False
 
     def batchSizeTest(self):
-        # Get entry value, initiate batchSize
-        batchSize = self.parseEntryBatchSizeValue(self.instanceDisplayManager.entryNumberQuestions.get())
-        print(str(batchSize))
         questionList = self.instanceQuestionObjectManager.getQuestionList()
         self.batchQuestionList =  []
-        if(batchSize <= len(questionList)):
-            index = 0
-            while(index < batchSize):
-                self.batchQuestionList.append(questionList[index])
-                index += 1
+
+        startIndex = self.batchRangeList[0]
+        endIndex = self.batchRangeList[1]
+
+        # If self.isEntryBatchSizeValid continue questionList to batchQuestionList process
+        # Else entire list of questions becomes batchQuestionList
+        if(self.isEntryBatchSizeValid):
+            questionListIndex = 0
+            # handle if end index is within questionList
+            # if within start index
+            while(questionListIndex < len(questionList)):
+                if(questionListIndex >= startIndex and questionListIndex <= endIndex):
+                    self.batchQuestionList.append(questionList[questionListIndex-1])
+                questionListIndex += 1
         else:
             self.batchQuestionList = questionList
-        print("length of batchQuestionList: "+str(len(self.batchQuestionList)))
+        print("self.batchQuestionList: "+str(len(self.batchQuestionList)))
+        for questionObj in self.batchQuestionList:
+            print(questionObj.getProblem())
         self.instanceQuestionObjectManager.setBatchSizeQuestionList(self.batchQuestionList)
 
     def testOption1(self):
         self.determineParseEntryBatchSizeValueIsValid()
-        # if(self.determineParseEntryBatchSizeValueIsValid()):
-        #     self.batchSizeTest()
-        #     self.instanceDisplayManager.displayQuestion()
-        # else:
-        #     # Else pass, display message to user to enter correct format handled in DisplayManager
-        #     # self.instanceQuestionObjectManager.refresh()
-        #     pass
-
-
+        if(self.isEntryBatchSizeValid):
+            self.batchSizeTest()
+            #handle upon question change, change globalCurrentQuestionIndex, find process of change
+            self.instanceQuestionObjectManager.setCurrentQuestionObject(self.instanceQuestionObjectManager.getBatchSizeQuestionList()[0])
+            self.instanceDisplayManager.displayQuestion()
 
     def testOption2(self):
-        self.instanceQuestionObjectManager.randomizeQuestionList()
-        self.instanceDisplayManager.displayQuestion()
-        self.batchSizeTest()
-
-
+        self.determineParseEntryBatchSizeValueIsValid()
+        if (self.isEntryBatchSizeValid):
+            self.batchSizeTest()
+            self.instanceQuestionObjectManager.randomizeQuestionList()
+            self.instanceQuestionObjectManager.setCurrentQuestionObject(self.instanceQuestionObjectManager.getBatchSizeQuestionList()[0])
+            self.instanceDisplayManager.displayQuestion()
 
     def createDisplayList(self, questionList):
         displayContainer = []

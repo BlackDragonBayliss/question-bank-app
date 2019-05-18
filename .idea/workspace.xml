@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f3d5109d-a44f-4251-ba2c-07eb41d78ec0" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DisplayManager.py" afterPath="$PROJECT_DIR$/DisplayManager.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/QuestionObjectManager.py" afterPath="$PROJECT_DIR$/QuestionObjectManager.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Test.py" afterPath="$PROJECT_DIR$/Test.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -17,7 +19,7 @@
         <entry file="file://$PROJECT_DIR$/Baysim.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="195">
-              <caret line="13" column="0" lean-forward="false" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+              <caret line="13" column="0" lean-forward="true" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
               </folding>
@@ -25,11 +27,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Test.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Test.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="268">
-              <caret line="384" column="19" lean-forward="false" selection-start-line="384" selection-start-column="19" selection-end-line="384" selection-end-column="19" />
+            <state relative-caret-position="153">
+              <caret line="508" column="65" lean-forward="false" selection-start-line="508" selection-start-column="46" selection-end-line="508" selection-end-column="65" />
               <folding>
                 <element signature="e#1#27#0" expanded="true" />
               </folding>
@@ -40,8 +42,8 @@
       <file leaf-file-name="DisplayManager.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DisplayManager.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="242">
-              <caret line="63" column="0" lean-forward="true" selection-start-line="63" selection-start-column="0" selection-end-line="63" selection-end-column="0" />
+            <state relative-caret-position="286">
+              <caret line="152" column="114" lean-forward="false" selection-start-line="152" selection-start-column="94" selection-end-line="152" selection-end-column="114" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
               </folding>
@@ -52,8 +54,8 @@
       <file leaf-file-name="QuestionObject.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/QuestionObject.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="23" column="28" lean-forward="false" selection-start-line="23" selection-start-column="8" selection-end-line="23" selection-end-column="28" />
+            <state relative-caret-position="258">
+              <caret line="19" column="18" lean-forward="false" selection-start-line="19" selection-start-column="8" selection-end-line="19" selection-end-column="18" />
               <folding />
             </state>
           </provider>
@@ -89,11 +91,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="QuestionObjectManager.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="QuestionObjectManager.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/QuestionObjectManager.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="175">
-              <caret line="26" column="75" lean-forward="false" selection-start-line="26" selection-start-column="75" selection-end-line="26" selection-end-column="75" />
+            <state relative-caret-position="318">
+              <caret line="35" column="58" lean-forward="false" selection-start-line="35" selection-start-column="58" selection-end-line="35" selection-end-column="58" />
               <folding />
             </state>
           </provider>
@@ -120,23 +122,12 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>changeToNextQuestion</find>
-      <find>next</find>
-      <find>startTest</find>
-      <find>setIsAnswered</find>
-      <find>isQuestionOutcomeScreen</find>
-      <find>correctQuestionAnsweredCount</find>
-      <find>getIsAnsweredCorrectly</find>
-      <find>setIsAnsweredCorrectly</find>
       <find>calculateScore</find>
       <find>Radiobutton</find>
       <find>displayQuestionCallIndex</find>
       <find>correctAnswerList</find>
       <find>c</find>
       <find>getBatchSizeQuestionList</find>
-      <find>proces</find>
-      <find>displayQuestion</find>
-      <find>processNextQuestion</find>
       <find>isFirstRoundStrAddition</find>
       <find>nextFilterPieceIndex</find>
       <find>listFinalQuestionPieceResults</find>
@@ -147,9 +138,20 @@
       <find>getCurrentQuestionObject</find>
       <find>startScreen</find>
       <find>handleVceFault</find>
-      <find>selectedAnswerList</find>
       <find>processParseQuestionBank</find>
+      <find>test</find>
+      <find>proces</find>
+      <find>hit correct</find>
+      <find>&quot;hit correct&quot;</find>
+      <find>parseEntryBatchSizeValue</find>
+      <find>selectedAnswerList</find>
       <find>batchSizeTest</find>
+      <find>displayQuestion</find>
+      <find>setCurrentQuestionObject</find>
+      <find>confirmAnswer</find>
+      <find>displayQuestionOutcomeScreen</find>
+      <find>setBatchSizeQuestionList</find>
+      <find>processNextQuestion</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -174,14 +176,14 @@
         <option value="$PROJECT_DIR$/__init__.py" />
         <option value="$PROJECT_DIR$/QuestionObject.py" />
         <option value="$PROJECT_DIR$/demofile.txt" />
-        <option value="$PROJECT_DIR$/QuestionObjectManager.py" />
         <option value="$PROJECT_DIR$/Baysim.py" />
         <option value="$PROJECT_DIR$/testfile.txt" />
         <option value="$PROJECT_DIR$/testAgain" />
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/DisplayManager.py" />
         <option value="$PROJECT_DIR$/testing.py" />
         <option value="$PROJECT_DIR$/Test.py" />
+        <option value="$PROJECT_DIR$/DisplayManager.py" />
+        <option value="$PROJECT_DIR$/QuestionObjectManager.py" />
       </list>
     </option>
   </component>
@@ -345,14 +347,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/QuestionObjectManager.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="175">
-          <caret line="26" column="75" lean-forward="false" selection-start-line="26" selection-start-column="75" selection-end-line="26" selection-end-column="75" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/demofile.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="280">
@@ -385,34 +379,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/QuestionObject.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="23" column="28" lean-forward="false" selection-start-line="23" selection-start-column="8" selection-end-line="23" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Baysim.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="13" column="0" lean-forward="false" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#21#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DisplayManager.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="242">
-          <caret line="63" column="0" lean-forward="true" selection-start-line="63" selection-start-column="0" selection-end-line="63" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#21#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/testing.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="323">
@@ -421,13 +387,49 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Baysim.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="13" column="0" lean-forward="true" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#21#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DisplayManager.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="286">
+          <caret line="152" column="114" lean-forward="false" selection-start-line="152" selection-start-column="94" selection-end-line="152" selection-end-column="114" />
+          <folding>
+            <element signature="e#0#21#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="268">
-          <caret line="384" column="19" lean-forward="false" selection-start-line="384" selection-start-column="19" selection-end-line="384" selection-end-column="19" />
+        <state relative-caret-position="153">
+          <caret line="508" column="65" lean-forward="false" selection-start-line="508" selection-start-column="46" selection-end-line="508" selection-end-column="65" />
           <folding>
             <element signature="e#1#27#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/QuestionObject.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="258">
+          <caret line="19" column="18" lean-forward="false" selection-start-line="19" selection-start-column="8" selection-end-line="19" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/QuestionObjectManager.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="318">
+          <caret line="35" column="58" lean-forward="false" selection-start-line="35" selection-start-column="58" selection-end-line="35" selection-end-column="58" />
+          <folding />
         </state>
       </provider>
     </entry>

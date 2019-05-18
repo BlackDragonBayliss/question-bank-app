@@ -25,7 +25,7 @@ class QuestionObjectManager:
     def processNextQuestion(self):
         self.currentQuestionIndex +=1
         if (self.currentQuestionIndex < len(self.getBatchSizeQuestionList())):
-            nextQuestion = self.getQuestionList()[self.currentQuestionIndex]
+            nextQuestion = self.getBatchSizeQuestionList()[self.currentQuestionIndex]
             self.setCurrentQuestionObject(nextQuestion)
             return True
         else:

@@ -53,10 +53,9 @@ class DisplayManager:
         self.updateYPositionGlobalIterate()
 
         # label prompt user enter question range seperated by ","
-        self.labelInfoNumberInfoQuestions = Label(self.root, text="If question range, enter question range seperated by \"-\", for example enter: 10 - 20")
-        self.labelInfoNumberInfoQuestions.place(x=self.xPositionKey, y=self.yPositionGlobalIterate)
+        self.labelInfoNumberInstructionForQuestions = Label(self.root, text="If question range, enter question range seperated by \"-\", for example enter: 1 - 10")
+        self.labelInfoNumberInstructionForQuestions.place(x=self.xPositionKey, y=self.yPositionGlobalIterate)
         self.updateYPositionGlobalIterate()
-
 
         self.entryNumberQuestions = Entry(self.root)
         self.entryNumberQuestions.place(x=self.xPositionConfirmButton, y=self.yPositionGlobalIterate)
@@ -78,11 +77,12 @@ class DisplayManager:
     def displayQuestion(self):
         self.resetScreenVariables()
         self.clearWidgets()
-
         instanceQuestionObjectManager = self.instanceTest.getInstanceQuestionObjectManager()
         self.questionCount += 1
         questionList = self.instanceTest.getInstanceQuestionObjectManager().getBatchSizeQuestionList()
+        # print("len questionList: "+str(len(questionList)))
         self.selectedAnswerList = []
+
         self.currentQuestion = self.instanceTest.getInstanceQuestionObjectManager().getCurrentQuestionObject()
         self.questionText = self.currentQuestion.getProblem()
 
@@ -101,6 +101,7 @@ class DisplayManager:
         self.confirmAnswerButton = Button(text="Confirm Answer", command=self.instanceTest.confirmAnswer)
         self.confirmAnswerButton.place(x=self.xPositionConfirmButton, y=self.yPositionGlobalIterate)
         self.updateYPositionGlobalIterate()
+
         self.deselectOptionsButton = Button(text="Deselect Answers", command=self.deselectAnswers)
         self.deselectOptionsButton.place(x=self.xPositionDeslectButton, y=self.yPositionGlobalIterate)
 
@@ -178,10 +179,9 @@ class DisplayManager:
     def clearWidgets(self):
         if(self.isInitialClearIndex):
             self.isInitialClearIndex = False
-
             self.labelInfoNumberQuestions.destroy()
+            self.labelInfoNumberInstructionForQuestions.destroy()
             self.entryNumberQuestions.destroy()
-
             self.beginTest1Button.destroy()
             self.beginTest2Button.destroy()
         else:
