@@ -33,6 +33,7 @@ class Test:
         self.isQuestionCorrectOutcome = False
         self.isVceFault = False
         self.isFaultAppended = False
+        self.isEntryBatchSizeValid = False
         self.isFirstRoundStrAddition = True
         self.isFaultDuplicantsAppended = True
         self.instanceDisplayManager = DisplayManager()
@@ -52,14 +53,9 @@ class Test:
         self.pdfText = "\n\n".join(pdf)
 
     def readQuestionBank(self):
-        # f = open("demofile.txt", "r")
-        # print(self.pdfText)
         stringText = self.pdfText #f.read()
         questionSplitContainer = []
         stringTextContainer = []
-
-        # print(stringText)
-
         #Iterate through first question, followed by consec four.
         questionPieceContainer = []
         stringTextContainer = stringText.splitlines()
@@ -68,102 +64,19 @@ class Test:
         isBeginTextAppend = False
         isOperationNormal = True
         index = 0
-
         vceTestList = []
-        #Take sample, test removal.
         vceIndex = 0
         for text in stringTextContainer:
-            # if (vceIndex > 109 and vceIndex < 125):
-            # if (vceIndex > 109 and vceIndex < 140):
             vceTestList.append(text)
             vceIndex += 1
-        # print("vceTestList: "+str(vceTestList))
-
-
-
-
-
         vceTestList = self.handleVceFault(vceTestList)
-        # print("questionList: "+str(vceTestList))
-
         revisedEmptyStringAtIndexFaultList = self.handleEmptyStringAtIndexFault(vceTestList)
 
-        # for i in range(80, 120):
-        #     # pass
-        #     print("vceTestList: " + str(vceTestList[i]))
-        #
-
-        # print("questionList: " + str(questionList))
-
-        # Handle VCE faults here.
-        # questionList = self.handleVceFault(stringTextContainer)
-        #
         questionPieceContainer = self.handleProblemConcatenationFault(revisedEmptyStringAtIndexFaultList)
-
-        # questionObjectListContainer
-        #VCE and space fault handled at this point
-
-        # for i in range(80, 120):
-        #     print("questionObjectListContainer: " + str(questionPieceContainer[i]))
-
-        # print(str(questionPieceContainer))
-        # print(str(tempContainer))
 
         # Intake feed, process into question bank
         questionComposite = self.processParseQuestionBank(questionPieceContainer)
-        # print("questionComposite: "+ str(questionComposite))
 
-
-        # for questionObj in questionComposite:
-        #     print("questionObj number: " + questionObj.getQuestionNumber())
-        #     print("questionObj problem: " + questionObj.getProblem())
-        #     print("correct answer: "+str(questionObj.getCorrectAnswerList()))
-        for i in range(5, 8):
-            # print("questionComposite: " + str(questionComposite[i]))
-            questionObj = questionComposite[i]
-            print("questionObj number: " + questionObj.getQuestionNumber())
-            print("questionObj problem: " + questionObj.getProblem())
-            print("correct answer: " + str(questionObj.getCorrectAnswerList()))
-
-
-
-
-
-        # print("questionComposite: "+questionComposite)
-            # isBeginTextAppend = False
-        # print(str(tempContainer))
-
-
-        # stringTextContainerIndex = 0
-        # for stringLine in stringTextContainer:
-        #     # if(stringTextContainerIndex == 40):
-        #     #     print("Breaking at index: "+str(stringTextContainerIndex))
-        #     #     break
-        #
-        # # starting at certain index begin storing question data lines
-        #     if(stringTextContainerIndex >= 20):
-        #         # print(stringLine)
-        #         questionSplitContainer.append(stringLine)
-        #     stringTextContainerIndex += 1
-
-
-
-
-        # print("questionSplitC
-        # ontainer: "+str(questionSplitContainer))
-        # testIndex = 0
-        # for val in questionSplitContainer:
-        #
-        #     print(val)
-        #     if(testIndex == 50):
-        #         break
-        #
-        #     testIndex += 1
-
-
-
-        # for val in questionComposite:
-        #     print(str(val.getAnswerListComposite()))
         # Set question list
         self.instanceQuestionObjectManager.setQuestionList(questionComposite)
         self.instanceQuestionObjectManager.setCurrentQuestionObject(questionComposite[0])
@@ -526,9 +439,56 @@ class Test:
         return self.faultResolutionQueryStringContainer
 
 
+    def determineParseEntryBatchSizeValueIsValid(self):
+        entryList = []
+        whiteSpaceClearedList = []
+        entryNumberString = self.instanceDisplayManager.entryNumberQuestions.get()
+        print(entryNumberString)
+        if("-" in entryNumberString):
+            entryList = entryNumberString.split("-")
+            # Clear extra whitespace for entry index
+            for val in entryList:
+                whiteSpaceClearedList.append(val.replace(" ", ""))
+            print("lenwhiteSpaceClearedList: "+str(len(whiteSpaceClearedList)))
+            # Handle two values on either side of "-"
+            if(len(whiteSpaceClearedList) == 2):
+                # Handle values are integers
+                isValValidList = []
+                for val in whiteSpaceClearedList:
+                    isValValidList.append(self.validateIsNumber(val))
+                print(str(isValValidList))
+                resultsFalseList = []
+                for isValValid in isValValidList:
+                    if (isValValid == False):
+                        resultsFalseList.append(isValValid)
+                if(len(resultsFalseList)):
+                    print("results false")
+                    self.isEntryBatchSizeValid = False
+                else:
+                    print("results are good: "+str(whiteSpaceClearedList))
+                    # Handle second value is larger than first
+                    val1 = whiteSpaceClearedList[0]
+                    val2 = whiteSpaceClearedList[1]
+                    if(val1 < val2):
+                        self.isEntryBatchSizeValid = True
+                    else:
+                        self.isEntryBatchSizeValid = False
+            else:
+                self.isEntryBatchSizeValid = False
+        else:
+            self.isEntryBatchSizeValid = False
+        print("self.isEntryBatchSizeValid: "+str(self.isEntryBatchSizeValid))
+
+    def validateIsNumber(self, val):
+        try:
+            int(val)
+            return True
+        except ValueError:
+            return False
 
     def batchSizeTest(self):
-        batchSize = int(self.instanceDisplayManager.entryNumberQuestions.get())
+        # Get entry value, initiate batchSize
+        batchSize = self.parseEntryBatchSizeValue(self.instanceDisplayManager.entryNumberQuestions.get())
         print(str(batchSize))
         questionList = self.instanceQuestionObjectManager.getQuestionList()
         self.batchQuestionList =  []
@@ -543,8 +503,16 @@ class Test:
         self.instanceQuestionObjectManager.setBatchSizeQuestionList(self.batchQuestionList)
 
     def testOption1(self):
-        self.batchSizeTest()
-        self.instanceDisplayManager.displayQuestion()
+        self.determineParseEntryBatchSizeValueIsValid()
+        # if(self.determineParseEntryBatchSizeValueIsValid()):
+        #     self.batchSizeTest()
+        #     self.instanceDisplayManager.displayQuestion()
+        # else:
+        #     # Else pass, display message to user to enter correct format handled in DisplayManager
+        #     # self.instanceQuestionObjectManager.refresh()
+        #     pass
+
+
 
     def testOption2(self):
         self.instanceQuestionObjectManager.randomizeQuestionList()

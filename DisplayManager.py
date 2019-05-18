@@ -44,12 +44,17 @@ class DisplayManager:
 
     def displayEntry(self):
         print(str(self.entryNumberQuestions.get()))
-    def startScreen(self):
 
+    def startScreen(self):
         self.root.geometry('1400x800')
 
         self.labelInfoNumberQuestions = Label(self.root, text="Enter number of questions for test")
         self.labelInfoNumberQuestions.place(x=self.xPositionKey, y=self.yPositionGlobalIterate)
+        self.updateYPositionGlobalIterate()
+
+        # label prompt user enter question range seperated by ","
+        self.labelInfoNumberInfoQuestions = Label(self.root, text="If question range, enter question range seperated by \"-\", for example enter: 10 - 20")
+        self.labelInfoNumberInfoQuestions.place(x=self.xPositionKey, y=self.yPositionGlobalIterate)
         self.updateYPositionGlobalIterate()
 
 
