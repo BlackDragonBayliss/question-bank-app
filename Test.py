@@ -559,7 +559,6 @@ class Test:
     def calculateScore(self):
         questionList = self.instanceQuestionObjectManager.questionList
         totalCountQuestions = len(questionList)
-        # self.instanceQuestionObjectManager.getCurrentQuestionObject().setIsAnsweredCorrectly(True)
         for question in questionList:
             if(question.getIsAnsweredCorrectly()):
                 self.correctQuestionAnsweredCount += 1
