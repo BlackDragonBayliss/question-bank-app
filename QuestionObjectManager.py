@@ -31,6 +31,15 @@ class QuestionObjectManager:
         else:
             return False
 
+    def processNextQuestionLearnMode(self):
+        self.currentQuestionIndex += 1
+        if (self.currentQuestionIndex < len(self.getBatchSizeQuestionList())):
+            nextQuestion = self.getBatchSizeQuestionList()[self.currentQuestionIndex]
+            self.setCurrentQuestionObject(nextQuestion)
+            return True
+        else:
+            return False
+
     def randomizeQuestionList(self):
         shuffle(self.questionList)
         self.setCurrentQuestionObject(self.getQuestionList()[0])

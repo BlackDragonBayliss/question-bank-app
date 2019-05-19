@@ -8,16 +8,12 @@ class DisplayManager:
         self.internalRadialIndex = 0
         self.yPositionIndex = 1
         self.yPositionGlobalIterate = self.yPositionIndex * 50
-
         self.yPositionContinueButton = 250
-
         self.xPositionKey = 10
         self.xPositionRadialButton = 30
         self.xPositionAnswer = 55
-
         self.xPositionConfirmButton = 10
         self.xPositionDeslectButton = 10
-
         self.xPositionButtonConfirmQuestionOutcome = 50
 
         self.root = Tk()
@@ -31,6 +27,9 @@ class DisplayManager:
 
         self.isInitialClearIndex = True
         self.isQuestionOutcomeScreen = False
+        self.isShowAnswerLearnMode = False
+
+        self.showAnswerLearnModeLabelText = ""
 
     def setup(self, test):
         self.instanceTest = test
@@ -61,15 +60,11 @@ class DisplayManager:
         self.entryNumberQuestions.place(x=self.xPositionConfirmButton, y=self.yPositionGlobalIterate)
         self.updateYPositionGlobalIterate()
 
-        # self.entryButton = Button(text="displayEntry", command=self.displayEntry)
-        # self.entryButton.place(x=self.xPositionConfirmButton, y=self.yPositionGlobalIterate)
-        # self.updateYPositionGlobalIterate()
-
-        self.beginTest1Button = Button(text="Begin Test 1", command=self.instanceTest.testOption1)
-        self.beginTest1Button.place(x=self.xPositionConfirmButton, y=self.yPositionGlobalIterate)
+        self.testModeButton = Button(text="Test mode", command=self.instanceTest.testMode)
+        self.testModeButton.place(x=self.xPositionConfirmButton, y=self.yPositionGlobalIterate)
         self.updateYPositionGlobalIterate()
-        self.beginTest2Button = Button(text="Begin Test 2", command=self.instanceTest.testOption2)
-        self.beginTest2Button.place(x=self.xPositionDeslectButton, y=self.yPositionGlobalIterate)
+        self.learnModeButton = Button(text="Learn mode", command=self.instanceTest.learnMode)
+        self.learnModeButton.place(x=self.xPositionDeslectButton, y=self.yPositionGlobalIterate)
 
         self.root.mainloop()
 
@@ -129,6 +124,64 @@ class DisplayManager:
                 self.updateYPositionGlobalIterate()
             radioButtonIndex += 1
 
+    def displayQuestionLearnMode(self):
+        self.resetScreenVariables()
+        self.clearWidgets()
+        instanceQuestionObjectManager = self.instanceTest.getInstanceQuestionObjectManager()
+        self.questionCount += 1
+        questionList = self.instanceTest.getInstanceQuestionObjectManager().getBatchSizeQuestionList()
+        self.selectedAnswerList = []
+
+        self.currentQuestion = self.instanceTest.getInstanceQuestionObjectManager().getCurrentQuestionObject()
+        self.questionText = self.currentQuestion.getProblem()
+
+        for index in self.currentQuestion.getAnswerListComposite():
+            # self.questionListAnswerKeys.append(index[0])
+            self.questionListAnswerTexts.append(index[1])
+
+        self.questionLabel = Label(text=self.questionText)
+        self.questionLabel.place(x=10, y=10)
+
+        questionListAnswers = ["A","B","C"]
+        answerIndex = 0
+        for counter, choiceText in enumerate(questionListAnswers, 1):
+            key = Label(self.root, text=questionListAnswers[answerIndex])
+            key.place(x=self.xPositionKey, y=self.yPositionGlobalIterate)
+            self.keyList.append(key)
+            self.updateYPositionGlobalIterate()
+            answerIndex += 1
+
+        # if(self.isShowAnswerLearnMode):
+        self.showAnswerLabel = Label(self.root, text=self.showAnswerLearnModeLabelText)
+        self.showAnswerLabel.place(x=self.xPositionKey, y=self.yPositionGlobalIterate)
+        self.updateYPositionGlobalIterate()
+            # self.isShowAnswerLearnMode = False
+
+        self.showAnswerButton = Button(text="Show answer", command=self.showAnswerLearnMode)
+        self.showAnswerButton.place(x=self.xPositionConfirmButton, y=self.yPositionGlobalIterate)
+        self.updateYPositionGlobalIterate()
+
+        self.nextQuestionButton = Button(text="Next question", command=self.instanceTest.changeToNextQuestionLearnMode)
+        self.nextQuestionButton.place(x=self.xPositionConfirmButton, y=self.yPositionGlobalIterate)
+        self.updateYPositionGlobalIterate()
+
+    def populateShowAnswerLearnModeLabelText(self):
+        correctAnswerString = ""
+        for correctAnswer in self.currentQuestion.getCorrectAnswerList():
+            correctAnswerString += str(correctAnswer) + "\n"
+        if(len(self.currentQuestion.getCorrectAnswerList()) == 1):
+            self.showAnswerLearnModeLabelText = "Correct answer: " + correctAnswerString
+        else:
+            self.showAnswerLearnModeLabelText = "Correct answers: " + correctAnswerString
+
+    def showAnswerLearnMode(self):
+        self.isShowAnswerLearnMode = True
+        self.populateShowAnswerLearnModeLabelText()
+        self.resetScreenVariables()
+        self.clearWidgets()
+        self.displayQuestionLearnMode()
+        print("showAnswerLearnMode")
+
     def displayQuestionOutcomeScreen(self):
         self.resetScreenVariables()
         self.clearWidgets()
@@ -161,6 +214,12 @@ class DisplayManager:
         score = Label(self.root, text="Total correct: "+str(scoreText)+"%")
         score.place(x=self.xPositionKey, y=self.yPositionGlobalIterate)
 
+    def displayLearnModeRetakeScreen(self):
+        self.resetScreenVariables()
+        self.clearWidgets()
+        learnModeEndScreenLabel = Label(self.root, text="End")
+        learnModeEndScreenLabel.place(x=self.xPositionKey, y=self.yPositionGlobalIterate)
+
     def resetScreenVariables(self):
         self.resetYPositionGlobalIterate()
         self.questionListAnswerKeys = []
@@ -177,29 +236,45 @@ class DisplayManager:
         self.yPositionGlobalIterate = self.yPositionIndex * 50
 
     def clearWidgets(self):
+        # Initial screen widgets
         if(self.isInitialClearIndex):
             self.isInitialClearIndex = False
             self.labelInfoNumberQuestions.destroy()
             self.labelInfoNumberInstructionForQuestions.destroy()
             self.entryNumberQuestions.destroy()
-            self.beginTest1Button.destroy()
-            self.beginTest2Button.destroy()
-        else:
-            for widget in self.buttonList:
-                widget.destroy()
+            self.testModeButton.destroy()
+            self.learnModeButton.destroy()
+            return
 
+        # Learn mode widgets
+        if(self.instanceTest.isLearnMode):
+            print("hit cleear isLearnMode")
             for widget in self.keyList:
                 widget.destroy()
+            self.questionLabel.destroy()
+            self.showAnswerLabel.destroy()
+            self.showAnswerButton.destroy()
+            self.nextQuestionButton.destroy()
+            return
 
+        # Test mode widgets
+        if(self.instanceTest.isTestMode):
+            for widget in self.buttonList:
+                widget.destroy()
+            for widget in self.keyList:
+                widget.destroy()
             for widget in self.keyAnswerList:
                 widget.destroy()
             self.questionLabel.destroy()
             self.confirmAnswerButton.destroy()
             self.deselectOptionsButton.destroy()
+            return
+
         # Handle destroy if isOutcomeScreen
         if(self.isQuestionOutcomeScreen):
             self.labelQuestionOutcome.destroy()
             self.labelQuestionOutcomeCorrectAnswer.destroy()
             self.buttonConfirmQuestionOutcome.destroy()
             self.isQuestionOutcomeScreen = False
+            return
 

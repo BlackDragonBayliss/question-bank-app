@@ -29,6 +29,7 @@ class QuestionObject:
 
     def setAnswerListComposite(self, answerListComposite):
         self.answerListComposite = answerListComposite
+
     def getAnswerListComposite(self):
         return self.answerListComposite
 

@@ -37,6 +37,8 @@ class Test:
         self.isEntryBatchSizeValid = False
         self.isFirstRoundStrAddition = True
         self.isFaultDuplicantsAppended = True
+        self.isTestMode = False
+        self.isLearnMode = False
         self.instanceDisplayManager = DisplayManager()
         self.instanceQuestionObjectManager = QuestionObjectManager()
 
@@ -319,11 +321,11 @@ class Test:
                 while(lengthIndex < len(spaceCorrectAnswerFault)):
                     self.strPieceSpaceCorrectAnswerFault += " "+spaceCorrectAnswerFault[lengthIndex]
                     lengthIndex += 1
-            print(self.strPieceSpaceCorrectAnswerFault)
+            # print(self.strPieceSpaceCorrectAnswerFault)
 
             #find index where correct answer piece, replace with fixed fault correct answer.
             self.listFinalQuestionPieceResults[self.spaceFaultQuestionPieceIndex] = "Correct Answer:"+self.strPieceSpaceCorrectAnswerFault
-            print("self.listFinalQuestionPieceResults"+str(self.listFinalQuestionPieceResults))
+            # print("self.listFinalQuestionPieceResults"+str(self.listFinalQuestionPieceResults))
 
     def handleDuplicantAnswersOnSameLineFault(self, questionPiece):
         questionPieceListSplit = []
@@ -403,29 +405,29 @@ class Test:
         entryList = []
         whiteSpaceClearedList = []
         entryNumberString = self.instanceDisplayManager.entryNumberQuestions.get()
-        print(entryNumberString)
+        # print(entryNumberString)
         if("-" in entryNumberString):
             entryList = entryNumberString.split("-")
             # Clear extra whitespace for entry index
             for val in entryList:
                 whiteSpaceClearedList.append(val.replace(" ", ""))
-            print("lenwhiteSpaceClearedList: "+str(len(whiteSpaceClearedList)))
+            # print("lenwhiteSpaceClearedList: "+str(len(whiteSpaceClearedList)))
             # Handle two values on either side of "-"
             if(len(whiteSpaceClearedList) == 2):
                 # Handle values are integers
                 isValValidList = []
                 for val in whiteSpaceClearedList:
                     isValValidList.append(self.validateIsNumber(val))
-                print(str(isValValidList))
+                # print(str(isValValidList))
                 resultsFalseList = []
                 for isValValid in isValValidList:
                     if (isValValid == False):
                         resultsFalseList.append(isValValid)
                 if(len(resultsFalseList)):
-                    print("results false")
+                    # print("results false")
                     self.isEntryBatchSizeValid = False
                 else:
-                    print("results are good: "+str(whiteSpaceClearedList))
+                    # print("results are good: "+str(whiteSpaceClearedList))
                     # Handle second value is larger than first
                     val1 = int(whiteSpaceClearedList[0])
                     val2 = int(whiteSpaceClearedList[1])
@@ -446,7 +448,7 @@ class Test:
                 self.isEntryBatchSizeValid = False
         else:
             self.isEntryBatchSizeValid = False
-        print("self.isEntryBatchSizeValid: "+str(self.isEntryBatchSizeValid))
+        # print("self.isEntryBatchSizeValid: "+str(self.isEntryBatchSizeValid))
 
     def validateIsNumber(self, val):
         try:
@@ -474,12 +476,13 @@ class Test:
                 questionListIndex += 1
         else:
             self.batchQuestionList = questionList
-        print("self.batchQuestionList: "+str(len(self.batchQuestionList)))
-        for questionObj in self.batchQuestionList:
-            print(questionObj.getProblem())
+        # print("self.batchQuestionList: "+str(len(self.batchQuestionList)))
+        # for questionObj in self.batchQuestionList:
+        #     print(questionObj.getProblem())
         self.instanceQuestionObjectManager.setBatchSizeQuestionList(self.batchQuestionList)
 
-    def testOption1(self):
+    def testMode(self):
+        self.isTestMode = True
         self.determineParseEntryBatchSizeValueIsValid()
         if(self.isEntryBatchSizeValid):
             self.batchSizeTest()
@@ -487,13 +490,14 @@ class Test:
             self.instanceQuestionObjectManager.setCurrentQuestionObject(self.instanceQuestionObjectManager.getBatchSizeQuestionList()[0])
             self.instanceDisplayManager.displayQuestion()
 
-    def testOption2(self):
+    def learnMode(self):
+        self.isLearnMode = True
         self.determineParseEntryBatchSizeValueIsValid()
         if (self.isEntryBatchSizeValid):
             self.batchSizeTest()
-            self.instanceQuestionObjectManager.randomizeQuestionList()
+            # self.instanceQuestionObjectManager.randomizeQuestionList()
             self.instanceQuestionObjectManager.setCurrentQuestionObject(self.instanceQuestionObjectManager.getBatchSizeQuestionList()[0])
-            self.instanceDisplayManager.displayQuestion()
+            self.instanceDisplayManager.displayQuestionLearnMode()
 
     def createDisplayList(self, questionList):
         displayContainer = []
@@ -512,8 +516,16 @@ class Test:
         else:
             self.instanceDisplayManager.displayScoreScreen()
 
+    def changeToNextQuestionLearnMode(self):
+        # Handle on set nextQuestion
+        if (self.instanceQuestionObjectManager.processNextQuestion()):
+            # Handle displayManager paint new question
+            self.instanceDisplayManager.displayQuestionLearnMode()
+        else:
+            self.instanceDisplayManager.displayLearnModeRetakeScreen()
+
     def confirmAnswer(self):
-        # create answerBooleanList to be appended later to textAnswerList
+        # Create answerBooleanList to be appended later to textAnswerList
         answerBooleanList = []
         selectedAnswerIndex = 0
         for selectedAnswer in self.instanceDisplayManager.selectedAnswerList:
@@ -557,14 +569,13 @@ class Test:
         self.selectedAnswerIndexTotal = 0
 
     def calculateScore(self):
-        questionList = self.instanceQuestionObjectManager.questionList
+        questionList = self.instanceQuestionObjectManager.getBatchSizeQuestionList()
         totalCountQuestions = len(questionList)
         for question in questionList:
             if(question.getIsAnsweredCorrectly()):
                 self.correctQuestionAnsweredCount += 1
         percentageCorrect = (self.correctQuestionAnsweredCount / totalCountQuestions) * 100
         return percentageCorrect
-
 
     def getIsQuestionCorrectOutcome(self):
         return self.isQuestionCorrectOutcome
