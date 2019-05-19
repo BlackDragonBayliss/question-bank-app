@@ -44,7 +44,6 @@ class Test:
 
     def operate(self):
         self.readPDF()
-        # self.parseQuestionBankToCorrectFormat()
         self.readQuestionBank()
         self.instanceDisplayManager.setup(self)
         self.instanceDisplayManager.startScreen()
@@ -61,12 +60,14 @@ class Test:
         stringTextContainer = []
         #Iterate through first question, followed by consec four.
         questionPieceContainer = []
+        revisedProblemLengthFaultQuestionPieceContainer = []
         stringTextContainer = stringText.splitlines()
         tempContainer = []
         strToAppend = ""
         isBeginTextAppend = False
         isOperationNormal = True
         index = 0
+
         vceTestList = []
         vceIndex = 0
         for text in stringTextContainer:
@@ -75,7 +76,11 @@ class Test:
         vceTestList = self.handleVceFault(vceTestList)
         revisedEmptyStringAtIndexFaultList = self.handleEmptyStringAtIndexFault(vceTestList)
 
-        questionPieceContainer = self.handleProblemConcatenationFault(revisedEmptyStringAtIndexFaultList)
+        # Handle problem concatenation fault
+        revisedEmptyStringQuestionPieceContainer = self.handleProblemConcatenationFault(revisedEmptyStringAtIndexFaultList)
+
+        # Handle if question problem over a certain length, if so, break with new line, to prevent question being cut off screen.
+        revisedProblemLengthFaultQuestionPieceContainer = self.parseProblemLengthFault(revisedEmptyStringQuestionPieceContainer)
 
         # Intake feed, process into question bank
         questionComposite = self.processParseQuestionBank(questionPieceContainer)
@@ -112,6 +117,10 @@ class Test:
             questionListRevised.append(questionPiece)
             indexProcessing += 1
         return questionListRevised
+
+    def parseProblemLengthFault(self, questionList):
+        # Handle if question problem over a certain length, if so, break with new line, to prevent question being cut off screen.
+        pass
 
     def handleEmptyStringAtIndexFault(self, questionList):
         emptyStringAtIndexFaultIndex = 0

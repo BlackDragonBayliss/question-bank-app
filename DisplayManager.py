@@ -75,21 +75,19 @@ class DisplayManager:
 
         self.root.mainloop()
 
-
     def displayQuestion(self):
         self.resetScreenVariables()
         self.clearWidgets()
         instanceQuestionObjectManager = self.instanceTest.getInstanceQuestionObjectManager()
         self.questionCount += 1
         questionList = self.instanceTest.getInstanceQuestionObjectManager().getBatchSizeQuestionList()
-        # print("len questionList: "+str(len(questionList)))
         self.selectedAnswerList = []
 
         self.currentQuestion = self.instanceTest.getInstanceQuestionObjectManager().getCurrentQuestionObject()
+
         self.questionText = self.currentQuestion.getProblem()
 
         for index in self.currentQuestion.getAnswerListComposite():
-            # self.questionListAnswerKeys.append(index[0])
             self.questionListAnswerTexts.append(index[1])
 
         self.questionLabel = Label(text=self.questionText)
@@ -172,7 +170,6 @@ class DisplayManager:
         index = 0
         for correctAnswer in self.currentQuestion.getCorrectAnswerList():
             if((index + 1) == len(self.currentQuestion.getCorrectAnswerList())):
-                print("Hit end length: "+str(index))
                 correctAnswerString += str(correctAnswer)
                 break
             correctAnswerString += str(correctAnswer) + "\n"
@@ -186,7 +183,6 @@ class DisplayManager:
         index = 0
         for correctAnswer in self.currentQuestion.getCorrectAnswerList():
             if((index + 1) == len(self.currentQuestion.getCorrectAnswerList())):
-                print("Hit end length: "+str(index))
                 correctAnswerString += str(correctAnswer)
                 break
             correctAnswerString += str(correctAnswer) + "\n"
