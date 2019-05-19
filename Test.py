@@ -222,15 +222,9 @@ class Test:
 
 
     def parseQuestionBankToCorrectFormat(self):
-        # file = open("testfile.txt", "w")
-        # file.write("Hello World")
-        # file.close()
         f = open("testfile.txt", "r")
-        # f = open("demofile.txt", "r")
         stringText = f.read()
-
         self.parseForFaults(stringText)
-        # print(stringText)
 
     def parseForFaults(self, stringText):
         data_set_group_0_1 = stringText.split('QUESTION')
@@ -448,7 +442,6 @@ class Test:
                 self.isEntryBatchSizeValid = False
         else:
             self.isEntryBatchSizeValid = False
-        # print("self.isEntryBatchSizeValid: "+str(self.isEntryBatchSizeValid))
 
     def validateIsNumber(self, val):
         try:
@@ -460,10 +453,8 @@ class Test:
     def batchSizeTest(self):
         questionList = self.instanceQuestionObjectManager.getQuestionList()
         self.batchQuestionList =  []
-
         startIndex = self.batchRangeList[0]
         endIndex = self.batchRangeList[1]
-
         # If self.isEntryBatchSizeValid continue questionList to batchQuestionList process
         # Else entire list of questions becomes batchQuestionList
         if(self.isEntryBatchSizeValid):
@@ -518,6 +509,7 @@ class Test:
 
     def changeToNextQuestionLearnMode(self):
         # Handle on set nextQuestion
+        self.instanceDisplayManager.showAnswerLearnModeLabelText = ""
         if (self.instanceQuestionObjectManager.processNextQuestion()):
             # Handle displayManager paint new question
             self.instanceDisplayManager.displayQuestionLearnMode()

@@ -46,6 +46,7 @@ class DisplayManager:
 
     def startScreen(self):
         self.root.geometry('1400x800')
+        self.root.configure(background='blue')
 
         self.labelInfoNumberQuestions = Label(self.root, text="Enter number of questions for test")
         self.labelInfoNumberQuestions.place(x=self.xPositionKey, y=self.yPositionGlobalIterate)
@@ -136,26 +137,21 @@ class DisplayManager:
         self.questionText = self.currentQuestion.getProblem()
 
         for index in self.currentQuestion.getAnswerListComposite():
-            # self.questionListAnswerKeys.append(index[0])
             self.questionListAnswerTexts.append(index[1])
 
         self.questionLabel = Label(text=self.questionText)
         self.questionLabel.place(x=10, y=10)
-
-        questionListAnswers = ["A","B","C"]
         answerIndex = 0
-        for counter, choiceText in enumerate(questionListAnswers, 1):
-            key = Label(self.root, text=questionListAnswers[answerIndex])
+        for counter, choiceText in enumerate(self.questionListAnswerTexts, 1):
+            key = Label(self.root, text=self.questionListAnswerTexts[answerIndex])
             key.place(x=self.xPositionKey, y=self.yPositionGlobalIterate)
             self.keyList.append(key)
             self.updateYPositionGlobalIterate()
             answerIndex += 1
 
-        # if(self.isShowAnswerLearnMode):
         self.showAnswerLabel = Label(self.root, text=self.showAnswerLearnModeLabelText)
         self.showAnswerLabel.place(x=self.xPositionKey, y=self.yPositionGlobalIterate)
         self.updateYPositionGlobalIterate()
-            # self.isShowAnswerLearnMode = False
 
         self.showAnswerButton = Button(text="Show answer", command=self.showAnswerLearnMode)
         self.showAnswerButton.place(x=self.xPositionConfirmButton, y=self.yPositionGlobalIterate)
@@ -167,7 +163,12 @@ class DisplayManager:
 
     def populateShowAnswerLearnModeLabelText(self):
         correctAnswerString = ""
+        index = 0
         for correctAnswer in self.currentQuestion.getCorrectAnswerList():
+            if((index + 1) == len(self.currentQuestion.getCorrectAnswerList())):
+                print("Hit end length: "+str(index))
+                correctAnswerString += str(correctAnswer)
+                break
             correctAnswerString += str(correctAnswer) + "\n"
         if(len(self.currentQuestion.getCorrectAnswerList()) == 1):
             self.showAnswerLearnModeLabelText = "Correct answer: " + correctAnswerString
@@ -180,7 +181,6 @@ class DisplayManager:
         self.resetScreenVariables()
         self.clearWidgets()
         self.displayQuestionLearnMode()
-        print("showAnswerLearnMode")
 
     def displayQuestionOutcomeScreen(self):
         self.resetScreenVariables()
@@ -197,7 +197,9 @@ class DisplayManager:
         self.labelQuestionOutcome.place(x=self.xPositionKey, y=self.yPositionGlobalIterate)
         self.updateYPositionGlobalIterate()
 
-        outcomeAnswer = self.instanceTest.getInstanceQuestionObjectManager().getCurrentQuestionObject().getCorrectAnswerList()
+        outcomeAnswerList = self.instanceTest.getInstanceQuestionObjectManager().getCurrentQuestionObject().getCorrectAnswerList()
+        for answer in outcomeAnswerList:
+
 
         self.labelQuestionOutcomeCorrectAnswer = Label(self.root, text=outcomeAnswer)
         self.labelQuestionOutcomeCorrectAnswer.place(x=self.xPositionKey, y=self.yPositionGlobalIterate)
@@ -245,10 +247,8 @@ class DisplayManager:
             self.testModeButton.destroy()
             self.learnModeButton.destroy()
             return
-
         # Learn mode widgets
         if(self.instanceTest.isLearnMode):
-            print("hit cleear isLearnMode")
             for widget in self.keyList:
                 widget.destroy()
             self.questionLabel.destroy()
@@ -256,7 +256,6 @@ class DisplayManager:
             self.showAnswerButton.destroy()
             self.nextQuestionButton.destroy()
             return
-
         # Test mode widgets
         if(self.instanceTest.isTestMode):
             for widget in self.buttonList:
@@ -269,7 +268,6 @@ class DisplayManager:
             self.confirmAnswerButton.destroy()
             self.deselectOptionsButton.destroy()
             return
-
         # Handle destroy if isOutcomeScreen
         if(self.isQuestionOutcomeScreen):
             self.labelQuestionOutcome.destroy()

@@ -121,3 +121,8 @@
 #
 #     # f = open("demofile.txt", "r")
 #     # print(self.pdfText)
+
+
+# file = open("testfile.txt", "w")
+# file.write("Hello World")
+# file.close()

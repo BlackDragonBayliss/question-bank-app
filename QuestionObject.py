@@ -26,18 +26,14 @@ class QuestionObject:
     def parseAnswer(self, answerString):
         answerList = answerString.split(". ")
         self.answerListComposite.append(answerList)
-
     def setAnswerListComposite(self, answerListComposite):
         self.answerListComposite = answerListComposite
-
     def getAnswerListComposite(self):
         return self.answerListComposite
-
     def getIsAnswered(self):
         return self.isAnswered
     def setIsAnswered(self, isAnswered):
         self.isAnswered = isAnswered
-
     def getIsAnsweredCorrectly(self):
         return self.isAnsweredCorrectly
     def setIsAnsweredCorrectly(self, isAnsweredCorrectly):
