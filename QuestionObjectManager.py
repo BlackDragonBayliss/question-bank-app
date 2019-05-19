@@ -43,12 +43,11 @@ class QuestionObjectManager:
     #         return False
 
     def randomizeQuestionList(self):
-        shuffle(self.questionList)
-        self.setCurrentQuestionObject(self.getQuestionList()[0])
+        shuffle(self.batchSizeQuestionList)
+        self.setCurrentQuestionObject(self.batchSizeQuestionList[0])
     def randomizeQuestionAnswerLists(self):
         for questionObject in self.questionList:
             questionObject.randomizeAnswerList()
-
     def getRandomizedQuestionList(self):
         return self.randomizedQuestionsList
     def setRandomizedQuestionList(self, randomizedQuestionList):

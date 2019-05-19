@@ -29,6 +29,7 @@ class DisplayManager:
         self.isQuestionOutcomeScreen = False
         self.isShowAnswerLearnMode = False
 
+        self.showAnswerTestModeOutomeText = ""
         self.showAnswerLearnModeLabelText = ""
 
     def setup(self, test):
@@ -59,6 +60,11 @@ class DisplayManager:
 
         self.entryNumberQuestions = Entry(self.root)
         self.entryNumberQuestions.place(x=self.xPositionConfirmButton, y=self.yPositionGlobalIterate)
+        self.updateYPositionGlobalIterate()
+
+        self.isRandomizationCheckBoxIntVar = IntVar()
+        self.isRandomizationCheckBox = Checkbutton(self.root, text='Randomize questions?', variable=self.isRandomizationCheckBoxIntVar)
+        self.isRandomizationCheckBox.place(x=self.xPositionConfirmButton, y=self.yPositionGlobalIterate)
         self.updateYPositionGlobalIterate()
 
         self.testModeButton = Button(text="Test mode", command=self.instanceTest.testMode)
@@ -161,6 +167,20 @@ class DisplayManager:
         self.nextQuestionButton.place(x=self.xPositionConfirmButton, y=self.yPositionGlobalIterate)
         self.updateYPositionGlobalIterate()
 
+    def populateShowAnswerTestModeOutomeText(self):
+        correctAnswerString = ""
+        index = 0
+        for correctAnswer in self.currentQuestion.getCorrectAnswerList():
+            if((index + 1) == len(self.currentQuestion.getCorrectAnswerList())):
+                print("Hit end length: "+str(index))
+                correctAnswerString += str(correctAnswer)
+                break
+            correctAnswerString += str(correctAnswer) + "\n"
+        if(len(self.currentQuestion.getCorrectAnswerList()) == 1):
+            self.showAnswerTestModeOutomeText = "Correct answer: " + correctAnswerString
+        else:
+            self.showAnswerTestModeOutomeText = "Correct answers: " + correctAnswerString
+
     def populateShowAnswerLearnModeLabelText(self):
         correctAnswerString = ""
         index = 0
@@ -197,11 +217,9 @@ class DisplayManager:
         self.labelQuestionOutcome.place(x=self.xPositionKey, y=self.yPositionGlobalIterate)
         self.updateYPositionGlobalIterate()
 
-        outcomeAnswerList = self.instanceTest.getInstanceQuestionObjectManager().getCurrentQuestionObject().getCorrectAnswerList()
-        for answer in outcomeAnswerList:
+        self.populateShowAnswerTestModeOutomeText()
 
-
-        self.labelQuestionOutcomeCorrectAnswer = Label(self.root, text=outcomeAnswer)
+        self.labelQuestionOutcomeCorrectAnswer = Label(self.root, text=self.showAnswerTestModeOutomeText)
         self.labelQuestionOutcomeCorrectAnswer.place(x=self.xPositionKey, y=self.yPositionGlobalIterate)
         self.updateYPositionGlobalIterate()
 
@@ -244,9 +262,19 @@ class DisplayManager:
             self.labelInfoNumberQuestions.destroy()
             self.labelInfoNumberInstructionForQuestions.destroy()
             self.entryNumberQuestions.destroy()
+            self.isRandomizationCheckBox.destroy()
             self.testModeButton.destroy()
             self.learnModeButton.destroy()
             return
+
+        # Handle destroy if isOutcomeScreen
+        if (self.isQuestionOutcomeScreen):
+            self.labelQuestionOutcome.destroy()
+            self.labelQuestionOutcomeCorrectAnswer.destroy()
+            self.buttonConfirmQuestionOutcome.destroy()
+            self.isQuestionOutcomeScreen = False
+            return
+
         # Learn mode widgets
         if(self.instanceTest.isLearnMode):
             for widget in self.keyList:
@@ -268,11 +296,5 @@ class DisplayManager:
             self.confirmAnswerButton.destroy()
             self.deselectOptionsButton.destroy()
             return
-        # Handle destroy if isOutcomeScreen
-        if(self.isQuestionOutcomeScreen):
-            self.labelQuestionOutcome.destroy()
-            self.labelQuestionOutcomeCorrectAnswer.destroy()
-            self.buttonConfirmQuestionOutcome.destroy()
-            self.isQuestionOutcomeScreen = False
-            return
+
 

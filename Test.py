@@ -220,7 +220,6 @@ class Test:
             self.questionInteration += 1
         return questionObjectComposite
 
-
     def parseQuestionBankToCorrectFormat(self):
         f = open("testfile.txt", "r")
         stringText = f.read()
@@ -477,7 +476,9 @@ class Test:
         self.determineParseEntryBatchSizeValueIsValid()
         if(self.isEntryBatchSizeValid):
             self.batchSizeTest()
-            #handle upon question change, change globalCurrentQuestionIndex, find process of change
+            # Handle isRandomization of question list selected
+            if(self.instanceDisplayManager.isRandomizationCheckBoxIntVar.get() == 1):
+                self.instanceQuestionObjectManager.randomizeQuestionList()
             self.instanceQuestionObjectManager.setCurrentQuestionObject(self.instanceQuestionObjectManager.getBatchSizeQuestionList()[0])
             self.instanceDisplayManager.displayQuestion()
 
@@ -486,7 +487,9 @@ class Test:
         self.determineParseEntryBatchSizeValueIsValid()
         if (self.isEntryBatchSizeValid):
             self.batchSizeTest()
-            # self.instanceQuestionObjectManager.randomizeQuestionList()
+            # Handle isRandomization of question list selected
+            if (self.instanceDisplayManager.isRandomizationCheckBoxIntVar.get() == 1):
+                self.instanceQuestionObjectManager.randomizeQuestionList()
             self.instanceQuestionObjectManager.setCurrentQuestionObject(self.instanceQuestionObjectManager.getBatchSizeQuestionList()[0])
             self.instanceDisplayManager.displayQuestionLearnMode()
 
