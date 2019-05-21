@@ -60,7 +60,7 @@ class Test:
         stringTextContainer = []
         #Iterate through first question, followed by consec four.
         questionPieceContainer = []
-        revisedProblemLengthFaultQuestionPieceContainer = []
+        revisedEmptyStringQuestionPieceContainer = []
         stringTextContainer = stringText.splitlines()
         tempContainer = []
         strToAppend = ""
@@ -79,12 +79,21 @@ class Test:
         # Handle problem concatenation fault
         revisedEmptyStringQuestionPieceContainer = self.handleProblemConcatenationFault(revisedEmptyStringAtIndexFaultList)
 
-        # Handle if question problem over a certain length, if so, break with new line, to prevent question being cut off screen.
-        revisedProblemLengthFaultQuestionPieceContainer = self.parseProblemLengthFault(revisedEmptyStringQuestionPieceContainer)
 
         # Intake feed, process into question bank
-        questionComposite = self.processParseQuestionBank(questionPieceContainer)
+        questionComposite = self.processParseQuestionBank(revisedEmptyStringQuestionPieceContainer)
 
+        # Handle if question problem over a certain length, if so, break with new line, to prevent question being cut off screen.
+        # revisedProblemLengthFaultQuestionPieceContainer = self.parseProblemLengthFault(
+        #     revisedEmptyStringQuestionPieceContainer)
+        testIndex = 0
+        for question in questionComposite:
+            if(testIndex < 10):
+                if(len(question.getProblem()) > 100):
+                    print(len(question.getProblem()))
+                    print(question.getProblem())
+            # print(str(question.getQuestionNumber()))
+            testIndex +=1
         # Set question list
         self.instanceQuestionObjectManager.setQuestionList(questionComposite)
         # self.instanceQuestionObjectManager.setCurrentQuestionObject(questionComposite[0])

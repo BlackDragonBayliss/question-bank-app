@@ -126,3 +126,24 @@
 # file = open("testfile.txt", "w")
 # file.write("Hello World")
 # file.close()
+
+maximumStringScreenSize = 200
+questionProblem = "A user prefers an external monitor, mouse, and keyboard for a laptop. The user does not want to use the built-in screen; however, when the laptop lid is closed, itgoes into sleep mode. Which of the following "
+# print(test)
+# findIndex = 0
+indexSplit = 0
+if len(questionProblem) > maximumStringScreenSize:
+    findIndex = 0
+    #find 200th character, find next space, add new line.
+    for letterSpace in questionProblem:
+        if findIndex >= maximumStringScreenSize:
+            if " " in letterSpace:
+                indexSplit = findIndex
+                break
+        findIndex += 1
+
+splitList = questionProblem[indexSplit:len(questionProblem)]
+# print("indexSplit: "+str(indexSplit))
+print("splitList: "+str(splitList))
+#     "Control Panel items can be used to disable this feature?
+# ")
