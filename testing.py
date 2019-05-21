@@ -127,37 +127,90 @@
 # file.write("Hello World")
 # file.close()
 
-maximumStringScreenSize = 200
-questionProblem = "A user prefers an external monitor, mouse, and keyboard for a laptop. The user does not want to use the built-in screen; however, when the laptop lid is closed, itgoes into sleep mode. Which of the following Control Panel items can be used to disable this feature?"
-splitStringList = []
 
-# print(test)
-# findIndex = 0
-indexSplit = 0
-if len(questionProblem) > maximumStringScreenSize:
-    findIndex = 0
-    #find 200th character, find next space, add new line.
-    for letterSpace in questionProblem:
-        if findIndex >= maximumStringScreenSize:
+problemList = ["A user prefers an external monitor, mouse, and keyboard for a laptop. The user does not want to use the built-in screen; however, when the laptop lid is closed, itgoes into sleep mode. Which of the following Control Panel items can be used to disable this feature?"
+,
+
+    "A user prefers an external monitor, mouse, and keyboard for a laptop. The user does not want to use the built-in screen; however, when the laptop lid is closed, itgoes into sleep mode. Which of the following Control Panel items can be used to disable this feature? BEARS BEARS BEARS LOT OF BEARS EVERYWHERE OMG WHAT IS GOING ON I'M SO SCARED PLEASE NO PLEASE I AM SO SCARED AND MY FACE CAN'T HANDLE THE BEARS NO BEARSSSSSSSSSSSS"
+]
+# maximumStringScreenSize = 200
+# questionProblem =
+
+
+# splitStringList = []
+# splitStringListComposite = []
+# # print(test)
+# # findIndex = 0
+#
+# for problem in questionList:
+#     indexSplit = 0
+#     if len(problem) > maximumStringScreenSize:
+#         findIndex = 0
+#
+#         #find 200th character, find next space, add new line.
+#         # Handle multiple lines
+#
+#         for letterSpace in problem:
+#             if findIndex >= maximumStringScreenSize:
+#                 if " " in letterSpace:
+#                     indexSplit = findIndex
+#                     isIndexFound = []
+#             findIndex += 1
+
+
+for problem in problemList:
+    splitListComposite = []
+    splitList = []
+    maximumStringScreenSize = 200
+    cutScreenIndex = 0
+    isCutOff = False
+    problem = problemList[0]
+
+
+    for letterSpace in problem:
+        if(cutScreenIndex % maximumStringScreenSize == 0):
+            isCutOff = True
+
+        if isCutOff:
             if " " in letterSpace:
-                indexSplit = findIndex
-                break
-        findIndex += 1
+                split = problem[cutScreenIndex:]
+                splitList.append(split)
+                isCutOff = False
+
+        cutScreenIndex +=1
+
+    print(str(splitList))
+
+    # Append splitList pieces.
+
+    #Add revised strings to list return list
+
+    splitListComposite.append(splitList)
 
 
-splitStringList.append(questionProblem[:207])
-splitStringList.append(questionProblem[207:])
 
-concatIndex = 0
-concatString = ""
-for string in splitStringList:
-    if(concatIndex != 0):
-        concatString += "\n"
-    concatString +=string
-    # print("string: "+str(string))
-    concatIndex += 1
+#     splitStringList.append(problem[:207])
+#     splitStringList.append(problem[207:])
+#
+#
+# splitStringListComposite.append(splitStringList)
+# print(str(splitStringListComposite))
 
-print(concatString)
+
+
+
+# concatIndex = 0
+# concatString = ""
+# for string in splitStringList:
+#     if(concatIndex != 0):
+#         concatString += "\n"
+#     concatString +=string
+#     # print("string: "+str(string))
+#     concatIndex += 1
+#
+# print(concatString)
+
+
 # print("splitList: "+str(splitList))
 #     "Control Panel items can be used to disable this feature?
 # ")
