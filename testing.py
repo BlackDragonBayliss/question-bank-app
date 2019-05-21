@@ -128,7 +128,9 @@
 # file.close()
 
 maximumStringScreenSize = 200
-questionProblem = "A user prefers an external monitor, mouse, and keyboard for a laptop. The user does not want to use the built-in screen; however, when the laptop lid is closed, itgoes into sleep mode. Which of the following "
+questionProblem = "A user prefers an external monitor, mouse, and keyboard for a laptop. The user does not want to use the built-in screen; however, when the laptop lid is closed, itgoes into sleep mode. Which of the following Control Panel items can be used to disable this feature?"
+splitStringList = []
+
 # print(test)
 # findIndex = 0
 indexSplit = 0
@@ -142,8 +144,20 @@ if len(questionProblem) > maximumStringScreenSize:
                 break
         findIndex += 1
 
-splitList = questionProblem[indexSplit:len(questionProblem)]
-# print("indexSplit: "+str(indexSplit))
-print("splitList: "+str(splitList))
+
+splitStringList.append(questionProblem[:207])
+splitStringList.append(questionProblem[207:])
+
+concatIndex = 0
+concatString = ""
+for string in splitStringList:
+    if(concatIndex != 0):
+        concatString += "\n"
+    concatString +=string
+    # print("string: "+str(string))
+    concatIndex += 1
+
+print(concatString)
+# print("splitList: "+str(splitList))
 #     "Control Panel items can be used to disable this feature?
 # ")

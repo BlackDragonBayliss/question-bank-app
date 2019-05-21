@@ -188,10 +188,6 @@ class Test:
                     # print("questionObjectListContainer: " + str(questionObjectListContainer))
                     questionObjectListContainer[currentQuestionSplitIndex].append(questionPiece)
                     continue
-                    # if(isBeginAddQuestionObject):
-                    # questionObjectList = []
-                        # isBeginAddQuestionObject = False
-                # print("currentQuestionSplitIndex: "+str(currentQuestionSplitIndex))
                 questionObjectListContainer[(currentQuestionSplitIndex)].append(questionPiece)
         questionContainer =[]
         testIndex = 0
