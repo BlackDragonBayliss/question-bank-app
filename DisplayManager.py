@@ -86,6 +86,7 @@ class DisplayManager:
         self.currentQuestion = self.instanceTest.getInstanceQuestionObjectManager().getCurrentQuestionObject()
 
         self.questionText = self.currentQuestion.getProblem()
+        print(self.questionText)
 
         for index in self.currentQuestion.getAnswerListComposite():
             self.questionListAnswerTexts.append(index[1])

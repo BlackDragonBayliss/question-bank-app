@@ -164,7 +164,7 @@ for problem in problemList:
     maximumStringScreenSize = 200
     cutScreenIndex = 0
     isCutOff = False
-    problem = problemList[0]
+    # problem = problemList[0]
 
 
     for letterSpace in problem:
@@ -179,13 +179,22 @@ for problem in problemList:
 
         cutScreenIndex +=1
 
-    print(str(splitList))
-
+    # print("splitList: "+str(splitList))
+    problemString = ""
+    isInitial  = True
     # Append splitList pieces.
+    for piece in splitList:
+        if(isInitial):
+            problemString += piece
+            continue
+        problemString += "\n"+piece
+
+    print("problemString: "+problemString)
+
 
     #Add revised strings to list return list
 
-    splitListComposite.append(splitList)
+    splitListComposite.append(problemString)
 
 
 

@@ -79,40 +79,73 @@ class Test:
         # Handle problem concatenation fault
         revisedEmptyStringQuestionPieceContainer = self.handleProblemConcatenationFault(revisedEmptyStringAtIndexFaultList)
 
-
         # Intake feed, process into question bank
         questionComposite = self.processParseQuestionBank(revisedEmptyStringQuestionPieceContainer)
 
         # Handle if question problem over a certain length, if so, break with new line, to prevent question being cut off screen.
-        # revisedProblemLengthFaultQuestionPieceContainer = self.parseProblemLengthFault(
-        #     revisedEmptyStringQuestionPieceContainer)
-        testIndex = 0
-        for question in questionComposite:
-            if(testIndex < 10):
-                if(len(question.getProblem()) > 100):
-                    print(len(question.getProblem()))
-                    print(question.getProblem())
-            # print(str(question.getQuestionNumber()))
-            testIndex +=1
+        questionCompositeRevised = self.handleProblemScreenCutOffFault(questionComposite)
+
         # Set question list
-        self.instanceQuestionObjectManager.setQuestionList(questionComposite)
-        # self.instanceQuestionObjectManager.setCurrentQuestionObject(questionComposite[0])
-        # # Randomize question answers
+        self.instanceQuestionObjectManager.setQuestionList(questionCompositeRevised)
+
+        # Randomize question answers
         self.instanceQuestionObjectManager.randomizeQuestionAnswerLists()
+
+    def handleProblemScreenCutOffFault(self, questionComposite):
+        splitList = []
+        problemResolutionIndexList = []
+        questionCompositeRevised = []
+        indexOfProblemResolution = 0
+        maximumStringScreenSize = 200
+        cutScreenIndex = 0
+        isCutOff = False
+        isSplitProcessing = False
+
+        for question in questionComposite:
+            questionRevised = question
+            problem = questionRevised.getProblem()
+            # Iterate through the problem letters to verify if split is needed
+            for letterSpace in problem:
+                if (cutScreenIndex % maximumStringScreenSize == 0 and cutScreenIndex != 0):
+                    isCutOff = True
+                if isCutOff:
+                    if " " in letterSpace:
+                        # Append problem prev index of list.
+                        split1 = problem[:cutScreenIndex]
+                        split2 = problem[cutScreenIndex:]
+                        splitList.append(split1)
+                        splitList.append(split2)
+                        isCutOff = False
+                        isSplitProcessing = True
+                cutScreenIndex += 1
+            # For question problem, if split was performed, correct
+            if isSplitProcessing:
+                isSplitProcessing = False
+                problemResolutionIndexList.append(indexOfProblemResolution)
+                problemString = ""
+                isInitial = True
+                # Append splitList pieces.
+                for piece in splitList:
+                    if isInitial:
+                        problemString += piece
+                        isInitial =  False
+                        continue
+                    problemString += "\n" + piece
+                questionRevised.setProblem(problemString)
+            isCutOff = False
+            splitList = []
+            cutScreenIndex = 0
+            questionCompositeRevised.append(questionRevised)
+            indexOfProblemResolution += 1
+        return questionCompositeRevised
 
     def handleVceFault(self, questionList):
         faultIndex = 0
         faultIndexList = []
         for questionPiece in questionList:
-            # print("questionPiece: "+questionPiece)
             if("www.vceplus.com " in questionPiece):
-                # print("hit")
-                # self.vceFaultIndex = faultIndex
                 faultIndexList.append(faultIndex)
-                # self.isVceFault = True
             faultIndex += 1
-        # print("vceFault in faultQuestionContainer: "+questionList[self.vceFaultIndex])
-        # if(self.isVceFault):
         questionListRevised = []
         indexProcessing = 0
         faultFoundIndex = 0
@@ -126,10 +159,6 @@ class Test:
             questionListRevised.append(questionPiece)
             indexProcessing += 1
         return questionListRevised
-
-    def parseProblemLengthFault(self, questionList):
-        # Handle if question problem over a certain length, if so, break with new line, to prevent question being cut off screen.
-        pass
 
     def handleEmptyStringAtIndexFault(self, questionList):
         emptyStringAtIndexFaultIndex = 0
