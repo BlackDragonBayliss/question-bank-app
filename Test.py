@@ -176,7 +176,7 @@ class Test:
         isBeginTextAppend = False
         strToAppend = ""
         for text in questionPieceList:
-            # Within questionPiece range"QUESTION" - "A."
+            # Within questionPiece range "QUESTION" - "A."
             # append question lines into individual lists
             if "A." in text:
                 questionPieceContainer.append(strToAppend)
