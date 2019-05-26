@@ -38,6 +38,7 @@ class Test:
         self.isFaultDuplicantsAppended = True
         self.isTestMode = False
         self.isLearnMode = False
+        self.isIncorrectRetaken = False
         self.instanceDisplayManager = DisplayManager()
         self.instanceQuestionObjectManager = QuestionObjectManager()
 
@@ -54,10 +55,9 @@ class Test:
         self.pdfText = "\n\n".join(pdf)
 
     def readQuestionBank(self):
-        stringText = self.pdfText #f.read()
+        stringText = self.pdfText
         questionSplitContainer = []
         stringTextContainer = []
-        #Iterate through first question, followed by consec four.
         questionPieceContainer = []
         revisedEmptyStringQuestionPieceContainer = []
         stringTextContainer = stringText.splitlines()
@@ -425,7 +425,7 @@ class Test:
 
     def batchSizeTest(self):
         questionList = self.instanceQuestionObjectManager.getQuestionList()
-        self.batchQuestionList =  []
+        batchQuestionList =  []
         startIndex = self.batchRangeList[0]
         endIndex = self.batchRangeList[1]
         #if self.isEntryBatchSizeValid continue questionList to batchQuestionList process
@@ -436,11 +436,14 @@ class Test:
             #if within start index
             while(questionListIndex < len(questionList)):
                 if(questionListIndex >= startIndex and questionListIndex <= endIndex):
-                    self.batchQuestionList.append(questionList[questionListIndex-1])
+                    batchQuestionList.append(questionList[questionListIndex-1])
                 questionListIndex += 1
         else:
-            self.batchQuestionList = questionList
-        self.instanceQuestionObjectManager.setBatchSizeQuestionList(self.batchQuestionList)
+            batchQuestionList = questionList
+        self.setQuestionObjectManagerBatchSizeTest(batchQuestionList)
+
+    def setQuestionObjectManagerBatchSizeTest(self, batchQuestionList):
+        self.instanceQuestionObjectManager.setBatchSizeQuestionList(batchQuestionList)
 
     def testMode(self):
         self.isTestMode = True
@@ -524,10 +527,14 @@ class Test:
         if(self.selectedAnswerIndexTotal != 0):
             if(len(self.answerMatchingList) == len(self.correctAnswerList) and self.selectedAnswerIndexTotal == len(self.correctAnswerList)):
                 self.isQuestionCorrectOutcome = True
-                #handle incorrect question store
-                self.handleIncorrectQuestionStore(self.instanceQuestionObjectManager.getCurrentQuestionObject())
             else:
                 self.isQuestionCorrectOutcome = False
+                #handle incorrect question store
+                self.handleIncorrectQuestionStore(self.instanceQuestionObjectManager.getCurrentQuestionObject())
+        else:
+            self.isQuestionCorrectOutcome = False
+            #handle incorrect question store
+            self.handleIncorrectQuestionStore(self.instanceQuestionObjectManager.getCurrentQuestionObject())
 
         self.instanceQuestionObjectManager.getCurrentQuestionObject().setIsAnsweredCorrectly(self.isQuestionCorrectOutcome)
         self.instanceDisplayManager.displayQuestionOutcomeScreen()
@@ -538,13 +545,24 @@ class Test:
     def handleIncorrectQuestionStore(self, question):
         print("appended question problem: "+question.getProblem())
         self.incorrectQuestionStore.append(question)
+
     def getIncorrectQuestionStore(self):
         return self.incorrectQuestionStore
 
     def retakeTestCurrentIncorrectQuestions(self):
         #take current incorrect
         self.isIncorrectRetaken = True
-        print(str(self.isIncorrectRetaken))
+        print("isIncorrectRetaken: "+str(self.isIncorrectRetaken))
+        print("incorrectQuestionStore: "+str(len(self.incorrectQuestionStore)))
+
+        #retake test params retake
+        #process retake, displayQuestions, with questionList set to incorrect question list.
+        #go through process again.
+
+        #set questionList
+        setQuestionObjectManagerBatchSizeTest = self.incorrectQuestionStore
+
+        #display
 
     def retakeTestOriginalIncorrectQuestions(self):
         self.incorrectRetakeCount += 1
@@ -554,7 +572,6 @@ class Test:
 
     def getIsIncorrectRetaken(self):
         return self.isIncorrectRetaken
-
     def calculateScore(self):
         questionList = self.instanceQuestionObjectManager.getBatchSizeQuestionList()
         totalCountQuestions = len(questionList)
