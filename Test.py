@@ -1,10 +1,7 @@
-
-from random import shuffle
 import pdftotext
 from DisplayManager import DisplayManager
 from QuestionObjectManager import *
 from QuestionObject import QuestionObject
-
 
 class Test:
     def __init__(self):
@@ -21,6 +18,7 @@ class Test:
         self.listResultsDuplicantAnswerOnSameLineFaultCorrected = []
         self.faultCorrectedAtIndexContainer = []
         self.batchRangeList = []
+        self.incorrectQuestionStore = []
         self.possibleDuplicantAnswerOnSameLineFaultCorrectedAtIndex = 0
         self.duplicantAnswerOnSameLineFaultCorrectedAtIndex = 0
         self.questionPieceFaultIndex = 0
@@ -29,6 +27,7 @@ class Test:
         self.answerListIndex = 0
         self.questionInteration = 0
         self.correctQuestionAnsweredCount = 0
+        self.incorrectRetakeCount += 1
         self.vceFaultIndex = 0
         self.strPieceSpaceCorrectAnswerFault = ""
         self.isQuestionCorrectOutcome = False
@@ -349,24 +348,18 @@ class Test:
                     del self.spaceFaultQuestionPieceList[0:1]
                     break
                 self.spaceFaultQuestionPieceIndex += 1
-            # print("self.spaceFaultQuestionPieceList: "+str(self.spaceFaultQuestionPieceList[0]))
-            # print(len(self.spaceFaultQuestionPieceList[0]))
             spaceCorrectAnswerFault = self.spaceFaultQuestionPieceList[0]
             if(len(spaceCorrectAnswerFault)):
                 lengthIndex = 0
                 while(lengthIndex < len(spaceCorrectAnswerFault)):
                     self.strPieceSpaceCorrectAnswerFault += " "+spaceCorrectAnswerFault[lengthIndex]
                     lengthIndex += 1
-            # print(self.strPieceSpaceCorrectAnswerFault)
-
             #find index where correct answer piece, replace with fixed fault correct answer.
             self.listFinalQuestionPieceResults[self.spaceFaultQuestionPieceIndex] = "Correct Answer:"+self.strPieceSpaceCorrectAnswerFault
-            # print("self.listFinalQuestionPieceResults"+str(self.listFinalQuestionPieceResults))
 
     def handleDuplicantAnswersOnSameLineFault(self, questionPiece):
         questionPieceListSplit = []
         questionPieceListSplit = questionPiece.split(" ")
-        # # print("fixing duplicantAnswersOnSameLineFault: "+str(questionPiece))
         questionPieceSplitIndex = 0
         filterList1 = []
         newQuestionPieceList = []
@@ -374,35 +367,18 @@ class Test:
         self.faultResolutionQueryStringContainer = []
         # self.nextFilterPieceIndex = 0
         for piece in questionPieceListSplit:
-            # print("piece: " + piece)
             if ("A." in piece or "B." in piece or "C." in piece or "D." in piece
                 or "E." in piece or "F." in piece or "G." in piece or "H." in piece):
                 filterList1.append(questionPieceSplitIndex)
-                # print("hit piece: " + piece)
             questionPieceSplitIndex += 1
-
-        # print("filterList1: " + str(filterList1))
         # construct individual questions from split filter
         filterListIterationIndex = 0
         for filterIndex in filterList1:
-            # print("SECOND INTERATION")
             self.isFirstRoundStrAddition = True
             currentFilterIndex = filterIndex
             questionString = ""
-            # questionString = self.questionPieceListSplit[filterIndex]
-            # print(questionString)
-            # print("currentFilterIndex: " + str(currentFilterIndex))
-            # print("filterListIterationIndex: " + str(filterListIterationIndex))
-            # print("len(self.filterList1): " + str(len(self.filterList1)))
-
             if (filterListIterationIndex < (len(filterList1) - 1)):
                 self.nextFilterPieceIndex = filterList1[filterListIterationIndex + 1]
-                # print("nextFilterPieceIndex: " + str(nextFilterPieceIndex))
-
-                # print("self.questionPieceListSplit: " + str(self.questionPieceListSplit))
-                # print("currentFilterIndex: " + str(currentFilterIndex))
-                # print("nextFilterPieceIndex: " + str(self.nextFilterPieceIndex))
-
                 # continue to next stop point adding indexs of the questionPieceListSplit together,
                 while (currentFilterIndex < self.nextFilterPieceIndex):
                     strToAdd = questionPieceListSplit[(currentFilterIndex)]
@@ -410,16 +386,9 @@ class Test:
                     if (self.isFirstRoundStrAddition):
                         questionString += " "
                         self.isFirstRoundStrAddition = False
-                    # print("questionString: " + str(questionString))
-                    # print("currentFilterIndex: " + str(currentFilterIndex))
                     currentFilterIndex += 1
             else:
                 self.nextFilterPieceIndex = self.nextFilterPieceIndex + 1
-
-                # print("self.questionPieceListSplit: " + str(self.questionPieceListSplit))
-                # print("currentFilterIndex: " + str(currentFilterIndex))
-                # print("nextFilterPieceIndex: " + str(self.nextFilterPieceIndex))
-
                 # continue to next stop point adding indexs of the questionPieceListSplit together,
                 while (currentFilterIndex <= self.nextFilterPieceIndex):
                     strToAdd = questionPieceListSplit[(currentFilterIndex)]
@@ -427,53 +396,44 @@ class Test:
                     if (self.isFirstRoundStrAddition):
                         questionString += " "
                         self.isFirstRoundStrAddition = False
-                    # print("questionString: " + str(questionString))
-                    # print("currentFilterIndex: " + str(currentFilterIndex))
                     currentFilterIndex += 1
 
             self.faultResolutionQueryStringContainer.append(questionString)
             filterListIterationIndex += 1
-            # print("Check test: "+str(self.faultResolutionQueryStringContainer))
         return self.faultResolutionQueryStringContainer
-
 
     def determineParseEntryBatchSizeValueIsValid(self):
         entryList = []
         whiteSpaceClearedList = []
         entryNumberString = self.instanceDisplayManager.entryNumberQuestions.get()
-        # print(entryNumberString)
         if("-" in entryNumberString):
             entryList = entryNumberString.split("-")
-            # Clear extra whitespace for entry index
+            #clear extra whitespace for entry index
             for val in entryList:
                 whiteSpaceClearedList.append(val.replace(" ", ""))
-            # print("lenwhiteSpaceClearedList: "+str(len(whiteSpaceClearedList)))
-            # Handle two values on either side of "-"
+            #handle two values on either side of "-"
             if(len(whiteSpaceClearedList) == 2):
-                # Handle values are integers
+                #handle values are integers
                 isValValidList = []
                 for val in whiteSpaceClearedList:
                     isValValidList.append(self.validateIsNumber(val))
-                # print(str(isValValidList))
                 resultsFalseList = []
                 for isValValid in isValValidList:
                     if (isValValid == False):
                         resultsFalseList.append(isValValid)
                 if(len(resultsFalseList)):
-                    # print("results false")
                     self.isEntryBatchSizeValid = False
                 else:
-                    # print("results are good: "+str(whiteSpaceClearedList))
-                    # Handle second value is larger than first
+                    #handle second value is larger than first
                     val1 = int(whiteSpaceClearedList[0])
                     val2 = int(whiteSpaceClearedList[1])
 
                     integerTransformedList = [val1,val2]
                     if(val1 < val2 and val1 != 0):
-                        # Handle if end index is within questionList
+                        #handle if end index is within questionList
                         questionList = self.instanceQuestionObjectManager.getQuestionList()
                         if(val2 <= len(questionList)):
-                            # Set self.batchRangeList that is used in future processing
+                            #set self.batchRangeList that is used in future processing
                             self.batchRangeList = integerTransformedList
                             self.isEntryBatchSizeValid = True
                         else:
@@ -497,21 +457,18 @@ class Test:
         self.batchQuestionList =  []
         startIndex = self.batchRangeList[0]
         endIndex = self.batchRangeList[1]
-        # If self.isEntryBatchSizeValid continue questionList to batchQuestionList process
-        # Else entire list of questions becomes batchQuestionList
+        #if self.isEntryBatchSizeValid continue questionList to batchQuestionList process
+        #else entire list of questions becomes batchQuestionList
         if(self.isEntryBatchSizeValid):
             questionListIndex = 0
-            # handle if end index is within questionList
-            # if within start index
+            #handle if end index is within questionList
+            #if within start index
             while(questionListIndex < len(questionList)):
                 if(questionListIndex >= startIndex and questionListIndex <= endIndex):
                     self.batchQuestionList.append(questionList[questionListIndex-1])
                 questionListIndex += 1
         else:
             self.batchQuestionList = questionList
-        # print("self.batchQuestionList: "+str(len(self.batchQuestionList)))
-        # for questionObj in self.batchQuestionList:
-        #     print(questionObj.getProblem())
         self.instanceQuestionObjectManager.setBatchSizeQuestionList(self.batchQuestionList)
 
     def testMode(self):
@@ -519,7 +476,7 @@ class Test:
         self.determineParseEntryBatchSizeValueIsValid()
         if(self.isEntryBatchSizeValid):
             self.batchSizeTest()
-            # Handle isRandomization of question list selected
+            #handle isRandomization of question list selected
             if(self.instanceDisplayManager.isRandomizationCheckBoxIntVar.get() == 1):
                 self.instanceQuestionObjectManager.randomizeQuestionList()
             self.instanceQuestionObjectManager.setCurrentQuestionObject(self.instanceQuestionObjectManager.getBatchSizeQuestionList()[0])
@@ -530,7 +487,7 @@ class Test:
         self.determineParseEntryBatchSizeValueIsValid()
         if (self.isEntryBatchSizeValid):
             self.batchSizeTest()
-            # Handle isRandomization of question list selected
+            #handle isRandomization of question list selected
             if (self.instanceDisplayManager.isRandomizationCheckBoxIntVar.get() == 1):
                 self.instanceQuestionObjectManager.randomizeQuestionList()
             self.instanceQuestionObjectManager.setCurrentQuestionObject(self.instanceQuestionObjectManager.getBatchSizeQuestionList()[0])
@@ -540,30 +497,30 @@ class Test:
         displayContainer = []
         for question in questionList:
             displayObject = "Question "+question[0]
-            #Append new line questionList attributes
+            #append new line questionList attributes
             displayContainer.append(displayObject)
         return displayContainer
 
     def changeToNextQuestion(self):
         self.instanceQuestionObjectManager.getCurrentQuestionObject().setIsAnswered(True)
-        #Handle on set nextQuestion
+        #handle on set nextQuestion
         if(self.instanceQuestionObjectManager.processNextQuestion()):
-        # Handle displayManager paint new question
+        #handle displayManager paint new question
             self.instanceDisplayManager.displayQuestion()
         else:
             self.instanceDisplayManager.displayScoreScreen()
 
     def changeToNextQuestionLearnMode(self):
-        # Handle on set nextQuestion
+        #handle on set nextQuestion
         self.instanceDisplayManager.showAnswerLearnModeLabelText = ""
         if (self.instanceQuestionObjectManager.processNextQuestion()):
-            # Handle displayManager paint new question
+            #handle displayManager paint new question
             self.instanceDisplayManager.displayQuestionLearnMode()
         else:
             self.instanceDisplayManager.displayLearnModeRetakeScreen()
 
     def confirmAnswer(self):
-        # Create answerBooleanList to be appended later to textAnswerList
+        #create answerBooleanList to be appended later to textAnswerList
         answerBooleanList = []
         selectedAnswerIndex = 0
         for selectedAnswer in self.instanceDisplayManager.selectedAnswerList:
@@ -572,14 +529,14 @@ class Test:
             else:
                 answerBooleanList.append("0")
             selectedAnswerIndex += 1
-        # Append selectedBool to answerList
+        #append selectedBool to answerList
         appendTrueSelectedValueCount = 0
         for textAnswer in self.instanceDisplayManager.textAnswerList:
             if (len(textAnswer) == 3):
                 del textAnswer[2:3]
             textAnswer.append(answerBooleanList[appendTrueSelectedValueCount])
             appendTrueSelectedValueCount += 1
-        # Instantiate is matching list
+        #instantiate is matching list
         for selectedAnswer in self.instanceDisplayManager.textAnswerList:
             correctAnswerIndex = 0
             selectedAnswerKey = selectedAnswer
@@ -592,11 +549,12 @@ class Test:
                     else:
                         pass
                 self.selectedAnswerIndexTotal += 1
-
-        # Handle if no answers selected, default to answer being incorrect
+        #handle if no answers selected, default to answer being incorrect
         if(self.selectedAnswerIndexTotal != 0):
             if(len(self.answerMatchingList) == len(self.correctAnswerList) and self.selectedAnswerIndexTotal == len(self.correctAnswerList)):
                 self.isQuestionCorrectOutcome = True
+                #handle incorrect question store
+                self.handleIncorrectQuestionStore(self.instanceQuestionObjectManager.getCurrentQuestionObject())
             else:
                 self.isQuestionCorrectOutcome = False
 
@@ -605,6 +563,26 @@ class Test:
         self.isQuestionCorrectOutcome =  False
         self.answerMatchingList = []
         self.selectedAnswerIndexTotal = 0
+
+    def handleIncorrectQuestionStore(self, question):
+        print("appended question problem: "+question.getProblem())
+        self.incorrectQuestionStore.append(question)
+    def getIncorrectQuestionStore(self):
+        return self.incorrectQuestionStore
+
+    def retakeTestCurrentIncorrectQuestions(self):
+        #take current incorrect
+        self.isIncorrectRetaken = True
+        print(str(self.isIncorrectRetaken))
+
+    def retakeTestOriginalIncorrectQuestions(self):
+        self.incorrectRetakeCount += 1
+        print(str(self.incorrectRetakeCount))
+        #if initial, set current
+        #take original incorrect
+
+    def getIsIncorrectRetaken(self):
+        return self.isIncorrectRetaken
 
     def calculateScore(self):
         questionList = self.instanceQuestionObjectManager.getBatchSizeQuestionList()
@@ -620,3 +598,9 @@ class Test:
 
     def getInstanceQuestionObjectManager(self):
         return self.instanceQuestionObjectManager
+
+    def resetGlobalVariablesForIncorrectQuestionRetake(self):
+        self.incorrectRetakeCount = 0
+
+    def resetGlobalVariablesForFullTestRetake(self):
+        self.incorrectRetakeCount = 0
