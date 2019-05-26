@@ -26,6 +26,11 @@ class QuestionObjectManager:
             return True
         else:
             return False
+    def setCurrentQuestionIndex(self, index):
+        self.currentQuestionIndex = index
+    def getCurrentQuestionIndex(self):
+        return self.currentQuestionIndex
+
     def randomizeQuestionList(self):
         shuffle(self.batchSizeQuestionList)
         self.setCurrentQuestionObject(self.batchSizeQuestionList[0])

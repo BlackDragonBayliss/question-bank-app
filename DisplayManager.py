@@ -231,6 +231,12 @@ class DisplayManager:
         self.retakeCurrentIncorrectButton.place(x=self.xPositionButtonConfirmQuestionOutcome, y=self.yPositionGlobalIterate)
         self.updateYPositionGlobalIterate()
 
+        #retake full test button
+        self.retakeFullTestButton = Button(text="Retake Full Test",command=self.instanceTest.retakeFullTest)
+        self.retakeFullTestButton.place(x=self.xPositionButtonConfirmQuestionOutcome,y=self.yPositionGlobalIterate)
+        self.updateYPositionGlobalIterate()
+
+
         #if incorrect retake already taken, display widgets to retake original incorrect questions.
         # if(self.instanceTest.getIsIncorrectRetaken()):
         #     #retake original incorrect label
@@ -282,8 +288,10 @@ class DisplayManager:
             self.score.destroy()
             self.retakeCurrentIncorrectLabel.destroy()
             self.retakeCurrentIncorrectButton.destroy()
-            self.retakeOriginalIncorrectLabel.destroy()
-            self.retakeOriginalIncorrectButton.destroy()
+            self.retakeFullTestButton.destroy()
+            # if (self.instanceTest.getIsIncorrectRetaken()):
+            #     self.retakeOriginalIncorrectLabel.destroy()
+            #     self.retakeOriginalIncorrectButton.destroy()
             self.isScoreScreen = False
             return
         #handle destroy if isOutcomeScreen
@@ -294,7 +302,7 @@ class DisplayManager:
             self.isQuestionOutcomeScreen = False
             return
         #learn mode widgets
-        if(self.instanceTest.isLearnMode):
+        if(self.instanceTest.getIsLearnMode()):
             for widget in self.keyList:
                 widget.destroy()
             self.questionLabel.destroy()
@@ -303,7 +311,7 @@ class DisplayManager:
             self.nextQuestionButton.destroy()
             return
         #test mode widgets
-        if(self.instanceTest.isTestMode):
+        if(self.instanceTest.getIsTestMode()):
             for widget in self.buttonList:
                 widget.destroy()
             for widget in self.keyList:

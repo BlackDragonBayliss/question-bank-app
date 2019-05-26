@@ -423,7 +423,7 @@ class Test:
         except ValueError:
             return False
 
-    def batchSizeTest(self):
+    def processBatchSizeTest(self):
         questionList = self.instanceQuestionObjectManager.getQuestionList()
         batchQuestionList =  []
         startIndex = self.batchRangeList[0]
@@ -449,23 +449,27 @@ class Test:
         self.isTestMode = True
         self.determineParseEntryBatchSizeValueIsValid()
         if(self.isEntryBatchSizeValid):
-            self.batchSizeTest()
+            self.processBatchSizeTest()
             #handle isRandomization of question list selected
             if(self.instanceDisplayManager.isRandomizationCheckBoxIntVar.get() == 1):
                 self.instanceQuestionObjectManager.randomizeQuestionList()
             self.instanceQuestionObjectManager.setCurrentQuestionObject(self.instanceQuestionObjectManager.getBatchSizeQuestionList()[0])
             self.instanceDisplayManager.displayQuestion()
-
     def learnMode(self):
         self.isLearnMode = True
         self.determineParseEntryBatchSizeValueIsValid()
         if (self.isEntryBatchSizeValid):
-            self.batchSizeTest()
+            self.processBatchSizeTest()
             #handle isRandomization of question list selected
             if (self.instanceDisplayManager.isRandomizationCheckBoxIntVar.get() == 1):
                 self.instanceQuestionObjectManager.randomizeQuestionList()
             self.instanceQuestionObjectManager.setCurrentQuestionObject(self.instanceQuestionObjectManager.getBatchSizeQuestionList()[0])
             self.instanceDisplayManager.displayQuestionLearnMode()
+
+    def getIsTestMode(self):
+        return self.isTestMode
+    def getIsLearnMode(self):
+        return self.isLearnMode
 
     def createDisplayList(self, questionList):
         displayContainer = []
@@ -550,19 +554,15 @@ class Test:
         return self.incorrectQuestionStore
 
     def retakeTestCurrentIncorrectQuestions(self):
-        #take current incorrect
         self.isIncorrectRetaken = True
         print("isIncorrectRetaken: "+str(self.isIncorrectRetaken))
         print("incorrectQuestionStore: "+str(len(self.incorrectQuestionStore)))
-
-        #retake test params retake
-        #process retake, displayQuestions, with questionList set to incorrect question list.
-        #go through process again.
-
         #set questionList
-        setQuestionObjectManagerBatchSizeTest = self.incorrectQuestionStore
-
+        self.setQuestionObjectManagerBatchSizeTest(self.incorrectQuestionStore)
+        #reset global variables
+        self.resetGlobalVariablesForIncorrectQuestionRetake()
         #display
+        self.instanceDisplayManager.displayQuestion()
 
     def retakeTestOriginalIncorrectQuestions(self):
         self.incorrectRetakeCount += 1
@@ -570,8 +570,19 @@ class Test:
         #if initial, set current
         #take original incorrect
 
+    def retakeFullTest(self):
+        print("isIncorrectRetaken: " + str(self.isIncorrectRetaken))
+        print("incorrectQuestionStore: " + str(len(self.incorrectQuestionStore)))
+        #set questionList
+        self.setQuestionObjectManagerBatchSizeTest(self.incorrectQuestionStore)
+        #reset global variables
+        self.resetGlobalVariablesForIncorrectQuestionRetake()
+        #display
+        self.instanceDisplayManager.displayQuestion()
+
     def getIsIncorrectRetaken(self):
         return self.isIncorrectRetaken
+
     def calculateScore(self):
         questionList = self.instanceQuestionObjectManager.getBatchSizeQuestionList()
         totalCountQuestions = len(questionList)
@@ -588,7 +599,9 @@ class Test:
         return self.instanceQuestionObjectManager
 
     def resetGlobalVariablesForIncorrectQuestionRetake(self):
-        self.incorrectRetakeCount = 0
+        self.incorrectQuestionStore = []
+        self.correctQuestionAnsweredCount = 0
+        self.instanceQuestionObjectManager.setCurrentQuestionIndex(0)
 
     def resetGlobalVariablesForFullTestRetake(self):
         self.incorrectRetakeCount = 0
