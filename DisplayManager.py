@@ -110,7 +110,7 @@ class DisplayManager:
             var = IntVar()
             for i in range(1, 2):
                 textAnswerList.append([str(counter), choiceText])
-                button = Radiobutton(root, variable=var, value=i, command=self.showChoice)
+                button = Radiobutton(root, variable=var, value=i)
                 button.place(x=self.xPositionRadialButton, y=self.yPositionGlobalIterate)#grid(row=counter+1, column=i)
                 buttonList.append(button)
                 selectedAnswerList.append(var)
@@ -231,8 +231,9 @@ class DisplayManager:
         self.updateYPositionGlobalIterate()
 
         #if incorrect retake already taken, display widgets to retake original incorrect questions.
-        if(self.instanceTest.isIncorrectRetaken):
+        if(self.instanceTest.getIsIncorrectRetaken()):
             #retake original incorrect label
+            print("inside incorrect retake is true")
             retakeOriginalIncorrectLabel = Label(self.root, text="Retake original incorrect questions: "+str(len(self.instanceTest.getOriginalIncorrectList())))
             retakeOriginalIncorrectLabel.place(x=self.xPositionKey, y=self.yPositionGlobalIterate)
             self.updateYPositionGlobalIterate()
