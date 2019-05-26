@@ -529,13 +529,16 @@ class Test:
                 self.selectedAnswerIndexTotal += 1
         #handle if no answers selected, default to answer being incorrect
         if(self.selectedAnswerIndexTotal != 0):
+            print("isAnswering")
             if(len(self.answerMatchingList) == len(self.correctAnswerList) and self.selectedAnswerIndexTotal == len(self.correctAnswerList)):
                 self.isQuestionCorrectOutcome = True
             else:
+                print("handling is false1")
                 self.isQuestionCorrectOutcome = False
                 #handle incorrect question store
                 self.handleIncorrectQuestionStore(self.instanceQuestionObjectManager.getCurrentQuestionObject())
         else:
+            print("handling is false2")
             self.isQuestionCorrectOutcome = False
             #handle incorrect question store
             self.handleIncorrectQuestionStore(self.instanceQuestionObjectManager.getCurrentQuestionObject())
@@ -571,10 +574,6 @@ class Test:
         #take original incorrect
 
     def retakeFullTest(self):
-        print("isIncorrectRetaken: " + str(self.isIncorrectRetaken))
-        print("incorrectQuestionStore: " + str(len(self.incorrectQuestionStore)))
-        #set questionList
-        self.setQuestionObjectManagerBatchSizeTest(self.incorrectQuestionStore)
         #reset global variables
         self.resetGlobalVariablesForIncorrectQuestionRetake()
         #display
@@ -586,9 +585,14 @@ class Test:
     def calculateScore(self):
         questionList = self.instanceQuestionObjectManager.getBatchSizeQuestionList()
         totalCountQuestions = len(questionList)
+
+        print("questionList length: "+str(totalCountQuestions))
+
         for question in questionList:
             if(question.getIsAnsweredCorrectly()):
                 self.correctQuestionAnsweredCount += 1
+        print("correctQuestionAnsweredCount: "+str(self.correctQuestionAnsweredCount))
+
         percentageCorrect = (self.correctQuestionAnsweredCount / totalCountQuestions) * 100
         return percentageCorrect
 
