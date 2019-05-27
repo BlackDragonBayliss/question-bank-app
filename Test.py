@@ -2,7 +2,6 @@ import pdftotext
 from DisplayManager import DisplayManager
 from QuestionObjectManager import *
 from QuestionObject import QuestionObject
-
 class Test:
     def __init__(self, stateStore):
         self.randomizedQuestionList = []

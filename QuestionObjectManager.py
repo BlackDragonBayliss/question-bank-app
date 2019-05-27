@@ -1,6 +1,4 @@
-# from Test import Test
 from random import shuffle
-
 class QuestionObjectManager:
     def __init__(self):
         self.ranomizedQuestionsList = []
