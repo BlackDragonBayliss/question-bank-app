@@ -227,7 +227,7 @@ class DisplayManager:
         self.updateYPositionGlobalIterate()
 
         #retake current incorrect button.
-        self.retakeCurrentIncorrectButton = Button(text="Retake Incorrect Incorrect Questions", command=self.instanceTest.retakeTestCurrentIncorrectQuestions)
+        self.retakeCurrentIncorrectButton = Button(text="Retake Incorrect Questions", command=self.instanceTest.retakeTestCurrentIncorrectQuestions)
         self.retakeCurrentIncorrectButton.place(x=self.xPositionButtonConfirmQuestionOutcome, y=self.yPositionGlobalIterate)
         self.updateYPositionGlobalIterate()
 
@@ -236,19 +236,26 @@ class DisplayManager:
         self.retakeFullTestButton.place(x=self.xPositionButtonConfirmQuestionOutcome,y=self.yPositionGlobalIterate)
         self.updateYPositionGlobalIterate()
 
-
         #if incorrect retake already taken, display widgets to retake original incorrect questions.
-        # if(self.instanceTest.getIsIncorrectRetaken()):
-        #     #retake original incorrect label
-        #     print("inside incorrect retake is true")
-        #     self.retakeOriginalIncorrectLabel = Label(self.root, text="Retake original incorrect questions: "+str(len(self.instanceTest.getOriginalIncorrectList())))
-        #     self.retakeOriginalIncorrectLabel.place(x=self.xPositionKey, y=self.yPositionGlobalIterate)
-        #     self.updateYPositionGlobalIterate()
-        #
-        #     #retake original incorrect button.
-        #     self.retakeOriginalIncorrectButton = Button(text="Retake Original Incorrect Questions", command=self.instanceTest.retakeTestOriginalIncorrectQuestions)
-        #     self.retakeOriginalIncorrectButton.place(x=self.xPositionButtonConfirmQuestionOutcome,y=self.yPositionGlobalIterate)
-        #     self.updateYPositionGlobalIterate()
+        if(self.instanceTest.isIncorrectOriginalPathOpen):
+            print("out isIncorrectOriginalPathOpen: " + str(self.instanceTest.isIncorrectOriginalPathOpen))
+            print("out isIncorrectOriginalClearOpen: " + str(self.instanceTest.isIncorrectOriginalClearOpen))
+            #retake original incorrect label
+            self.retakeOriginalIncorrectLabel = Label(self.root, text="Retake original incorrect questions: "+str(len(self.instanceTest.getOriginalIncorrectList())))
+            self.retakeOriginalIncorrectLabel.place(x=self.xPositionKey, y=self.yPositionGlobalIterate)
+            self.updateYPositionGlobalIterate()
+            #retake original incorrect button.
+            self.retakeOriginalIncorrectButton = Button(text="Retake Original Incorrect Questions", command=self.instanceTest.retakeTestOriginalIncorrectQuestions)
+            self.retakeOriginalIncorrectButton.place(x=self.xPositionButtonConfirmQuestionOutcome,y=self.yPositionGlobalIterate)
+            self.updateYPositionGlobalIterate()
+            self.instanceTest.isIncorrectOriginalClearOpen = True
+
+        #retake full test button
+        self.startScreenButton = Button(text="Home Screen", command=self.instanceTest.returnHome)
+        self.startScreenButton.place(x=self.xPositionButtonConfirmQuestionOutcome, y=self.yPositionGlobalIterate)
+        self.updateYPositionGlobalIterate()
+
+        self.instanceTest.isIncorrectOriginalPathOpen = True
         self.isScoreScreen = True
 
     def displayLearnModeRetakeScreen(self):
@@ -289,9 +296,13 @@ class DisplayManager:
             self.retakeCurrentIncorrectLabel.destroy()
             self.retakeCurrentIncorrectButton.destroy()
             self.retakeFullTestButton.destroy()
-            # if (self.instanceTest.getIsIncorrectRetaken()):
-            #     self.retakeOriginalIncorrectLabel.destroy()
-            #     self.retakeOriginalIncorrectButton.destroy()
+            self.startScreenButton.destroy()
+            print("inside isIncorrectOriginalPathOpen: " + str(self.instanceTest.isIncorrectOriginalPathOpen))
+            print("inside isIncorrectOriginalClearOpen: "+str(self.instanceTest.isIncorrectOriginalClearOpen))
+            if (self.instanceTest.isIncorrectOriginalClearOpen):
+                self.retakeOriginalIncorrectLabel.destroy()
+                self.retakeOriginalIncorrectButton.destroy()
+                self.instanceTest.isIncorrectOriginalClearOpen = False
             self.isScoreScreen = False
             return
         #handle destroy if isOutcomeScreen

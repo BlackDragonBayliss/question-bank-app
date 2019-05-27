@@ -1,7 +1,7 @@
-from Test import Test
+from StateStoreComposite import StateStoreComposite
 
 def main():
     print("Operating")
-    instanceTest = Test()
-    instanceTest.operate()
+    #state object
+    instanceStateStoreComposite = StateStoreComposite()
 if __name__ == "__main__": main()

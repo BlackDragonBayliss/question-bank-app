@@ -4,7 +4,7 @@ from QuestionObjectManager import *
 from QuestionObject import QuestionObject
 
 class Test:
-    def __init__(self):
+    def __init__(self, stateStore):
         self.randomizedQuestionList = []
         self.questionList = []
         self.completedQuestions = []
@@ -39,8 +39,11 @@ class Test:
         self.isTestMode = False
         self.isLearnMode = False
         self.isIncorrectRetaken = False
+        self.isIncorrectOriginalPathOpen = False
+        self.isIncorrectOriginalClearOpen = False
         self.instanceDisplayManager = DisplayManager()
         self.instanceQuestionObjectManager = QuestionObjectManager()
+        self.instanceStateStore = stateStore
 
     def operate(self):
         self.readPDF()
@@ -48,8 +51,13 @@ class Test:
         self.instanceDisplayManager.setup(self)
         self.instanceDisplayManager.startScreen()
 
+    def returnHome(self):
+        #apoptosis
+        self.instanceDisplayManager.root.destroy()
+        self.instanceStateStore.createTest()
+
     def readPDF(self):
-        # Load your PDF
+        #Load PDF
         with open("my_pdf.pdf", "rb") as f:
             pdf = pdftotext.PDF(f)
         self.pdfText = "\n\n".join(pdf)
@@ -441,6 +449,7 @@ class Test:
         else:
             batchQuestionList = questionList
         self.setQuestionObjectManagerBatchSizeTest(batchQuestionList)
+        self.storeOriginalQuestionList()
 
     def setQuestionObjectManagerBatchSizeTest(self, batchQuestionList):
         self.instanceQuestionObjectManager.setBatchSizeQuestionList(batchQuestionList)
@@ -529,16 +538,16 @@ class Test:
                 self.selectedAnswerIndexTotal += 1
         #handle if no answers selected, default to answer being incorrect
         if(self.selectedAnswerIndexTotal != 0):
-            print("isAnswering")
             if(len(self.answerMatchingList) == len(self.correctAnswerList) and self.selectedAnswerIndexTotal == len(self.correctAnswerList)):
+                print("answer correct")
                 self.isQuestionCorrectOutcome = True
             else:
-                print("handling is false1")
+                print("answer incorrect")
                 self.isQuestionCorrectOutcome = False
                 #handle incorrect question store
                 self.handleIncorrectQuestionStore(self.instanceQuestionObjectManager.getCurrentQuestionObject())
         else:
-            print("handling is false2")
+            print("no answer incorrect")
             self.isQuestionCorrectOutcome = False
             #handle incorrect question store
             self.handleIncorrectQuestionStore(self.instanceQuestionObjectManager.getCurrentQuestionObject())
@@ -550,34 +559,54 @@ class Test:
         self.selectedAnswerIndexTotal = 0
 
     def handleIncorrectQuestionStore(self, question):
-        print("appended question problem: "+question.getProblem())
         self.incorrectQuestionStore.append(question)
 
     def getIncorrectQuestionStore(self):
         return self.incorrectQuestionStore
 
     def retakeTestCurrentIncorrectQuestions(self):
-        self.isIncorrectRetaken = True
-        print("isIncorrectRetaken: "+str(self.isIncorrectRetaken))
-        print("incorrectQuestionStore: "+str(len(self.incorrectQuestionStore)))
+        if (self.incorrectRetakeCount == 0):
+            # set original incorrect question list
+            self.instanceQuestionObjectManager.setOriginalIncorrectQuestionList(self.incorrectQuestionStore)
+        #set isIncorrectOriginalPathOpen true for retake display options
+        # self.isIncorrectOriginalPathOpen = True
         #set questionList
+        print("incorrectQuestionStore: "+str(len(self.incorrectQuestionStore)))
         self.setQuestionObjectManagerBatchSizeTest(self.incorrectQuestionStore)
         #reset global variables
+        self.instanceQuestionObjectManager.setCurrentQuestionObject(self.incorrectQuestionStore[0])
         self.resetGlobalVariablesForIncorrectQuestionRetake()
         #display
         self.instanceDisplayManager.displayQuestion()
+        self.incorrectRetakeCount +=1
 
     def retakeTestOriginalIncorrectQuestions(self):
-        self.incorrectRetakeCount += 1
-        print(str(self.incorrectRetakeCount))
-        #if initial, set current
-        #take original incorrect
-
-    def retakeFullTest(self):
+        questionStore = self.instanceQuestionObjectManager.getOriginalIncorrectQuestionList()
+        #set questionList
+        self.setQuestionObjectManagerBatchSizeTest(questionStore)
         #reset global variables
+        self.instanceQuestionObjectManager.setCurrentQuestionObject(self.instanceQuestionObjectManager.getOriginalQuestionList()[0])
         self.resetGlobalVariablesForIncorrectQuestionRetake()
         #display
         self.instanceDisplayManager.displayQuestion()
+
+    def retakeFullTest(self):
+        questionStore = self.instanceQuestionObjectManager.getOriginalQuestionList()
+        #set questionList
+        self.setQuestionObjectManagerBatchSizeTest(questionStore)
+        #reset global variables
+        self.instanceQuestionObjectManager.setCurrentQuestionObject(questionStore[0])
+        self.isIncorrectOriginalPathOpen = False
+        self.resetGlobalVariablesForIncorrectQuestionRetake()
+        #display
+        self.instanceDisplayManager.displayQuestion()
+
+    def storeOriginalQuestionList(self):
+        print("storingOriginalQuestionList, length: "+str(len(self.instanceQuestionObjectManager.getBatchSizeQuestionList())))
+        self.instanceQuestionObjectManager.setOriginalQuestionList(self.instanceQuestionObjectManager.getBatchSizeQuestionList())
+
+    def getOriginalIncorrectList(self):
+        return self.instanceQuestionObjectManager.getOriginalIncorrectQuestionList()
 
     def getIsIncorrectRetaken(self):
         return self.isIncorrectRetaken

@@ -10,10 +10,21 @@ class QuestionObjectManager:
         self.batchSizeQuestionList = batchSizeQuestionList
     def getBatchSizeQuestionList(self):
         return self.batchSizeQuestionList
+
+    def setOriginalIncorrectQuestionList(self, questionList):
+        self.questionList = questionList
+    def getOriginalIncorrectQuestionList(self):
+        return self.questionList
+
+    def setOriginalQuestionList(self, questionList):
+        self.questionList = questionList
+    def getOriginalQuestionList(self):
+        return self.questionList
     def setQuestionList(self, questionList):
         self.questionList = questionList
     def getQuestionList(self):
         return self.questionList
+
     def getCurrentQuestionObject(self):
         return self.currentQuestionObject
     def setCurrentQuestionObject(self, questionObject):
@@ -41,9 +52,3 @@ class QuestionObjectManager:
         return self.randomizedQuestionsList
     def setRandomizedQuestionList(self, randomizedQuestionList):
         self.randomizedQuestionList = randomizedQuestionList
-    def getOriginalAnswerFormation(self):
-        pass
-    def setOriginalQuestionList(self, question):
-        pass
-    def getOriginalQuestionList(self):
-        pass
