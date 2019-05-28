@@ -27,6 +27,7 @@ class DisplayManager:
         self.isQuestionOutcomeScreen = False
         self.isShowAnswerLearnMode = False
         self.isScoreScreen = False
+        self.isShowAnswerLearnMode = False
 
         self.showAnswerTestModeOutomeText = ""
         self.showAnswerLearnModeLabelText = ""
@@ -65,8 +66,21 @@ class DisplayManager:
         self.updateYPositionGlobalIterate()
         self.learnModeButton = Button(text="Learn mode", command=self.instanceTest.learnMode)
         self.learnModeButton.place(x=self.xPositionDeslectButton, y=self.yPositionGlobalIterate)
+        self.updateYPositionGlobalIterate()
+
+        self.flashCardModeButton = Button(text="Flash card mode", command=self.instanceTest.flashCardMode)
+        self.flashCardModeButton.place(x=self.xPositionDeslectButton, y=self.yPositionGlobalIterate)
+        self.updateYPositionGlobalIterate()
 
         self.root.mainloop()
+
+    def flashCardMode(self):
+        f = open("flash_card.txt", "r")
+        if f.mode == 'r':
+            contents = f.read()
+
+
+
 
     def displayQuestion(self):
         self.resetScreenVariables()
@@ -143,8 +157,12 @@ class DisplayManager:
             self.updateYPositionGlobalIterate()
             answerIndex += 1
 
+
         self.showAnswerLabel = Label(self.root, text=self.showAnswerLearnModeLabelText)
-        self.showAnswerLabel.place(x=self.xPositionKey, y=self.yPositionGlobalIterate)
+        if (self.isShowAnswerLearnMode):
+            self.showAnswerLabel.place(x=self.xPositionKey, y=self.yPositionGlobalIterate)
+            self.isShowAnswerLearnMode = False
+
         self.updateYPositionGlobalIterate()
 
         self.showAnswerButton = Button(text="Show answer", command=self.showAnswerLearnMode)
@@ -154,6 +172,11 @@ class DisplayManager:
         self.nextQuestionButton = Button(text="Next question", command=self.instanceTest.changeToNextQuestionLearnMode)
         self.nextQuestionButton.place(x=self.xPositionConfirmButton, y=self.yPositionGlobalIterate)
         self.updateYPositionGlobalIterate()
+
+        self.previousQuestionButton = Button(text="Previous question", command=self.instanceTest.changeToPreviousQuestionLearnMode)
+        self.previousQuestionButton.place(x=self.xPositionConfirmButton, y=self.yPositionGlobalIterate)
+        self.updateYPositionGlobalIterate()
+        # self.showAnswerTestModeOutomeText = ""
 
     def populateShowAnswerTestModeOutomeText(self):
         correctAnswerString = ""
@@ -183,9 +206,9 @@ class DisplayManager:
 
     def showAnswerLearnMode(self):
         self.isShowAnswerLearnMode = True
+        # self.resetScreenVariables()
+        # self.clearWidgets()
         self.populateShowAnswerLearnModeLabelText()
-        self.resetScreenVariables()
-        self.clearWidgets()
         self.displayQuestionLearnMode()
 
     def displayQuestionOutcomeScreen(self):
@@ -262,7 +285,10 @@ class DisplayManager:
         self.resetScreenVariables()
         self.clearWidgets()
         learnModeEndScreenLabel = Label(self.root, text="End")
-        learnModeEndScreenLabel.place(x=self.xPositionKey, y=self.yPositionGlobalIterate)
+        learnModeEndScreenLabel.place(x=self.xPositionButtonConfirmQuestionOutcome, y=self.yPositionGlobalIterate)
+        self.updateYPositionGlobalIterate()
+        self.startScreenButton = Button(text="Home Screen", command=self.instanceTest.returnHome)
+        self.startScreenButton.place(x=self.xPositionButtonConfirmQuestionOutcome, y=self.yPositionGlobalIterate)
 
     def resetScreenVariables(self):
         self.resetYPositionGlobalIterate()
@@ -317,9 +343,12 @@ class DisplayManager:
             for widget in self.keyList:
                 widget.destroy()
             self.questionLabel.destroy()
+            # if (self.isShowAnswerLearnMode):
             self.showAnswerLabel.destroy()
             self.showAnswerButton.destroy()
             self.nextQuestionButton.destroy()
+            self.previousQuestionButton.destroy()
+            # self.showAnswerLearnModeLabelText = ""
             return
         #test mode widgets
         if(self.instanceTest.getIsTestMode()):

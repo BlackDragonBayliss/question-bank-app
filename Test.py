@@ -474,6 +474,33 @@ class Test:
             self.instanceQuestionObjectManager.setCurrentQuestionObject(self.instanceQuestionObjectManager.getBatchSizeQuestionList()[0])
             self.instanceDisplayManager.displayQuestionLearnMode()
 
+    def flashCardMode(self):
+        f = open("flash_card.txt", "r")
+        # if f.mode == 'r':
+        contents = f.read()
+
+
+    def parseQuestionBankToCorrectFormat(self):
+        f = open("flash_card.txt", "r")
+        stringText = f.read()
+        self.parseIntoFlashCardList(stringText)
+
+    def parseIntoFlashCardList(self, stringText):
+        data_set_group_0_1 = stringText.split('QUESTION')
+        data_set_group_0_1.pop(0)
+        valIndex = 0
+        for val in data_set_group_0_1:
+            faultQuestionContainer = val.splitlines()
+            faultQuestionContainer = list(filter(None, faultQuestionContainer))
+            # questionNumber = faultQuestionContainer[0].replace(' ', '')
+            for questionPiece in faultQuestionContainer:
+                print("questionPiece: "+str(questionPiece) + " " + str(valIndex))
+                # print(valIndex)
+
+
+
+
+
     def getIsTestMode(self):
         return self.isTestMode
     def getIsLearnMode(self):
@@ -498,12 +525,21 @@ class Test:
 
     def changeToNextQuestionLearnMode(self):
         #handle on set nextQuestion
-        self.instanceDisplayManager.showAnswerLearnModeLabelText = ""
+        # self.instanceDisplayManager.showAnswerLearnModeLabelText = ""
         if (self.instanceQuestionObjectManager.processNextQuestion()):
             #handle displayManager paint new question
             self.instanceDisplayManager.displayQuestionLearnMode()
         else:
             self.instanceDisplayManager.displayLearnModeRetakeScreen()
+
+    def changeToPreviousQuestionLearnMode(self):
+        #paint screen of previous question
+        #set current question -1
+        self.instanceQuestionObjectManager.setCurrentQuestionIndex((self.instanceQuestionObjectManager.getCurrentQuestionIndex()-1))
+        self.instanceQuestionObjectManager.setCurrentQuestionObject(self.instanceQuestionObjectManager.getBatchSizeQuestionList()[self.instanceQuestionObjectManager.getCurrentQuestionIndex()])
+        self.instanceDisplayManager.displayQuestionLearnMode()
+
+
 
     def confirmAnswer(self):
         #create answerBooleanList to be appended later to textAnswerList

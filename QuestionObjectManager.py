@@ -40,6 +40,7 @@ class QuestionObjectManager:
     def getCurrentQuestionIndex(self):
         return self.currentQuestionIndex
 
+
     def randomizeQuestionList(self):
         shuffle(self.batchSizeQuestionList)
         self.setCurrentQuestionObject(self.batchSizeQuestionList[0])
