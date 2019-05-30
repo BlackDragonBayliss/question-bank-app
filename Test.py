@@ -28,6 +28,7 @@ class Test:
         self.correctQuestionAnsweredCount = 0
         self.incorrectRetakeCount = 0
         self.vceFaultIndex = 0
+        self.isRevisitQuestion = 0
         self.strPieceSpaceCorrectAnswerFault = ""
         self.isQuestionCorrectOutcome = False
         self.isVceFault = False
@@ -504,7 +505,6 @@ class Test:
     def getQuestionObjectManagerRevisitQuestionList(self):
         return self.instanceQuestionObjectManager.getRevisitQuestionList()
 
-
     def getIsTestMode(self):
         return self.isTestMode
     def getIsLearnMode(self):
@@ -523,16 +523,19 @@ class Test:
     def changeToNextQuestion(self):
         self.instanceQuestionObjectManager.getCurrentQuestionObject().setIsAnswered(True)
         #handle on set nextQuestion
-        if(self.instanceQuestionObjectManager.processNextQuestion()):
+        if self.instanceQuestionObjectManager.processNextQuestion():
         #handle displayManager paint new question
             self.instanceDisplayManager.displayQuestion()
         else:
             self.instanceDisplayManager.displayScoreScreen()
 
     def changeToNextQuestionLearnMode(self):
+
+        if self.instanceTest.isRevisitQuestion == 1:
+           print("awesome check")
+
         #handle on set nextQuestion
-        # self.instanceDisplayManager.showAnswerLearnModeLabelText = ""
-        if (self.instanceQuestionObjectManager.processNextQuestion()):
+        if self.instanceQuestionObjectManager.processNextQuestion():
             #handle displayManager paint new question
             self.instanceDisplayManager.displayQuestionLearnMode()
         else:

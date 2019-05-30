@@ -3,9 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="f3d5109d-a44f-4251-ba2c-07eb41d78ec0" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DisplayManager.py" afterPath="$PROJECT_DIR$/DisplayManager.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/FlashCard.py" afterPath="$PROJECT_DIR$/FlashCard.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Test.py" afterPath="$PROJECT_DIR$/Test.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/testing.py" afterPath="$PROJECT_DIR$/testing.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -39,8 +37,8 @@
       <file leaf-file-name="Test.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="71">
-              <caret line="504" column="74" lean-forward="false" selection-start-line="504" selection-start-column="74" selection-end-line="504" selection-end-column="74" />
+            <state relative-caret-position="312">
+              <caret line="533" column="8" lean-forward="false" selection-start-line="533" selection-start-column="8" selection-end-line="534" selection-end-column="33" />
               <folding>
                 <element signature="e#0#16#0" expanded="true" />
               </folding>
@@ -51,8 +49,8 @@
       <file leaf-file-name="DisplayManager.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DisplayManager.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="400">
-              <caret line="323" column="147" lean-forward="false" selection-start-line="323" selection-start-column="118" selection-end-line="323" selection-end-column="147" />
+            <state relative-caret-position="168">
+              <caret line="181" column="118" lean-forward="false" selection-start-line="181" selection-start-column="89" selection-end-line="181" selection-end-column="118" />
               <folding />
             </state>
           </provider>
@@ -129,10 +127,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>getIsAnsweredCorrectly</find>
-      <find>setIsAnsweredCorrectly</find>
-      <find>confirmAnswer</find>
-      <find>handleIncorrectQuestionStore</find>
       <find>setCurrentQuestion</find>
       <find>isIncorrectOriginalPathOpen</find>
       <find>retakeFullTestButton</find>
@@ -157,8 +151,12 @@
       <find>learn</find>
       <find>showAnswerLearnMode</find>
       <find>changeToPreviousQuestionLearnMode</find>
-      <find>isLearn</find>
       <find>displayLearnModeRetakeScreen</find>
+      <find>start</find>
+      <find>isRevisitCheckBox</find>
+      <find>isLearn</find>
+      <find>changeToNextQuestionLearnMode</find>
+      <find>isRevisitQuestion</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -471,16 +469,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/DisplayManager.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="400">
-          <caret line="323" column="147" lean-forward="false" selection-start-line="323" selection-start-column="118" selection-end-line="323" selection-end-column="147" />
+        <state relative-caret-position="168">
+          <caret line="181" column="118" lean-forward="false" selection-start-line="181" selection-start-column="89" selection-end-line="181" selection-end-column="118" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="71">
-          <caret line="504" column="74" lean-forward="false" selection-start-line="504" selection-start-column="74" selection-end-line="504" selection-end-column="74" />
+        <state relative-caret-position="312">
+          <caret line="533" column="8" lean-forward="false" selection-start-line="533" selection-start-column="8" selection-end-line="534" selection-end-column="33" />
           <folding>
             <element signature="e#0#16#0" expanded="true" />
           </folding>
