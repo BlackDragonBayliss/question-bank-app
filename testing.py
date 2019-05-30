@@ -233,18 +233,30 @@ def parseIntoFlashCardList(stringText):
     data_set_group = stringText.split('Q.')
     data_set_group.pop(0)
     valIndex = 0
+    flashCardContainer = []
     for val in data_set_group:
-        faultQuestionContainer = val.splitlines()
-        faultQuestionContainer = list(filter(None, faultQuestionContainer))
-        for questionPiece in faultQuestionContainer:
-            print("questionPiece: " + str(questionPiece) + " " + str(valIndex))
+        flashPieceContainer = val.splitlines()
+        flashPieceContainer = list(filter(None, flashPieceContainer))
+        print("flashPieceContainer: "+str(len(flashPieceContainer)))
 
 
+        # for flashPiece in flashPieceContainer:
+        #     print(str(valIndex))
+            # flashCardPie.append(flashPiece)
+        # #init flash card object and append to container
+        # print(str(len(flashPieceContainer)))
+        flashCardContainer.append(FlashCard(flashPieceContainer[0],flashPieceContainer[1]))
+        # flashPieceContainer = []
         valIndex += 1
 
-def parseQuestionBankToCorrectFormat():
+    print(str(len(flashCardContainer)))
+    for flashCard in flashCardContainer:
+        print("flashPiece: " + str(flashCard.getProblem()) + " " + str(flashCard.getAnswer()))
+
+
+def processFlashCardList():
     f = open("flash_card.txt", "r")
     stringText = f.read()
     parseIntoFlashCardList(stringText)
 
-parseQuestionBankToCorrectFormat()
+processFlashCardList()

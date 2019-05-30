@@ -41,7 +41,7 @@ class DisplayManager:
 
     def startScreen(self):
         self.root.geometry('1400x800')
-        self.root.configure(background='blue')
+        self.root.configure(background='red')
 
         self.labelInfoNumberQuestions = Label(self.root, text="Enter number of questions for test")
         self.labelInfoNumberQuestions.place(x=self.xPositionKey, y=self.yPositionGlobalIterate)
@@ -111,6 +111,10 @@ class DisplayManager:
         self.deselectOptionsButton = Button(text="Deselect Answers", command=self.deselectAnswers)
         self.deselectOptionsButton.place(x=self.xPositionDeslectButton, y=self.yPositionGlobalIterate)
 
+        self.currentQuestionLabel = Label(self.root, text="Current question: " + str(self.instanceTest.getQuestionObjectManagerCurrentQuestionIndex()))
+        self.currentQuestionLabel.place(x=self.xPositionKey, y=self.yPositionGlobalIterate)
+        self.updateYPositionGlobalIterate()
+
     def displayGUIRadioButtons(self, root, questionText, questionListAnswerKeys, questionListAnswerTexts, textAnswerList, buttonList, selectedAnswerList):
         radioButtonIndex = 0
         for counter, choiceText in enumerate(questionListAnswerTexts, 1):
@@ -173,10 +177,21 @@ class DisplayManager:
         self.nextQuestionButton.place(x=self.xPositionConfirmButton, y=self.yPositionGlobalIterate)
         self.updateYPositionGlobalIterate()
 
-        self.previousQuestionButton = Button(text="Previous question", command=self.instanceTest.changeToPreviousQuestionLearnMode)
-        self.previousQuestionButton.place(x=self.xPositionConfirmButton, y=self.yPositionGlobalIterate)
+        # print(str(self.instanceTest.getQuestionObjectManagerCurrentQuestionIndex()))
+        if(self.instanceTest.getQuestionObjectManagerCurrentQuestionIndex() != 0):
+            self.instanceTest.isShowPreviousQuestion = True
+            self.previousQuestionButton = Button(text="Previous question",command=self.instanceTest.changeToPreviousQuestionLearnMode)
+            self.previousQuestionButton.place(x=self.xPositionConfirmButton, y=self.yPositionGlobalIterate)
         self.updateYPositionGlobalIterate()
-        # self.showAnswerTestModeOutomeText = ""
+
+        self.currentQuestionLabel = Label(self.root, text="Current question: "+str(self.instanceTest.getQuestionObjectManagerCurrentQuestionIndex()))
+        self.currentQuestionLabel.place(x=self.xPositionKey, y=self.yPositionGlobalIterate)
+        self.updateYPositionGlobalIterate()
+
+
+
+
+
 
     def populateShowAnswerTestModeOutomeText(self):
         correctAnswerString = ""
@@ -278,17 +293,39 @@ class DisplayManager:
         self.startScreenButton.place(x=self.xPositionButtonConfirmQuestionOutcome, y=self.yPositionGlobalIterate)
         self.updateYPositionGlobalIterate()
 
+
+
+        self.retakeCurrentIncorrectLabel = Label(self.root, text="Number of revisit questions: " +self.instanceTest.getQuestionObjectManagerRevisitQuestionList())
+        self.retakeCurrentIncorrectLabel.place(x=self.xPositionButtonConfirmQuestionOutcome, y=self.yPositionGlobalIterate)
+        self.updateYPositionGlobalIterate()
+
+        #testRevisitMarkedQuestionsButton
+        self.testRevisitMarkedQuestionsButton = Button(text="Test Revisit Marked Question", command=self.instanceTest.testMarkedRevisitQuestions)
+        self.testRevisitMarkedQuestionsButton.place(x=self.xPositionButtonConfirmQuestionOutcome, y=self.yPositionGlobalIterate)
+        self.updateYPositionGlobalIterate()
+
         self.instanceTest.isIncorrectOriginalPathOpen = True
         self.isScoreScreen = True
 
-    def displayLearnModeRetakeScreen(self):
+    def displayLearnModeEndScreen(self):
         self.resetScreenVariables()
         self.clearWidgets()
-        learnModeEndScreenLabel = Label(self.root, text="End")
-        learnModeEndScreenLabel.place(x=self.xPositionButtonConfirmQuestionOutcome, y=self.yPositionGlobalIterate)
+        self.instanceTest.isLearnModeEndScreen = True
+
         self.updateYPositionGlobalIterate()
         self.startScreenButton = Button(text="Home Screen", command=self.instanceTest.returnHome)
         self.startScreenButton.place(x=self.xPositionButtonConfirmQuestionOutcome, y=self.yPositionGlobalIterate)
+
+        self.updateYPositionGlobalIterate()
+        self.retakeCurrentIncorrectLabel = Label(self.root,text="Number of revisit questions: " + self.instanceTest.getQuestionObjectManagerRevisitQuestionList())
+        self.retakeCurrentIncorrectLabel.place(x=self.xPositionButtonConfirmQuestionOutcome,y=self.yPositionGlobalIterate)
+        self.updateYPositionGlobalIterate()
+
+        self.testRevisitMarkedQuestionsButton = Button(text="Test Revisit Marked Question", command=self.instanceTest.testMarkedRevisitQuestionList)
+        self.testRevisitMarkedQuestionsButton.place(x=self.xPositionButtonConfirmQuestionOutcome, y=self.yPositionGlobalIterate)
+        self.updateYPositionGlobalIterate()
+
+
 
     def resetScreenVariables(self):
         self.resetYPositionGlobalIterate()
@@ -315,6 +352,7 @@ class DisplayManager:
             self.isRandomizationCheckBox.destroy()
             self.testModeButton.destroy()
             self.learnModeButton.destroy()
+            self.flashCardModeButton.destroy()
             return
         #handle destroy if isScoreScreen
         if (self.isScoreScreen):
@@ -338,17 +376,31 @@ class DisplayManager:
             self.buttonConfirmQuestionOutcome.destroy()
             self.isQuestionOutcomeScreen = False
             return
+
+        if (self.instanceTest.getIsLearnModeEndScreen()):
+            for widget in self.keyList:
+                widget.destroy()
+            self.questionLabel.destroy()
+            self.showAnswerLabel.destroy()
+            self.showAnswerButton.destroy()
+            self.nextQuestionButton.destroy()
+            if (self.instanceTest.isShowPreviousQuestion):
+                self.previousQuestionButton.destroy()
+            self.currentQuestionLabel.destroy()
+            self.instanceTest.isLearnModeEndScreen = False
+            return
+
         #learn mode widgets
         if(self.instanceTest.getIsLearnMode()):
             for widget in self.keyList:
                 widget.destroy()
             self.questionLabel.destroy()
-            # if (self.isShowAnswerLearnMode):
             self.showAnswerLabel.destroy()
             self.showAnswerButton.destroy()
             self.nextQuestionButton.destroy()
-            self.previousQuestionButton.destroy()
-            # self.showAnswerLearnModeLabelText = ""
+            if(self.instanceTest.isShowPreviousQuestion):
+                self.previousQuestionButton.destroy()
+            self.currentQuestionLabel.destroy()
             return
         #test mode widgets
         if(self.instanceTest.getIsTestMode()):
@@ -361,4 +413,5 @@ class DisplayManager:
             self.questionLabel.destroy()
             self.confirmAnswerButton.destroy()
             self.deselectOptionsButton.destroy()
+            self.currentQuestionLabel.destroy()
             return

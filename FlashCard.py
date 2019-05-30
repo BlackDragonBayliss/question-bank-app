@@ -1,9 +1,10 @@
-class QuestionObject:
-    def __init__(self):
+class FlashCard:
+    def __init__(self, problem, answer):
         self.correctAnswerList = []
         self.answerListComposite = []
         self.isAnsweredCorrectly = False
-
+        self.problem = problem
+        self.answer = answer
     def setQuestionNumber(self, questionNumber):
         self.questionNumber = questionNumber
     def getQuestionNumber(self):

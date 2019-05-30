@@ -40,6 +40,7 @@ class Test:
         self.isIncorrectRetaken = False
         self.isIncorrectOriginalPathOpen = False
         self.isIncorrectOriginalClearOpen = False
+        self.isShowPreviousQuestion = False
         self.instanceDisplayManager = DisplayManager()
         self.instanceQuestionObjectManager = QuestionObjectManager()
         self.instanceStateStore = stateStore
@@ -498,13 +499,18 @@ class Test:
                 # print(valIndex)
 
 
-
+    def testMarkedRevisitQuestionList(self):
+        print("")
+    def getQuestionObjectManagerRevisitQuestionList(self):
+        return self.instanceQuestionObjectManager.getRevisitQuestionList()
 
 
     def getIsTestMode(self):
         return self.isTestMode
     def getIsLearnMode(self):
         return self.isLearnMode
+    def getIsLearnModeEndScreen(self):
+        return self.isLearnModeEndScreen
 
     def createDisplayList(self, questionList):
         displayContainer = []
@@ -530,15 +536,17 @@ class Test:
             #handle displayManager paint new question
             self.instanceDisplayManager.displayQuestionLearnMode()
         else:
-            self.instanceDisplayManager.displayLearnModeRetakeScreen()
+            self.instanceDisplayManager.displayLearnModeEndScreen()
 
     def changeToPreviousQuestionLearnMode(self):
         #paint screen of previous question
-        #set current question -1
-        self.instanceQuestionObjectManager.setCurrentQuestionIndex((self.instanceQuestionObjectManager.getCurrentQuestionIndex()-1))
+        #set current question index -1
+        self.instanceQuestionObjectManager.setCurrentQuestionIndex((self.getQuestionObjectManagerCurrentQuestionIndex()-1))
         self.instanceQuestionObjectManager.setCurrentQuestionObject(self.instanceQuestionObjectManager.getBatchSizeQuestionList()[self.instanceQuestionObjectManager.getCurrentQuestionIndex()])
         self.instanceDisplayManager.displayQuestionLearnMode()
 
+    def getQuestionObjectManagerCurrentQuestionIndex(self):
+        return self.instanceQuestionObjectManager.getCurrentQuestionIndex()
 
 
     def confirmAnswer(self):
