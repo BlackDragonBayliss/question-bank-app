@@ -18,6 +18,7 @@ class Test:
         self.faultCorrectedAtIndexContainer = []
         self.batchRangeList = []
         self.incorrectQuestionStore = []
+        self.revisitQuestionStore = []
         self.possibleDuplicantAnswerOnSameLineFaultCorrectedAtIndex = 0
         self.duplicantAnswerOnSameLineFaultCorrectedAtIndex = 0
         self.questionPieceFaultIndex = 0
@@ -38,6 +39,7 @@ class Test:
         self.isFaultDuplicantsAppended = True
         self.isTestMode = False
         self.isLearnMode = False
+        self.isLearnModeEndScreen = False
         self.isIncorrectRetaken = False
         self.isIncorrectOriginalPathOpen = False
         self.isIncorrectOriginalClearOpen = False
@@ -499,12 +501,6 @@ class Test:
                 print("questionPiece: "+str(questionPiece) + " " + str(valIndex))
                 # print(valIndex)
 
-
-    def testMarkedRevisitQuestionList(self):
-        print("")
-    def getQuestionObjectManagerRevisitQuestionList(self):
-        return self.instanceQuestionObjectManager.getRevisitQuestionList()
-
     def getIsTestMode(self):
         return self.isTestMode
     def getIsLearnMode(self):
@@ -522,6 +518,9 @@ class Test:
 
     def changeToNextQuestion(self):
         self.instanceQuestionObjectManager.getCurrentQuestionObject().setIsAnswered(True)
+        # handle revisit question store if checkbox is checked
+        if self.isRevisitQuestion.get() == 1:
+            self.revisitQuestionStore.append(self.instanceQuestionObjectManager.getCurrentQuestionObject())
         #handle on set nextQuestion
         if self.instanceQuestionObjectManager.processNextQuestion():
         #handle displayManager paint new question
@@ -530,10 +529,9 @@ class Test:
             self.instanceDisplayManager.displayScoreScreen()
 
     def changeToNextQuestionLearnMode(self):
-
-        if self.instanceTest.isRevisitQuestion == 1:
-           print("awesome check")
-
+        #handle revisit question store if checkbox is checked
+        if self.isRevisitQuestion.get() == 1:
+            self.revisitQuestionStore.append(self.instanceQuestionObjectManager.getCurrentQuestionObject())
         #handle on set nextQuestion
         if self.instanceQuestionObjectManager.processNextQuestion():
             #handle displayManager paint new question
@@ -548,6 +546,8 @@ class Test:
         self.instanceQuestionObjectManager.setCurrentQuestionObject(self.instanceQuestionObjectManager.getBatchSizeQuestionList()[self.instanceQuestionObjectManager.getCurrentQuestionIndex()])
         self.instanceDisplayManager.displayQuestionLearnMode()
 
+    def getRevisitQuestionStore(self):
+        return self.revisitQuestionStore
     def getQuestionObjectManagerCurrentQuestionIndex(self):
         return self.instanceQuestionObjectManager.getCurrentQuestionIndex()
 
@@ -647,6 +647,24 @@ class Test:
         #display
         self.instanceDisplayManager.displayQuestion()
 
+    def retakeTestRevisitQuestions(self):
+        self.setQuestionObjectManagerBatchSizeTest(self.revisitQuestionStore)
+        #reset global variables
+        self.instanceQuestionObjectManager.setCurrentQuestionObject(self.revisitQuestionStore[0])
+        self.resetGlobalVariablesForIncorrectQuestionRetake()
+        #display
+        self.instanceDisplayManager.displayQuestionLearnMode()
+        # self.incorrectRetakeCount +=1
+
+    def storeRevisitQuestionIndexes(self):
+        f = open("store.txt", "w+")
+        # for i in range(10):
+        for question in self.revisitQuestionStore:
+            f.write(question.getQuestionNumber())
+        f.close()
+
+        # for question in self.revisitQuestionStore:
+        #     question.
     def storeOriginalQuestionList(self):
         print("storingOriginalQuestionList, length: "+str(len(self.instanceQuestionObjectManager.getBatchSizeQuestionList())))
         self.instanceQuestionObjectManager.setOriginalQuestionList(self.instanceQuestionObjectManager.getBatchSizeQuestionList())
@@ -679,6 +697,10 @@ class Test:
 
     def resetGlobalVariablesForIncorrectQuestionRetake(self):
         self.incorrectQuestionStore = []
+        self.correctQuestionAnsweredCount = 0
+        self.instanceQuestionObjectManager.setCurrentQuestionIndex(0)
+    def resetGlobalVariablesForRevisitQuestionRetake(self):
+        self.revisitQuestionStore = []
         self.correctQuestionAnsweredCount = 0
         self.instanceQuestionObjectManager.setCurrentQuestionIndex(0)
 

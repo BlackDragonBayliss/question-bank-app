@@ -41,7 +41,7 @@ class DisplayManager:
 
     def startScreen(self):
         self.root.geometry('1400x800')
-        self.root.configure(background='red')
+        self.root.configure(background='blue')
 
         self.labelInfoNumberQuestions = Label(self.root, text="Enter number of questions for test")
         self.labelInfoNumberQuestions.place(x=self.xPositionKey, y=self.yPositionGlobalIterate)
@@ -194,11 +194,6 @@ class DisplayManager:
         self.currentQuestionLabel.place(x=self.xPositionKey, y=self.yPositionGlobalIterate)
         self.updateYPositionGlobalIterate()
 
-        # testRevisitMarkedQuestionsButton
-        # self.markedQuestionsButton = Button(text="Test Revisit Questions",command=self.instanceTest.testMarkedRevisitQuestions)
-        # self.testRevisitMarkedQuestionsButton.place(x=self.xPositionButtonConfirmQuestionOutcome,y=self.yPositionGlobalIterate)
-        # self.updateYPositionGlobalIterate()
-
         self.instanceTest.isRevisitQuestion = IntVar()
         self.isRevisitCheckBox = Checkbutton(self.root, text='Revisit question', variable=self.instanceTest.isRevisitQuestion)
         self.isRevisitCheckBox.place(x=self.xPositionConfirmButton, y=self.yPositionGlobalIterate)
@@ -307,13 +302,13 @@ class DisplayManager:
         self.updateYPositionGlobalIterate()
 
 
-        self.retakeCurrentIncorrectLabel = Label(self.root, text="Number of revisit questions: " +self.instanceTest.getQuestionObjectManagerRevisitQuestionList())
-        self.retakeCurrentIncorrectLabel.place(x=self.xPositionButtonConfirmQuestionOutcome, y=self.yPositionGlobalIterate)
+        self.revisitQuestionLabel = Label(self.root, text="Number of revisit questions: " +str(len(self.instanceTest.getRevisitQuestionStore())))
+        self.revisitQuestionLabel.place(x=self.xPositionButtonConfirmQuestionOutcome, y=self.yPositionGlobalIterate)
         self.updateYPositionGlobalIterate()
 
         #testRevisitMarkedQuestionsButton
-        self.testRevisitMarkedQuestionsButton = Button(text="Test Revisit Questions", command=self.instanceTest.testMarkedRevisitQuestions)
-        self.testRevisitMarkedQuestionsButton.place(x=self.xPositionButtonConfirmQuestionOutcome, y=self.yPositionGlobalIterate)
+        self.revisitQuestionTestButton = Button(text="Test Revisit Questions", command=self.instanceTest.retakeTestRevisitQuestions)
+        self.revisitQuestionTestButton.place(x=self.xPositionButtonConfirmQuestionOutcome, y=self.yPositionGlobalIterate)
         self.updateYPositionGlobalIterate()
 
         self.instanceTest.isIncorrectOriginalPathOpen = True
@@ -327,15 +322,19 @@ class DisplayManager:
         self.updateYPositionGlobalIterate()
         self.startScreenButton = Button(text="Home Screen", command=self.instanceTest.returnHome)
         self.startScreenButton.place(x=self.xPositionButtonConfirmQuestionOutcome, y=self.yPositionGlobalIterate)
-
-        self.updateYPositionGlobalIterate()
-        self.retakeCurrentIncorrectLabel = Label(self.root,text="Number of revisit questions: " + self.instanceTest.getQuestionObjectManagerRevisitQuestionList())
-        self.retakeCurrentIncorrectLabel.place(x=self.xPositionButtonConfirmQuestionOutcome,y=self.yPositionGlobalIterate)
         self.updateYPositionGlobalIterate()
 
-        self.testRevisitMarkedQuestionsButton = Button(text="Test Revisit Questions", command=self.instanceTest.testMarkedRevisitQuestionList)
-        self.testRevisitMarkedQuestionsButton.place(x=self.xPositionButtonConfirmQuestionOutcome, y=self.yPositionGlobalIterate)
+        self.revisitQuestionLabel = Label(self.root,text="Number of revisit questions: " + str(len(self.instanceTest.getRevisitQuestionStore())))
+        self.revisitQuestionLabel.place(x=self.xPositionButtonConfirmQuestionOutcome, y=self.yPositionGlobalIterate)
         self.updateYPositionGlobalIterate()
+
+        # testRevisitMarkedQuestionsButton
+        self.revisitQuestionTestButton = Button(text="Test Revisit Questions",command=self.instanceTest.retakeTestRevisitQuestions)
+        self.revisitQuestionTestButton.place(x=self.xPositionButtonConfirmQuestionOutcome,y=self.yPositionGlobalIterate)
+        self.updateYPositionGlobalIterate()
+
+        #write to store question number indexes
+        self.instanceTest.storeRevisitQuestionIndexes()
 
 
 
@@ -373,6 +372,8 @@ class DisplayManager:
             self.retakeCurrentIncorrectButton.destroy()
             self.retakeFullTestButton.destroy()
             self.startScreenButton.destroy()
+            self.revisitQuestionLabel.destroy()
+            self.revisitQuestionTestButton.destroy()
             print("inside isIncorrectOriginalPathOpen: " + str(self.instanceTest.isIncorrectOriginalPathOpen))
             print("inside isIncorrectOriginalClearOpen: "+str(self.instanceTest.isIncorrectOriginalClearOpen))
             if (self.instanceTest.isIncorrectOriginalClearOpen):
@@ -391,8 +392,8 @@ class DisplayManager:
 
         if (self.instanceTest.getIsLearnModeEndScreen()):
             self.startScreenButton.destroy()
-            self.retakeCurrentIncorrectLabel.destroy()
-            self.testRevisitMarkedQuestionsButton.destroy()
+            self.revisitQuestionLabel.destroy()
+            self.revisitQuestionTestButton.destroy()
             self.instanceTest.isLearnModeEndScreen = False
             return
 
