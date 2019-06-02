@@ -658,13 +658,10 @@ class Test:
 
     def storeRevisitQuestionIndexes(self):
         f = open("store.txt", "w+")
-        # for i in range(10):
         for question in self.revisitQuestionStore:
             f.write(question.getQuestionNumber())
         f.close()
 
-        # for question in self.revisitQuestionStore:
-        #     question.
     def storeOriginalQuestionList(self):
         print("storingOriginalQuestionList, length: "+str(len(self.instanceQuestionObjectManager.getBatchSizeQuestionList())))
         self.instanceQuestionObjectManager.setOriginalQuestionList(self.instanceQuestionObjectManager.getBatchSizeQuestionList())
