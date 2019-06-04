@@ -241,20 +241,33 @@ class Test:
                 if (questionPiece.find("Correct") == 0):
                     answerUnparsed = questionPiece.split(":")
                     self.answerList = answerUnparsed[1].split(" ")
+                    print(questionObj.getQuestionNumber())
+                    print(self.answerList)
                     del self.answerList[0:1]
                 questionPieceIndex += 1
+
+
+
 
             #reiterate through answers, if matching correct answerList, set text as correct answer in object
             for answer in self.answerList:
                 for questionPiece in objectPieceList:
                     questionPieceKey = self.answerList[self.answerListIndex] + "."
+                    print("self.answerListIndex "+self.answerListIndex)
+                    print("questionPieceKey "+questionPieceKey)
+                    print("questionPiece " + questionPiece)
                     if (questionPiece.find(questionPieceKey) == 0):
                         answerListSplit = questionPiece.split(". ")
                         correctAnswerToAppend = answerListSplit[1]
+                        print("correctAnswerToAppend " + correctAnswerToAppend)
                         questionObj.addCorrectAnswer(correctAnswerToAppend)
                 self.answerListIndex +=1
+
             self.answerListIndex = 0
             questionObjectComposite.append(questionObj)
+
+
+
 
             #parse answer list
             for val in objectPieceList:
@@ -267,6 +280,7 @@ class Test:
             intervalIndex += 1
             testIndex += 1
             self.questionInteration += 1
+            print(questionObj.getCorrectAnswerListaddCorrectAnswer())
         return questionObjectComposite
 
     def parseQuestionBankToCorrectFormat(self):

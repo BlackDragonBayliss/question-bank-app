@@ -217,16 +217,19 @@ class DisplayManager:
     def populateShowAnswerLearnModeLabelText(self):
         correctAnswerString = ""
         index = 0
+        # test  = ["delta", "pie"]
         for correctAnswer in self.currentQuestion.getCorrectAnswerList():
-            if((index + 1) == len(self.currentQuestion.getCorrectAnswerList())):
+            if (index + 1) == len(self.currentQuestion.getCorrectAnswerList()):
                 correctAnswerString += str(correctAnswer)
                 break
-            correctAnswerString += str(correctAnswer) + "\n"
+            correctAnswerString += str(correctAnswer) +", "
+
+
         if(len(self.currentQuestion.getCorrectAnswerList()) == 1):
             self.showAnswerLearnModeLabelText = "Correct answer: " + correctAnswerString
         else:
             self.showAnswerLearnModeLabelText = "Correct answers: " + correctAnswerString
-
+        print(self.showAnswerLearnModeLabelText)
     def showAnswerLearnMode(self):
         self.isShowAnswerLearnMode = True
         # self.resetScreenVariables()

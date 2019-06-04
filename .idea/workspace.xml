@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f3d5109d-a44f-4251-ba2c-07eb41d78ec0" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Baysim.py" afterPath="$PROJECT_DIR$/Baysim.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DisplayManager.py" afterPath="$PROJECT_DIR$/DisplayManager.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Test.py" afterPath="$PROJECT_DIR$/Test.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/store.txt" afterPath="$PROJECT_DIR$/store.txt" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -16,8 +20,8 @@
       <file leaf-file-name="Baysim.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Baysim.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="1" column="11" lean-forward="false" selection-start-line="1" selection-start-column="11" selection-end-line="1" selection-end-column="11" />
+            <state relative-caret-position="45">
+              <caret line="3" column="49" lean-forward="false" selection-start-line="3" selection-start-column="49" selection-end-line="3" selection-end-column="49" />
               <folding />
             </state>
           </provider>
@@ -26,11 +30,21 @@
       <file leaf-file-name="Test.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="313">
-              <caret line="659" column="35" lean-forward="false" selection-start-line="659" selection-start-column="35" selection-end-line="659" selection-end-column="35" />
+            <state relative-caret-position="273">
+              <caret line="262" column="75" lean-forward="true" selection-start-line="262" selection-start-column="75" selection-end-line="262" selection-end-column="75" />
               <folding>
                 <element signature="e#0#16#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="QuestionObject.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/QuestionObject.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="204">
+              <caret line="21" column="24" lean-forward="false" selection-start-line="21" selection-start-column="8" selection-end-line="21" selection-end-column="24" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -39,7 +53,7 @@
         <entry file="file://$PROJECT_DIR$/store.txt">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
-              <caret line="0" column="2" lean-forward="true" selection-start-line="0" selection-start-column="2" selection-end-line="0" selection-end-column="2" />
+              <caret line="0" column="0" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -48,8 +62,8 @@
       <file leaf-file-name="DisplayManager.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DisplayManager.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="440">
-              <caret line="336" column="53" lean-forward="false" selection-start-line="336" selection-start-column="26" selection-end-line="336" selection-end-column="53" />
+            <state relative-caret-position="3390">
+              <caret line="226" column="0" lean-forward="true" selection-start-line="226" selection-start-column="0" selection-end-line="226" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -60,16 +74,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="60">
               <caret line="4" column="15" lean-forward="true" selection-start-line="4" selection-start-column="15" selection-end-line="4" selection-end-column="15" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="QuestionObject.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/QuestionObject.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="15" column="25" lean-forward="false" selection-start-line="15" selection-start-column="8" selection-end-line="15" selection-end-column="25" />
               <folding />
             </state>
           </provider>
@@ -88,8 +92,8 @@
       <file leaf-file-name="QuestionObjectManager.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/QuestionObjectManager.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="123">
-              <caret line="25" column="32" lean-forward="false" selection-start-line="25" selection-start-column="8" selection-end-line="25" selection-end-column="32" />
+            <state relative-caret-position="285">
+              <caret line="19" column="28" lean-forward="true" selection-start-line="19" selection-start-column="28" selection-end-line="19" selection-end-column="28" />
               <folding />
             </state>
           </provider>
@@ -98,7 +102,7 @@
       <file leaf-file-name="testing.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/testing.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
+            <state relative-caret-position="3810">
               <caret line="254" column="0" lean-forward="false" selection-start-line="254" selection-start-column="0" selection-end-line="254" selection-end-column="0" />
               <folding />
             </state>
@@ -126,12 +130,8 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>displayQuestionLearnMode</find>
-      <find>showAnswerLearnModeLabelText</find>
-      <find>showAnswerButton</find>
       <find>end</find>
       <find>change</find>
-      <find>showAnswerLearnMode</find>
       <find>changeToPreviousQuestionLearnMode</find>
       <find>displayLearnModeRetakeScreen</find>
       <find>start</find>
@@ -147,15 +147,19 @@
       <find>revisitQuestionTestButton</find>
       <find>confirmAnswer</find>
       <find>confirmAnswerlea</find>
-      <find>currentQuestionObject</find>
       <find>changeToNextQuestionLearnMode</find>
       <find>revisit</find>
       <find>displayQuestion</find>
       <find>learn</find>
       <find>retake</find>
-      <find>getAnswerListComposite</find>
       <find>retakeTestRevisitQuestions</find>
+      <find>showAnswerLearnMode</find>
+      <find>populateShowAnswerLearnModeLabelText</find>
+      <find>currentQuestionObject</find>
+      <find>showAnswerLearnModeLabelText</find>
+      <find>getAnswerListComposite</find>
       <find>selectedAnswerList</find>
+      <find>addCorrectAnswer</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -191,8 +195,8 @@
         <option value="$PROJECT_DIR$/testing.py" />
         <option value="$PROJECT_DIR$/FlashCardComposite.py" />
         <option value="$PROJECT_DIR$/QuestionObjectManager.py" />
-        <option value="$PROJECT_DIR$/DisplayManager.py" />
         <option value="$PROJECT_DIR$/store.txt" />
+        <option value="$PROJECT_DIR$/DisplayManager.py" />
         <option value="$PROJECT_DIR$/Baysim.py" />
         <option value="$PROJECT_DIR$/Test.py" />
       </list>
@@ -240,7 +244,7 @@
   <component name="PropertiesComponent">
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
-    <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file:///Users/CommanderCarr/PycharmProjects/question-bank-app/QuestionObject.py" />
+    <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file:///Users/CommanderCarr/PycharmProjects/question-bank-app/Test.py" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -411,14 +415,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/testing.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="254" column="0" lean-forward="false" selection-start-line="254" selection-start-column="0" selection-end-line="254" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/FlashCard.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="225">
@@ -443,26 +439,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/testing.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3810">
+          <caret line="254" column="0" lean-forward="false" selection-start-line="254" selection-start-column="0" selection-end-line="254" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/QuestionObjectManager.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="123">
-          <caret line="25" column="32" lean-forward="false" selection-start-line="25" selection-start-column="8" selection-end-line="25" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DisplayManager.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="440">
-          <caret line="336" column="53" lean-forward="false" selection-start-line="336" selection-start-column="26" selection-end-line="336" selection-end-column="53" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/QuestionObject.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="15" column="25" lean-forward="false" selection-start-line="15" selection-start-column="8" selection-end-line="15" selection-end-column="25" />
+        <state relative-caret-position="285">
+          <caret line="19" column="28" lean-forward="true" selection-start-line="19" selection-start-column="28" selection-end-line="19" selection-end-column="28" />
           <folding />
         </state>
       </provider>
@@ -470,23 +458,39 @@
     <entry file="file://$PROJECT_DIR$/store.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="0" column="2" lean-forward="true" selection-start-line="0" selection-start-column="2" selection-end-line="0" selection-end-column="2" />
+          <caret line="0" column="0" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DisplayManager.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3390">
+          <caret line="226" column="0" lean-forward="true" selection-start-line="226" selection-start-column="0" selection-end-line="226" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/QuestionObject.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="21" column="24" lean-forward="false" selection-start-line="21" selection-start-column="8" selection-end-line="21" selection-end-column="24" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Baysim.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="11" lean-forward="false" selection-start-line="1" selection-start-column="11" selection-end-line="1" selection-end-column="11" />
+        <state relative-caret-position="45">
+          <caret line="3" column="49" lean-forward="false" selection-start-line="3" selection-start-column="49" selection-end-line="3" selection-end-column="49" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="313">
-          <caret line="659" column="35" lean-forward="false" selection-start-line="659" selection-start-column="35" selection-end-line="659" selection-end-column="35" />
+        <state relative-caret-position="273">
+          <caret line="262" column="75" lean-forward="true" selection-start-line="262" selection-start-column="75" selection-end-line="262" selection-end-column="75" />
           <folding>
             <element signature="e#0#16#0" expanded="true" />
           </folding>
