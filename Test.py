@@ -19,6 +19,7 @@ class Test:
         self.batchRangeList = []
         self.incorrectQuestionStore = []
         self.revisitQuestionStore = []
+        self.multipleAnswerFaultAnswerList = []
         self.possibleDuplicantAnswerOnSameLineFaultCorrectedAtIndex = 0
         self.duplicantAnswerOnSameLineFaultCorrectedAtIndex = 0
         self.questionPieceFaultIndex = 0
@@ -225,63 +226,89 @@ class Test:
                     questionObjectListContainer[currentQuestionSplitIndex].append(questionPiece)
                     continue
                 questionObjectListContainer[(currentQuestionSplitIndex)].append(questionPiece)
-        questionContainer =[]
-        testIndex = 0
-        for objectPieceList in questionObjectListContainer:
-            possibleAnswerIndex = 0
-            questionNumber = objectPieceList[0].split(' ')
-            #create data object
-            questionObj = QuestionObject()
 
-            questionObj.setQuestionNumber(questionNumber[1])
-            questionObj.setProblem(objectPieceList[1])
-            questionPieceIndex = 0
-            #parse correct answer
-            for questionPiece in objectPieceList:
-                if (questionPiece.find("Correct") == 0):
-                    answerUnparsed = questionPiece.split(":")
-                    self.answerList = answerUnparsed[1].split(" ")
-                    print(questionObj.getQuestionNumber())
-                    print(self.answerList)
-                    del self.answerList[0:1]
-                questionPieceIndex += 1
+        # for objectPieceList in questionObjectListContainer:
+        objectPieceList = questionObjectListContainer[23]
+        correctAnswerList = self.formulateAnswerList(objectPieceList)
+        print(correctAnswerList)
+            # self.questionObjectListContainer
+
+
+
+        self.filterAddCorrectAnswer(objectPieceList,correctAnswerList)
+            # # filter correct answer
+            # self.filterCorrectAnswer()
 
 
 
 
-            #reiterate through answers, if matching correct answerList, set text as correct answer in object
-            for answer in self.answerList:
-                for questionPiece in objectPieceList:
-                    questionPieceKey = self.answerList[self.answerListIndex] + "."
-                    print("self.answerListIndex "+self.answerListIndex)
-                    print("questionPieceKey "+questionPieceKey)
-                    print("questionPiece " + questionPiece)
-                    if (questionPiece.find(questionPieceKey) == 0):
-                        answerListSplit = questionPiece.split(". ")
-                        correctAnswerToAppend = answerListSplit[1]
-                        print("correctAnswerToAppend " + correctAnswerToAppend)
-                        questionObj.addCorrectAnswer(correctAnswerToAppend)
-                self.answerListIndex +=1
-
-            self.answerListIndex = 0
-            questionObjectComposite.append(questionObj)
 
 
-
-
-            #parse answer list
-            for val in objectPieceList:
-                if(possibleAnswerIndex > 1):
-                    if(val.find("Correct") == 0):
-                        isContinueCalculating = False
-                        break
-                    questionObj.parseAnswer(val)
-                possibleAnswerIndex += 1
-            intervalIndex += 1
-            testIndex += 1
-            self.questionInteration += 1
-            print(questionObj.getCorrectAnswerListaddCorrectAnswer())
         return questionObjectComposite
+
+    def formulateAnswerList(self,objectPieceList):
+        questionNumber = objectPieceList[0].split(' ')
+        print(questionNumber)
+        self.questionObj = QuestionObject()
+        self.questionObj.setQuestionNumber(questionNumber[1])
+        self.questionObj.setProblem(objectPieceList[1])
+
+        questionPieceIndex = 0
+        # parse correct answer
+        print(str(objectPieceList))
+        for questionPiece in objectPieceList:
+            # print(questionPiece)
+
+            if (questionPiece.find("Correct") == 0):
+                answerUnparsed = questionPiece.split(":")
+
+                self.answerList = answerUnparsed[1].split(" ")
+                # print(questionObj.getQuestionNumber())
+                print(self.answerList)
+                del self.answerList[0:1]
+
+            questionPieceIndex += 1
+
+        # handle multiple index,
+        if len(self.answerList[0]) > 1:
+            print("greater: " + self.answerList[0])
+            for val in self.answerList[0]:
+                self.multipleAnswerFaultAnswerList.append(val)
+        else:
+            self.multipleAnswerFaultAnswerList = self.answerList
+        return self.multipleAnswerFaultAnswerList
+
+    def filterAddCorrectAnswer(self, objectPieceList, answerList):
+        for answer in self.answerList:
+            for questionPiece in objectPieceList:
+                questionPieceKey = self.answerList[self.answerListIndex] + "."
+
+                # print("self.answerListIndex "+str(self.answerListIndex))
+                # print("questionPieceKey "+str(questionPieceKey))
+                # print("questionPiece " + str(questionPiece))
+
+                if (questionPiece.find(questionPieceKey) == 0):
+                    answerListSplit = questionPiece.split(". ")
+                    correctAnswerToAppend = answerListSplit[1]
+                    print("correctAnswerToAppend " + str(correctAnswerToAppend))
+                    self.questionObj.addCorrectAnswer(correctAnswerToAppend)
+            self.answerListIndex += 1
+
+        self.answerListIndex = 0
+        self.questionObjectComposite.append(self.questionObj)
+
+    def filterCorrectAnswer(self):
+        for val in objectPieceList:
+            if (possibleAnswerIndex > 1):
+                if (val.find("Correct") == 0):
+                    isContinueCalculating = False
+                    break
+                questionObj.parseAnswer(val)
+            possibleAnswerIndex += 1
+        intervalIndex += 1
+        testIndex += 1
+        self.questionInteration += 1
+        print("correct answer list: " + str(questionObj.getCorrectAnswerList()))
 
     def parseQuestionBankToCorrectFormat(self):
         f = open("testfile.txt", "r")

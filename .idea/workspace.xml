@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f3d5109d-a44f-4251-ba2c-07eb41d78ec0" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Baysim.py" afterPath="$PROJECT_DIR$/Baysim.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DisplayManager.py" afterPath="$PROJECT_DIR$/DisplayManager.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Test.py" afterPath="$PROJECT_DIR$/Test.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/store.txt" afterPath="$PROJECT_DIR$/store.txt" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -21,7 +18,7 @@
         <entry file="file://$PROJECT_DIR$/Baysim.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="45">
-              <caret line="3" column="49" lean-forward="false" selection-start-line="3" selection-start-column="49" selection-end-line="3" selection-end-column="49" />
+              <caret line="3" column="33" lean-forward="false" selection-start-line="3" selection-start-column="33" selection-end-line="3" selection-end-column="33" />
               <folding />
             </state>
           </provider>
@@ -30,8 +27,8 @@
       <file leaf-file-name="Test.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="273">
-              <caret line="262" column="75" lean-forward="true" selection-start-line="262" selection-start-column="75" selection-end-line="262" selection-end-column="75" />
+            <state relative-caret-position="376">
+              <caret line="293" column="36" lean-forward="false" selection-start-line="293" selection-start-column="25" selection-end-line="293" selection-end-column="36" />
               <folding>
                 <element signature="e#0#16#0" expanded="true" />
               </folding>
@@ -130,7 +127,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>end</find>
       <find>change</find>
       <find>changeToPreviousQuestionLearnMode</find>
       <find>displayLearnModeRetakeScreen</find>
@@ -158,8 +154,9 @@
       <find>currentQuestionObject</find>
       <find>showAnswerLearnModeLabelText</find>
       <find>getAnswerListComposite</find>
-      <find>selectedAnswerList</find>
       <find>addCorrectAnswer</find>
+      <find>selectedAnswerList</find>
+      <find>answerList</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -482,15 +479,15 @@
     <entry file="file://$PROJECT_DIR$/Baysim.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="45">
-          <caret line="3" column="49" lean-forward="false" selection-start-line="3" selection-start-column="49" selection-end-line="3" selection-end-column="49" />
+          <caret line="3" column="33" lean-forward="false" selection-start-line="3" selection-start-column="33" selection-end-line="3" selection-end-column="33" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="273">
-          <caret line="262" column="75" lean-forward="true" selection-start-line="262" selection-start-column="75" selection-end-line="262" selection-end-column="75" />
+        <state relative-caret-position="376">
+          <caret line="293" column="36" lean-forward="false" selection-start-line="293" selection-start-column="25" selection-end-line="293" selection-end-column="36" />
           <folding>
             <element signature="e#0#16#0" expanded="true" />
           </folding>
