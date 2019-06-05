@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f3d5109d-a44f-4251-ba2c-07eb41d78ec0" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Baysim.py" afterPath="$PROJECT_DIR$/Baysim.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Test.py" afterPath="$PROJECT_DIR$/Test.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -27,8 +26,8 @@
       <file leaf-file-name="Test.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="376">
-              <caret line="293" column="36" lean-forward="false" selection-start-line="293" selection-start-column="25" selection-end-line="293" selection-end-column="36" />
+            <state relative-caret-position="351">
+              <caret line="275" column="45" lean-forward="false" selection-start-line="275" selection-start-column="45" selection-end-line="275" selection-end-column="45" />
               <folding>
                 <element signature="e#0#16#0" expanded="true" />
               </folding>
@@ -127,7 +126,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>change</find>
       <find>changeToPreviousQuestionLearnMode</find>
       <find>displayLearnModeRetakeScreen</find>
       <find>start</find>
@@ -157,6 +155,7 @@
       <find>addCorrectAnswer</find>
       <find>selectedAnswerList</find>
       <find>answerList</find>
+      <find>isContinueCalculating</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -486,8 +485,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="376">
-          <caret line="293" column="36" lean-forward="false" selection-start-line="293" selection-start-column="25" selection-end-line="293" selection-end-column="36" />
+        <state relative-caret-position="351">
+          <caret line="275" column="45" lean-forward="false" selection-start-line="275" selection-start-column="45" selection-end-line="275" selection-end-column="45" />
           <folding>
             <element signature="e#0#16#0" expanded="true" />
           </folding>

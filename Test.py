@@ -11,6 +11,7 @@ class Test:
         self.answerMatchingComposite = []
         self.correctAnswerList = []
         self.questionPieceContainer = []
+        self.questionObjectComposite = []
         # Fault fixing variables
         self.faultResolutionQueryStringContainer = []
         self.filterList1 = []
@@ -206,7 +207,6 @@ class Test:
         return questionPieceContainer
 
     def processParseQuestionBank(self, questionSplitContainer):
-        questionObjectComposite = []
         intervalIndex = 0
         isBeginAddQuestionObject = True
         isStartProcessing = False
@@ -230,21 +230,17 @@ class Test:
         # for objectPieceList in questionObjectListContainer:
         objectPieceList = questionObjectListContainer[23]
         correctAnswerList = self.formulateAnswerList(objectPieceList)
-        print(correctAnswerList)
+        # print(correctAnswerList)
             # self.questionObjectListContainer
 
 
 
         self.filterAddCorrectAnswer(objectPieceList,correctAnswerList)
             # # filter correct answer
-            # self.filterCorrectAnswer()
+        # self.filterCorrectAnswer(objectPieceList)
 
 
-
-
-
-
-        return questionObjectComposite
+        return self.questionObjectComposite
 
     def formulateAnswerList(self,objectPieceList):
         questionNumber = objectPieceList[0].split(' ')
@@ -276,16 +272,17 @@ class Test:
                 self.multipleAnswerFaultAnswerList.append(val)
         else:
             self.multipleAnswerFaultAnswerList = self.answerList
+
+        print("multi answer list: "+str(self.multipleAnswerFaultAnswerList))
         return self.multipleAnswerFaultAnswerList
 
     def filterAddCorrectAnswer(self, objectPieceList, answerList):
         for answer in self.answerList:
             for questionPiece in objectPieceList:
                 questionPieceKey = self.answerList[self.answerListIndex] + "."
-
-                # print("self.answerListIndex "+str(self.answerListIndex))
-                # print("questionPieceKey "+str(questionPieceKey))
-                # print("questionPiece " + str(questionPiece))
+                print("self.answerListIndex "+str(self.answerListIndex))
+                print("questionPieceKey "+str(questionPieceKey))
+                print("questionPiece " + str(questionPiece))
 
                 if (questionPiece.find(questionPieceKey) == 0):
                     answerListSplit = questionPiece.split(". ")
@@ -297,18 +294,19 @@ class Test:
         self.answerListIndex = 0
         self.questionObjectComposite.append(self.questionObj)
 
-    def filterCorrectAnswer(self):
+    def filterCorrectAnswer(self, objectPieceList):
+        possibleAnswerIndex = 0
         for val in objectPieceList:
-            if (possibleAnswerIndex > 1):
-                if (val.find("Correct") == 0):
-                    isContinueCalculating = False
-                    break
-                questionObj.parseAnswer(val)
+            # if (possibleAnswerIndex > 1):
+            if (val.find("Correct") == 0):
+                # isContinueCalculating = False
+                break
+
+
+
+            self.questionObj.parseAnswer(val)
             possibleAnswerIndex += 1
-        intervalIndex += 1
-        testIndex += 1
-        self.questionInteration += 1
-        print("correct answer list: " + str(questionObj.getCorrectAnswerList()))
+        print("correct answer list: " + str(self.questionObj.getCorrectAnswerList()))
 
     def parseQuestionBankToCorrectFormat(self):
         f = open("testfile.txt", "r")
