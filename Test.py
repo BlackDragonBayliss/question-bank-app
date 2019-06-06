@@ -237,7 +237,7 @@ class Test:
 
         self.filterAddCorrectAnswer(objectPieceList,correctAnswerList)
             # # filter correct answer
-        # self.filterCorrectAnswer(objectPieceList)
+        self.filterCorrectAnswer(objectPieceList)
 
 
         return self.questionObjectComposite
@@ -277,12 +277,12 @@ class Test:
         return self.multipleAnswerFaultAnswerList
 
     def filterAddCorrectAnswer(self, objectPieceList, answerList):
-        for answer in self.answerList:
+        for answer in answerList:
             for questionPiece in objectPieceList:
-                questionPieceKey = self.answerList[self.answerListIndex] + "."
-                print("self.answerListIndex "+str(self.answerListIndex))
-                print("questionPieceKey "+str(questionPieceKey))
-                print("questionPiece " + str(questionPiece))
+                questionPieceKey = answerList[self.answerListIndex] + "."
+                # print("self.answerListIndex "+str(self.answerListIndex))
+                # print("questionPieceKey "+str(questionPieceKey))
+                # print("questionPiece " + str(questionPiece))
 
                 if (questionPiece.find(questionPieceKey) == 0):
                     answerListSplit = questionPiece.split(". ")
@@ -301,12 +301,12 @@ class Test:
             if (val.find("Correct") == 0):
                 # isContinueCalculating = False
                 break
-
-
-
             self.questionObj.parseAnswer(val)
-            possibleAnswerIndex += 1
+            # possibleAnswerIndex += 1
         print("correct answer list: " + str(self.questionObj.getCorrectAnswerList()))
+        print("getAnswerListComposite answer list: " + str(self.questionObj.getAnswerListComposite()))
+
+
 
     def parseQuestionBankToCorrectFormat(self):
         f = open("testfile.txt", "r")

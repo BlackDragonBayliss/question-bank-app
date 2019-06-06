@@ -26,8 +26,8 @@
       <file leaf-file-name="Test.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="351">
-              <caret line="275" column="45" lean-forward="false" selection-start-line="275" selection-start-column="45" selection-end-line="275" selection-end-column="45" />
+            <state relative-caret-position="360">
+              <caret line="24" column="63" lean-forward="true" selection-start-line="24" selection-start-column="63" selection-end-line="24" selection-end-column="63" />
               <folding>
                 <element signature="e#0#16#0" expanded="true" />
               </folding>
@@ -38,8 +38,8 @@
       <file leaf-file-name="QuestionObject.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/QuestionObject.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="21" column="24" lean-forward="false" selection-start-line="21" selection-start-column="8" selection-end-line="21" selection-end-column="24" />
+            <state relative-caret-position="450">
+              <caret line="30" column="30" lean-forward="false" selection-start-line="30" selection-start-column="8" selection-end-line="30" selection-end-column="30" />
               <folding />
             </state>
           </provider>
@@ -151,11 +151,11 @@
       <find>populateShowAnswerLearnModeLabelText</find>
       <find>currentQuestionObject</find>
       <find>showAnswerLearnModeLabelText</find>
-      <find>getAnswerListComposite</find>
       <find>addCorrectAnswer</find>
       <find>selectedAnswerList</find>
       <find>answerList</find>
       <find>isContinueCalculating</find>
+      <find>getAnswerListComposite</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -467,14 +467,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/QuestionObject.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="21" column="24" lean-forward="false" selection-start-line="21" selection-start-column="8" selection-end-line="21" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Baysim.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="45">
@@ -483,10 +475,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/QuestionObject.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="450">
+          <caret line="30" column="30" lean-forward="false" selection-start-line="30" selection-start-column="8" selection-end-line="30" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="351">
-          <caret line="275" column="45" lean-forward="false" selection-start-line="275" selection-start-column="45" selection-end-line="275" selection-end-column="45" />
+        <state relative-caret-position="360">
+          <caret line="24" column="63" lean-forward="true" selection-start-line="24" selection-start-column="63" selection-end-line="24" selection-end-column="63" />
           <folding>
             <element signature="e#0#16#0" expanded="true" />
           </folding>
