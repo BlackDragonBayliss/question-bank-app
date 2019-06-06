@@ -228,17 +228,14 @@ class Test:
                 questionObjectListContainer[(currentQuestionSplitIndex)].append(questionPiece)
 
         # for objectPieceList in questionObjectListContainer:
-        objectPieceList = questionObjectListContainer[23]
+        objectPieceList = questionObjectListContainer[0]
         correctAnswerList = self.formulateAnswerList(objectPieceList)
         # print(correctAnswerList)
             # self.questionObjectListContainer
 
-
-
         self.filterAddCorrectAnswer(objectPieceList,correctAnswerList)
             # # filter correct answer
         self.filterCorrectAnswer(objectPieceList)
-
 
         return self.questionObjectComposite
 
@@ -301,12 +298,21 @@ class Test:
             if (val.find("Correct") == 0):
                 # isContinueCalculating = False
                 break
+
+                # def parseAnswer(self, answerString):
+                #     answerList = answerString.split(". ")
+                #     self.answerListComposite.append(answerList)
+
             self.questionObj.parseAnswer(val)
             # possibleAnswerIndex += 1
         print("correct answer list: " + str(self.questionObj.getCorrectAnswerList()))
         print("getAnswerListComposite answer list: " + str(self.questionObj.getAnswerListComposite()))
 
+        # setAnswerListComposite
 
+
+
+        # setAnswerListComposite
 
     def parseQuestionBankToCorrectFormat(self):
         f = open("testfile.txt", "r")
