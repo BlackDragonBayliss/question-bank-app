@@ -533,10 +533,8 @@ class Test:
         for val in data_set_group_0_1:
             faultQuestionContainer = val.splitlines()
             faultQuestionContainer = list(filter(None, faultQuestionContainer))
-            # questionNumber = faultQuestionContainer[0].replace(' ', '')
-            for questionPiece in faultQuestionContainer:
-                print("questionPiece: "+str(questionPiece) + " " + str(valIndex))
-                # print(valIndex)
+            # for questionPiece in faultQuestionContainer:
+            #     print("questionPiece: "+str(questionPiece) + " " + str(valIndex))
 
     def getIsTestMode(self):
         return self.isTestMode
