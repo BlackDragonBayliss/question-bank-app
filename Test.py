@@ -272,7 +272,6 @@ class Test:
         else:
             self.multipleAnswerFaultAnswerList = self.answerList
 
-        # print("multi answer list: "+str(self.multipleAnswerFaultAnswerList))
         return self.multipleAnswerFaultAnswerList
 
     def filterAddCorrectAnswer(self, objectPieceList, answerList):
