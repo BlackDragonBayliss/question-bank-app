@@ -212,8 +212,6 @@ class Test:
         isStartProcessing = False
         questionObjectListContainer = []
         questionObjectList = []
-        #split at question interval store in question set.
-        #iterate through question pieces, storing at interval of question found in string.
         currentQuestionSplitIndex = -1
         for questionPiece in questionSplitContainer:
             #if "QUESTION" start new data set
@@ -227,17 +225,14 @@ class Test:
                     continue
                 questionObjectListContainer[(currentQuestionSplitIndex)].append(questionPiece)
 
-        i = 0
+        # i = 0
         for objectPieceList in questionObjectListContainer:
-        # objectPieceList = questionObjectListContainer[23]
             correctAnswerList = self.formulateAnswerList(objectPieceList)
-            print("mo: "+str(correctAnswerList))
-                # self.questionObjectListContainer
             self.filterAddCorrectAnswer(objectPieceList,correctAnswerList)
             self.filterCorrectAnswer(objectPieceList)
-            if i == 24:
-                break
-            i += 1
+            # if i == 23:
+            #     break
+            # i += 1
 
         return self.questionObjectComposite
 
@@ -256,6 +251,7 @@ class Test:
 
             if (questionPiece.find("Correct") == 0):
                 answerUnparsed = questionPiece.split(":")
+                print(answerUnparsed)
 
                 self.answerList = answerUnparsed[1].split(" ")
                 # print(questionObj.getQuestionNumber())
@@ -265,13 +261,15 @@ class Test:
             questionPieceIndex += 1
 
         # handle multiple index,
+        self.multipleAnswerFaultAnswerList = []
         if len(self.answerList[0]) > 1:
-            # print("greater: " + self.answerList[0])
+            print("greater: " + self.answerList[0])
             for val in self.answerList[0]:
                 self.multipleAnswerFaultAnswerList.append(val)
         else:
             self.multipleAnswerFaultAnswerList = self.answerList
 
+        print("multi: "+str(self.multipleAnswerFaultAnswerList))
         return self.multipleAnswerFaultAnswerList
 
     def filterAddCorrectAnswer(self, objectPieceList, answerList):
