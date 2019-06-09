@@ -683,7 +683,6 @@ class Test:
         #reset global variables
         self.instanceQuestionObjectManager.setCurrentQuestionObject(self.revisitQuestionStore[0])
         self.resetGlobalVariablesForIncorrectQuestionRetake()
-        #display
         self.instanceDisplayManager.displayQuestionLearnMode()
         # self.incorrectRetakeCount +=1
 
