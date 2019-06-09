@@ -676,7 +676,6 @@ class Test:
         self.instanceQuestionObjectManager.setCurrentQuestionObject(questionStore[0])
         self.isIncorrectOriginalPathOpen = False
         self.resetGlobalVariablesForIncorrectQuestionRetake()
-        #display
         self.instanceDisplayManager.displayQuestion()
 
     def retakeTestRevisitQuestions(self):
