@@ -227,13 +227,17 @@ class Test:
                     continue
                 questionObjectListContainer[(currentQuestionSplitIndex)].append(questionPiece)
 
+        i = 0
         for objectPieceList in questionObjectListContainer:
         # objectPieceList = questionObjectListContainer[23]
             correctAnswerList = self.formulateAnswerList(objectPieceList)
-            # print(correctAnswerList)
+            print("mo: "+str(correctAnswerList))
                 # self.questionObjectListContainer
             self.filterAddCorrectAnswer(objectPieceList,correctAnswerList)
             self.filterCorrectAnswer(objectPieceList)
+            if i == 24:
+                break
+            i += 1
 
         return self.questionObjectComposite
 
@@ -272,20 +276,23 @@ class Test:
         return self.multipleAnswerFaultAnswerList
 
     def filterAddCorrectAnswer(self, objectPieceList, answerList):
+        print("answer list: "+str(answerList))
         for answer in answerList:
             for questionPiece in objectPieceList:
                 questionPieceKey = answerList[self.answerListIndex] + "."
-                # print("self.answerListIndex "+str(self.answerListIndex))
-                # print("questionPieceKey "+str(questionPieceKey))
-                # print("questionPiece " + str(questionPiece))
+
+                print("self.answerListIndex "+str(self.answerListIndex))
+                print("questionPieceKey "+str(questionPieceKey))
+                print("questionPiece " + str(questionPiece))
 
                 if (questionPiece.find(questionPieceKey) == 0):
                     answerListSplit = questionPiece.split(". ")
                     correctAnswerToAppend = answerListSplit[1]
-                    # print("correctAnswerToAppend " + str(correctAnswerToAppend))
+                    print("correctAnswerToAppend " + str(correctAnswerToAppend))
                     self.questionObj.addCorrectAnswer(correctAnswerToAppend)
+                    break
             self.answerListIndex += 1
-
+        print(str(self.questionObj.getCorrectAnswerList()))
         self.answerListIndex = 0
         self.questionObjectComposite.append(self.questionObj)
 
@@ -303,8 +310,8 @@ class Test:
 
                 self.questionObj.parseAnswer(val)
             possibleAnswerIndex += 1
-        # print("correct answer list: " + str(self.questionObj.getCorrectAnswerList()))
-        # print("getAnswerListComposite answer list: " + str(self.questionObj.getAnswerListComposite()))
+        print("correct answer list: " + str(self.questionObj.getCorrectAnswerList()))
+        print("getAnswerListComposite answer list: " + str(self.questionObj.getAnswerListComposite()))
 
         # setAnswerListComposite
 
@@ -619,13 +626,13 @@ class Test:
             if(selectedAnswerKey[2] == "1"):
                 currentQuestionObject = self.instanceQuestionObjectManager.getCurrentQuestionObject()
                 self.correctAnswerList = currentQuestionObject.getCorrectAnswerList()
+                print("correct answer list: "+str(self.correctAnswerList))
                 for correctAnswer in self.correctAnswerList:
                     if (selectedAnswerKey[1] == correctAnswer):
                         self.answerMatchingList.append(selectedAnswerKey)
                     else:
                         pass
                 self.selectedAnswerIndexTotal += 1
-        print(self.)
         #handle if no answers selected, default to answer being incorrect
         if(self.selectedAnswerIndexTotal != 0):
             if(len(self.answerMatchingList) == len(self.correctAnswerList) and self.selectedAnswerIndexTotal == len(self.correctAnswerList)):
