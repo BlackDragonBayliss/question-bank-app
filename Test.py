@@ -575,8 +575,6 @@ class Test:
             self.instanceDisplayManager.displayLearnModeEndScreen()
 
     def changeToPreviousQuestionLearnMode(self):
-        #paint screen of previous question
-        #set current question index -1
         self.instanceQuestionObjectManager.setCurrentQuestionIndex((self.getQuestionObjectManagerCurrentQuestionIndex()-1))
         self.instanceQuestionObjectManager.setCurrentQuestionObject(self.instanceQuestionObjectManager.getBatchSizeQuestionList()[self.instanceQuestionObjectManager.getCurrentQuestionIndex()])
         self.instanceDisplayManager.displayQuestionLearnMode()
@@ -650,8 +648,6 @@ class Test:
         if (self.incorrectRetakeCount == 0):
             # set original incorrect question list
             self.instanceQuestionObjectManager.setOriginalIncorrectQuestionList(self.incorrectQuestionStore)
-        #set isIncorrectOriginalPathOpen true for retake display options
-        # self.isIncorrectOriginalPathOpen = True
         #set questionList
         print("incorrectQuestionStore: "+str(len(self.incorrectQuestionStore)))
         self.setQuestionObjectManagerBatchSizeTest(self.incorrectQuestionStore)
