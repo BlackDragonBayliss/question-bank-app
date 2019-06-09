@@ -301,20 +301,10 @@ class Test:
                     # isContinueCalculating = False
                     break
 
-                    # def parseAnswer(self, answerString):
-                    #     answerList = answerString.split(". ")
-                    #     self.answerListComposite.append(answerList)
-
                 self.questionObj.parseAnswer(val)
             possibleAnswerIndex += 1
         print("correct answer list: " + str(self.questionObj.getCorrectAnswerList()))
         print("getAnswerListComposite answer list: " + str(self.questionObj.getAnswerListComposite()))
-
-        # setAnswerListComposite
-
-
-
-        # setAnswerListComposite
 
     def parseQuestionBankToCorrectFormat(self):
         f = open("testfile.txt", "r")
