@@ -298,13 +298,11 @@ class Test:
         for val in objectPieceList:
             if (possibleAnswerIndex > 1):
                 if (val.find("Correct") == 0):
-                    # isContinueCalculating = False
                     break
-
                 self.questionObj.parseAnswer(val)
             possibleAnswerIndex += 1
-        print("correct answer list: " + str(self.questionObj.getCorrectAnswerList()))
-        print("getAnswerListComposite answer list: " + str(self.questionObj.getAnswerListComposite()))
+        # print("correct answer list: " + str(self.questionObj.getCorrectAnswerList()))
+        # print("getAnswerListComposite answer list: " + str(self.questionObj.getAnswerListComposite()))
 
     def parseQuestionBankToCorrectFormat(self):
         f = open("testfile.txt", "r")
@@ -684,7 +682,6 @@ class Test:
         self.instanceQuestionObjectManager.setCurrentQuestionObject(self.revisitQuestionStore[0])
         self.resetGlobalVariablesForIncorrectQuestionRetake()
         self.instanceDisplayManager.displayQuestionLearnMode()
-        # self.incorrectRetakeCount +=1
 
     def storeRevisitQuestionIndexes(self):
         f = open("store.txt", "w+")
