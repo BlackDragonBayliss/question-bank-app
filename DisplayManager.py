@@ -110,6 +110,7 @@ class DisplayManager:
 
         self.deselectOptionsButton = Button(text="Deselect Answers", command=self.deselectAnswers)
         self.deselectOptionsButton.place(x=self.xPositionDeslectButton, y=self.yPositionGlobalIterate)
+        self.updateYPositionGlobalIterate()
 
         self.currentQuestionLabel = Label(self.root, text="Current question: " + str(self.instanceTest.getQuestionObjectManagerCurrentQuestionIndex()))
         self.currentQuestionLabel.place(x=self.xPositionKey, y=self.yPositionGlobalIterate)
@@ -183,7 +184,6 @@ class DisplayManager:
         self.nextQuestionButton.place(x=self.xPositionConfirmButton, y=self.yPositionGlobalIterate)
         self.updateYPositionGlobalIterate()
 
-        # print(str(self.instanceTest.getQuestionObjectManagerCurrentQuestionIndex()))
         if(self.instanceTest.getQuestionObjectManagerCurrentQuestionIndex() != 0):
             self.instanceTest.isShowPreviousQuestion = True
             self.previousQuestionButton = Button(text="Previous question",command=self.instanceTest.changeToPreviousQuestionLearnMode)
