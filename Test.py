@@ -12,6 +12,7 @@ class Test:
         self.correctAnswerList = []
         self.questionPieceContainer = []
         self.questionObjectComposite = []
+        # Fault fixing variables
         self.faultResolutionQueryStringContainer = []
         self.filterList1 = []
         self.listResultsDuplicantAnswerOnSameLineFaultCorrected = []
