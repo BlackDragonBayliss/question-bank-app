@@ -78,7 +78,7 @@ class Test:
         strToAppend = ""
         isBeginTextAppend = False
         isOperationNormal = True
-        index = 0
+        # index = 0
 
         vceTestList = []
         vceIndex = 0
