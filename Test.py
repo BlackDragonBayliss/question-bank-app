@@ -100,9 +100,9 @@ class Test:
         # Set question list
         self.instanceQuestionObjectManager.setQuestionList(questionCompositeRevised)
 
-        # # Randomize question answers
-        # self.instanceQuestionObjectManager.randomizeQuestionAnswerLists()
-
+        # Randomize question answers
+        self.instanceQuestionObjectManager.randomizeQuestionAnswerLists()
+        #add
     def handleProblemScreenCutOffFault(self, questionComposite):
         splitList = []
         problemResolutionIndexList = []
