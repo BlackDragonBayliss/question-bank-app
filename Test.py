@@ -200,8 +200,6 @@ class Test:
         for text in questionPieceList:
             print("baseLineTextIterationCount: "+ str(baseLineTextIterationCount))
             print("text: "+text)
-            #within questionPiece range "QUESTION" - "A."
-            #append question lines into individual lists
             if "A." in text and firstTextQuestionCount > 1:
                 questionPieceContainer.append(strToAppend)
                 strToAppend = ""
