@@ -94,6 +94,14 @@ class Test:
         # Intake feed, process into question bank
         questionComposite = self.processParseQuestionBank(revisedEmptyStringQuestionPieceContainer)
 
+        # testIndex = 0
+        # for question in questionComposite:
+        #     if(testIndex == 268 or testIndex == 269):
+        #         print("question number: "+question.getQuestionNumber())
+        #         print("question problem: " + question.getProblem())
+        #         print("question answer list: " + str(question.getAnswerListComposite()))
+        #     testIndex += 1
+
         # Handle if question problem over a certain length, if so, break with new line, to prevent question being cut off screen.
         questionCompositeRevised = self.handleProblemScreenCutOffFault(questionComposite)
 
@@ -183,27 +191,39 @@ class Test:
         return newList
 
     def handleProblemConcatenationFault(self, questionPieceList):
-        index = 0
+        firstTextQuestionCount = 0
+        baseLineTextIterationCount = 0
         questionPieceContainer = []
         isBeginTextAppend = False
+        isOperationNormal = False
         strToAppend = ""
         for text in questionPieceList:
+            print("baseLineTextIterationCount: "+ str(baseLineTextIterationCount))
+            print("text: "+text)
             #within questionPiece range "QUESTION" - "A."
             #append question lines into individual lists
-            if "A." in text:
+            if "A." in text and firstTextQuestionCount > 1:
                 questionPieceContainer.append(strToAppend)
                 strToAppend = ""
                 isBeginTextAppend = False
+                #start appending the question answers
                 isOperationNormal = True
+                firstTextQuestionCount = 1
             if (isBeginTextAppend):
                 strToAppend += text
             if "QUESTION" in text:
                 isBeginTextAppend = True
                 isOperationNormal = False
+                firstTextQuestionCount = 0
+
                 questionPieceContainer.append(text)
             if(isOperationNormal):
                 questionPieceContainer.append(text)
-            index += 1
+
+            firstTextQuestionCount += 1
+            baseLineTextIterationCount += 1
+
+        # print("index Handle Problem: " + str(index))
         return questionPieceContainer
 
     def processParseQuestionBank(self, questionSplitContainer):
@@ -238,24 +258,23 @@ class Test:
 
     def formulateAnswerList(self,objectPieceList):
         questionNumber = objectPieceList[0].split(' ')
-        print(questionNumber)
         self.questionObj = QuestionObject()
         self.questionObj.setQuestionNumber(questionNumber[1])
         self.questionObj.setProblem(objectPieceList[1])
 
         questionPieceIndex = 0
         # parse correct answer
-        print(str(objectPieceList))
+        # print(str(objectPieceList))
         for questionPiece in objectPieceList:
             # print(questionPiece)
 
             if (questionPiece.find("Correct") == 0):
                 answerUnparsed = questionPiece.split(":")
-                print(answerUnparsed)
+                # print(answerUnparsed)
 
                 self.answerList = answerUnparsed[1].split(" ")
                 # print(questionObj.getQuestionNumber())
-                print(self.answerList)
+                # print(self.answerList)
                 del self.answerList[0:1]
 
             questionPieceIndex += 1
@@ -263,33 +282,33 @@ class Test:
         # handle multiple index,
         self.multipleAnswerFaultAnswerList = []
         if len(self.answerList[0]) > 1:
-            print("greater: " + self.answerList[0])
+            # print("greater: " + self.answerList[0])
             for val in self.answerList[0]:
                 self.multipleAnswerFaultAnswerList.append(val)
         else:
             self.multipleAnswerFaultAnswerList = self.answerList
 
-        print("multi: "+str(self.multipleAnswerFaultAnswerList))
+        # print("multi: "+str(self.multipleAnswerFaultAnswerList))
         return self.multipleAnswerFaultAnswerList
 
     def filterAddCorrectAnswer(self, objectPieceList, answerList):
-        print("answer list: "+str(answerList))
+        # print("answer list: "+str(answerList))
         for answer in answerList:
             for questionPiece in objectPieceList:
                 questionPieceKey = answerList[self.answerListIndex] + "."
 
-                print("self.answerListIndex "+str(self.answerListIndex))
-                print("questionPieceKey "+str(questionPieceKey))
-                print("questionPiece " + str(questionPiece))
+                # print("self.answerListIndex "+str(self.answerListIndex))
+                # print("questionPieceKey "+str(questionPieceKey))
+                # print("questionPiece " + str(questionPiece))
 
                 if (questionPiece.find(questionPieceKey) == 0):
                     answerListSplit = questionPiece.split(". ")
                     correctAnswerToAppend = answerListSplit[1]
-                    print("correctAnswerToAppend " + str(correctAnswerToAppend))
+                    # print("correctAnswerToAppend " + str(correctAnswerToAppend))
                     self.questionObj.addCorrectAnswer(correctAnswerToAppend)
                     break
             self.answerListIndex += 1
-        print(str(self.questionObj.getCorrectAnswerList()))
+        # print(str(self.questionObj.getCorrectAnswerList()))
         self.answerListIndex = 0
         self.questionObjectComposite.append(self.questionObj)
 
@@ -607,7 +626,7 @@ class Test:
             if(selectedAnswerKey[2] == "1"):
                 currentQuestionObject = self.instanceQuestionObjectManager.getCurrentQuestionObject()
                 self.correctAnswerList = currentQuestionObject.getCorrectAnswerList()
-                print("correct answer list: "+str(self.correctAnswerList))
+                # print("correct answer list: "+str(self.correctAnswerList))
                 for correctAnswer in self.correctAnswerList:
                     if (selectedAnswerKey[1] == correctAnswer):
                         self.answerMatchingList.append(selectedAnswerKey)
@@ -617,15 +636,15 @@ class Test:
         #handle if no answers selected, default to answer being incorrect
         if(self.selectedAnswerIndexTotal != 0):
             if(len(self.answerMatchingList) == len(self.correctAnswerList) and self.selectedAnswerIndexTotal == len(self.correctAnswerList)):
-                print("answer correct")
+                # print("answer correct")
                 self.isQuestionCorrectOutcome = True
             else:
-                print("answer incorrect")
+                # print("answer incorrect")
                 self.isQuestionCorrectOutcome = False
                 #handle incorrect question store
                 self.handleIncorrectQuestionStore(self.instanceQuestionObjectManager.getCurrentQuestionObject())
         else:
-            print("no answer incorrect")
+            # print("no answer incorrect")
             self.isQuestionCorrectOutcome = False
             #handle incorrect question store
             self.handleIncorrectQuestionStore(self.instanceQuestionObjectManager.getCurrentQuestionObject())
@@ -647,7 +666,7 @@ class Test:
             # set original incorrect question list
             self.instanceQuestionObjectManager.setOriginalIncorrectQuestionList(self.incorrectQuestionStore)
         #set questionList
-        print("incorrectQuestionStore: "+str(len(self.incorrectQuestionStore)))
+        # print("incorrectQuestionStore: "+str(len(self.incorrectQuestionStore)))
         self.setQuestionObjectManagerBatchSizeTest(self.incorrectQuestionStore)
         #reset global variables
         self.instanceQuestionObjectManager.setCurrentQuestionObject(self.incorrectQuestionStore[0])
@@ -690,7 +709,7 @@ class Test:
         f.close()
 
     def storeOriginalQuestionList(self):
-        print("storingOriginalQuestionList, length: "+str(len(self.instanceQuestionObjectManager.getBatchSizeQuestionList())))
+        # print("storingOriginalQuestionList, length: "+str(len(self.instanceQuestionObjectManager.getBatchSizeQuestionList())))
         self.instanceQuestionObjectManager.setOriginalQuestionList(self.instanceQuestionObjectManager.getBatchSizeQuestionList())
 
     def getOriginalIncorrectList(self):
@@ -703,12 +722,12 @@ class Test:
         questionList = self.instanceQuestionObjectManager.getBatchSizeQuestionList()
         totalCountQuestions = len(questionList)
 
-        print("questionList length: "+str(totalCountQuestions))
+        # print("questionList length: "+str(totalCountQuestions))
 
         for question in questionList:
             if(question.getIsAnsweredCorrectly()):
                 self.correctQuestionAnsweredCount += 1
-        print("correctQuestionAnsweredCount: "+str(self.correctQuestionAnsweredCount))
+        # print("correctQuestionAnsweredCount: "+str(self.correctQuestionAnsweredCount))
 
         percentageCorrect = (self.correctQuestionAnsweredCount / totalCountQuestions) * 100
         return percentageCorrect
